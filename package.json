@@ -1,7 +1,7 @@
 {
   "name": "night-vision-charts",
   "version": "0.1.0",
-  "description": "",
+  "description": "Highly customizable charting library, created for professional traders",
   "type": "module",
   "files": [
     "dist"

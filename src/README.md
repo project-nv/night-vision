@@ -59,10 +59,11 @@ chart.data = {
 - Improve the layout: x/y axis calculation
 - Expand the built-in overlay collection
 - Port the script system from TVJS
+- Add keyboard & mouse events 
 - NavyJS tutorial
 - Data API (the high-level API)
 - Add tool overlays
-- Toolbar 
+- Toolbar
 - Mobile support
 
 
