@@ -1,0 +1,21 @@
+{
+  "name": "night-vision-docs",
+  "version": "0.1.0",
+  "description": "Docs for NightVision charts",
+  "main": "index.js",
+  "scripts": {
+    "docs:dev": "vitepress dev docs --port 8087 --host",
+    "docs:build": "vitepress build docs",
+    "docs:serve": "vitepress serve docs --port 8087"
+  },
+  "author": "ChartMaster",
+  "license": "ISC",
+  "dependencies": {
+    "vitepress": "^1.0.0-alpha.22",
+    "vue": "^3.2.41"
+  },
+  "devDependencies": {
+    "markdown-it": "^13.0.1",
+    "vitepress-plugin-search": "^1.0.4-alpha.11"
+  }
+}

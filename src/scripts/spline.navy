@@ -1,0 +1,40 @@
+
+// NavyJS ~ 0.1-lite
+
+[OVERLAY name=Spline, ctx=Canvas, author=ChartMaster, version=1.0.0]
+
+// Define new props
+prop('color', { type: 'Color', def: '#31ce31' })
+prop('lineWidth', { type: 'Integer', def: 1 })
+prop('dataIndex', { type: 'Integer', def: 1 })
+
+
+draw(ctx) {
+    ctx.lineWidth = $props.lineWidth
+    ctx.lineJoin = "round"
+    ctx.strokeStyle = $props.color
+    ctx.beginPath()
+    const layout = $core.layout
+    const data = $core.data // Full dataset
+    const view = $core.view // Visible view
+    const idx = $props.dataIndex
+    for (var i = view.i1, n = view.i2; i <= n; i++) {
+        let p = data[i]
+        let x = layout.time2x(p[0])
+        let y = layout.value2y(p[idx])
+        ctx.lineTo(x, y)
+    }
+    ctx.stroke()
+}
+
+// Price label + Scale symbol + price line
+/*valueTracker(x) => {
+    show: true,
+    symbol: $core.src.name,
+    line: true,
+    color: $props.color,
+    value: x[$props.dataIndex]
+}*/
+
+// Legend, defined as pairs [value, color]
+legend(x) => [[x[$props.dataIndex], $props.color]]

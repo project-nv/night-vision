@@ -1,0 +1,107 @@
+
+// NavyScript~0.1
+
+[OVERLAY name=Spline, export=true, ctx=Canvas, extends=Line]
+
+// Define new props
+prop('color', { type: 'Color', def: '#fff' })
+prop('line_width', { type: 'Integer', def: 10 })
+prop('data_index', { type: 'Integer', def: 1 })
+
+/*
+props() => {
+    color: { type: 'Color', def: '#fff' },
+    line_width: { type: 'Integer', def: 10 },
+    data_index: { type: 'Integer', def: 1 }
+}
+*/
+
+// Define constants
+const COLORS = ['#42b28a', '#5691ce', '#612ff9', '#d50b90', '#ff2316' ]
+
+let X = 'https://ffffffuuuuu.com'
+
+color() => COLORS
+
+testBrackets2 (
+    a = 1,
+    b = {}
+)
+{
+    for (var k = 0; k < 100; k++) {
+        return k
+    }
+}
+
+init() {
+    // On mount
+    function test() {
+
+    }
+}
+
+testBrackets () {}
+
+
+function blah() {
+ let a = () => { return 1 }
+}
+
+while (true) {
+
+}
+
+if () {
+
+}
+
+switch (expression) {
+    case expression:
+
+        break;
+    default:
+
+}
+
+goto(1)
+
+.then(() => {})
+.catch(() => {})
+.finally(() => {})
+
+with ([1, 2, 3]) {
+  console.log(toString()); // 1,2,3
+}
+
+try {
+  adddlert("Welcome guest!");
+}
+catch(err) {
+  document.getElementById("demo").innerHTML = err.message;
+}
+
+
+
+// Short form of meta() { return { ... } }
+meta() => { author: 'C451', version: '1.0.0' }
+
+// Required data format
+dataFormat() => TS(Float)
+
+draw(ctx) {
+    ctx.lineWidth = $props.line_width
+    ctx.strokeStyle = $props.color
+    ctx.beginPath()
+    const layout = $core.layout
+    const i = $props.data_index
+    const data = $core.data
+    for (var k = 0, n = data.length; k < n; k++) {
+        let p = data[k]
+        let x = layout.t2screen(p[0])
+        let y = layout.$2screen(p[i])
+        ctx.lineTo(x, y)
+    }
+    ctx.stroke()
+}
+
+dataColors() => [color]

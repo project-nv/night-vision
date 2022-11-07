@@ -1,0 +1,40 @@
+{
+  "name": "night-vision-charts",
+  "version": "0.1.0",
+  "description": "",
+  "type": "module",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "dev": "vite --host",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "main": "./dist/night-vision.umd.cjs",
+  "module": "./dist/night-vision.js",
+  "exports": {
+    ".": {
+      "import": "./dist/night-vision.js",
+      "require": "./dist/night-vision.umd.cjs"
+    }
+  },
+  "author": "ChartMaster",
+  "license": "ISC",
+  "dependencies": {
+    "@freecodecamp/strip-comments": "^3.0.1",
+    "arrayslicer": "^1.2.3",
+    "hammerjs": "^2.0.8",
+    "hamsterjs": "^1.1.3",
+    "lz-string": "^1.4.4",
+    "moment": "^2.29.4",
+    "svelte": "^3.50.1"
+  },
+  "devDependencies": {
+    "@sveltejs/vite-plugin-svelte": "^1.0.9",
+    "svelte-color-picker": "^1.0.7",
+    "svelte-colorpick": "^0.1.7",
+    "vite": "^3.1.8",
+    "vite-plugin-banner": "^0.5.0"
+  }
+}
