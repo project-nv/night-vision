@@ -11,7 +11,7 @@ hero:
   actions:
     - theme: brand
       text: Get Started
-      link: /guide/intro/night-vision-charts
+      link: /guide/intro/getting-started
     - theme: alt
       text: View on GitHub
       link: https://github.com/project-nv/night-vision
