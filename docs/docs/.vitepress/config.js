@@ -2,6 +2,7 @@ export default {
     lang: 'en-US',
     title: 'NightVision Docs',
     description: 'Timeseries / candlestick charts for PROs. Welcome to nex-gen!',
+    appearance: 'dark',
     head: [
         ['link', { rel: 'icon', type: 'image/png', href: '/favicon.png' }],
     ],
