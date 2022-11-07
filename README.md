@@ -59,7 +59,7 @@ chart.data = {
 - Improve the layout: x/y axis calculation
 - Expand the built-in overlay collection
 - Port the script system from TVJS
-- Add keyboard & mouse events 
+- Add keyboard & mouse events
 - NavyJS tutorial
 - Data API (the high-level API)
 - Add tool overlays
@@ -67,7 +67,10 @@ chart.data = {
 - Mobile support
 
 
+<div align="center">
 
-<center> Happy charting! <br><br></center>
+Happy charting!
 
-<center><img src="/docs/docs/public/wink.gif" alt="wink" width="64"/></center>
+<img src="/docs/docs/public/wink.gif" alt="wink" width="64"/>
+
+</div>
