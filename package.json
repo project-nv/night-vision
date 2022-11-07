@@ -1,5 +1,5 @@
 {
-  "name": "night-vision-charts",
+  "name": "night-vision",
   "version": "0.1.0",
   "description": "Highly customizable charting library, created for professional traders",
   "type": "module",
@@ -11,7 +11,7 @@
     "build": "vite build",
     "preview": "vite preview"
   },
-  "main": "./dist/night-vision.umd.cjs",
+  "main": "./dist/night-vision.js",
   "module": "./dist/night-vision.js",
   "exports": {
     ".": {
