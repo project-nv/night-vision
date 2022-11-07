@@ -7,8 +7,6 @@ import data from '../data/data-ohlcv.json?id=main'
 import data2 from '../data/data-area.json?id=main-2'
 import TestStack from '../tests/testStack.js'
 
-import ColorMatrix from '../temp/ColorMatrix.svelte'
-import Custom from '../temp/custom.navy'
 
 // Tests
 import fullReset from '../tests/data-sync/fullReset.js'
@@ -40,9 +38,8 @@ let chart = null
 
 onMount(() => {
     chart = new NightVision('chart-container', {
-        data: data2,
-        //scripts: [Custom]
-        //autoResize: true
+        data: data,
+        autoResize: true
     })
 
     window.chart = chart

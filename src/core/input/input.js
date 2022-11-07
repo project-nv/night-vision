@@ -322,7 +322,8 @@ export default class Input {
                 gridId: this.gridId, z, diff1, diff2
             })
         }
-        if (!updated) this.changeRange()
+        // TODO: fix doulbe updates (only on120hz macbook)
+        /*if (!updated)*/ this.changeRange()
 
     }
 
