@@ -6,7 +6,7 @@ hero:
   text: Time-series / candlestick charts for PROS.
   tagline: Welcome to next-gen, degen!
   image:
-    src: /assets/big-logo-5.png
+    src: /big-logo-5.png
     alt: Kek
   actions:
     - theme: brand
