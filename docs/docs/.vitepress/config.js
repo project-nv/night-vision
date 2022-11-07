@@ -13,11 +13,11 @@ export default {
         nav: [
             { text: 'Guide', link: '/guide/intro/night-vision-charts' },
             { text: 'Examples', link: '/guide/intro/10-basic-examples' },
-            { text: 'Changelog', link: 'https://github.com/...' },
+            { text: 'Roadmap', link: 'https://github.com/project-nv/night-vision#roadmap' },
             {
                text: '0.1.0',
                items: [
-                 { text: '0.1.0', link: 'https://github.com/...' },
+                 { text: '0.1.0', link: 'https://www.npmjs.com/package/night-vision' },
                ]
              }
         ],
@@ -142,7 +142,7 @@ export default {
         ],
         footer: {
             message: 'Released under the MIT License.',
-            copyright: 'Copyright © 2022-present ChartMaster'
+            copyright: 'Copyright © 2022-present, ChartMaster'
         }
     }
 }

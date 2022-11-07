@@ -4,17 +4,17 @@ layout: home
 hero:
   name: Night Vision Charts
   text: Time-series / candlestick charts for PROS.
-  tagline: Welcome to next-gen, degen!
+  tagline: Welcome to the next generation!
   image:
     src: /big-logo-5.png
-    alt: Kek
+    alt: Big NV logo
   actions:
     - theme: brand
       text: Get Started
       link: /guide/night-vision-charts
     - theme: alt
       text: View on GitHub
-      link: https://github.com/vuejs/vitepress
+      link: https://github.com/project-nv/night-vision
 
 features:
     - icon: ⚡️
