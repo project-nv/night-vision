@@ -164,12 +164,12 @@ export default {
 
     // Fast filter (index-based)
     fastFilterIB(arr, t1, t2) {
-        if (!arr.length) return [arr, undefined]
+        if (!arr.length) return [undefined, undefined]
         let i1 =  Math.floor(t1)
         if (i1 < 0) i1 = 0
         let i2 =  Math.floor(t2 + 1)
-        let res = arr.slice(i1, i2)
-        return [res, i1]
+        //let res = arr.slice(i1, i2)
+        return [i1, i2]
     },
 
     // Nearest indexes (left and right)

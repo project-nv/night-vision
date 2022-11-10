@@ -76,7 +76,8 @@ function panel(props, layout, ctx) {
 }
 
 function formatDate(props, p) {
-    let t = p[1][0]
+    //let t = p[1][0]
+    let t = p[1]
 
     // TODO: implement TI
     //t = grid_0.tiMap.i2t(t)

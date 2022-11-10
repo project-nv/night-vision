@@ -68,7 +68,7 @@ $:props = {
     scripts,
     config: configMerge,
     //legendButtons,
-    indexBased,
+    //indexBased,
     //extensions,
     //xSettings,
     //skin,

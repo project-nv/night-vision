@@ -24,7 +24,8 @@ class DataScanner {
         }
         let mainOv = all.find(x => x.main) || all[0]
         this.main = (mainOv || {}).data || []
-        this.interval = Utils.detectInterval(this.main)
+        this.interval = this.hub.data.indexBased ? 1 :
+            Utils.detectInterval(this.main)
 
         return this.interval
 
@@ -42,7 +43,7 @@ class DataScanner {
         } else {
             s = l - dl, d = 0.5
         }
-        if (!this.props.indexBased) {
+        if (!this.hub.data.indexBased) {
             return [
                 this.main[s][0] - this.interval * d,
                 this.main[l][0] + this.interval * ml

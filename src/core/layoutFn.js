@@ -15,7 +15,7 @@ export default function(self, range) {
         // (universal mapping that works both in timeBased
         // & indexBased modes)
         ti2x: (t, i) => {
-            // TODO: implement
+            // TODO: implement    
         },
         // Time to screen x-coordinates
         time2x: t => {

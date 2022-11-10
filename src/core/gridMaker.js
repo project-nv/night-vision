@@ -38,7 +38,6 @@ function GridMaker(id, specs, mainGrid = null) {
     let { interval, range, ctx, timezone } = props
 
     let y_t = null // TODO: implement
-    let tiMap = {}
     let ls = !!settings.logScale // Pane's log scale
 
     // All overlays
@@ -46,9 +45,10 @@ function GridMaker(id, specs, mainGrid = null) {
 
     // Main data
     let data = hub.mainOv.dataSubset
+    let view = hub.mainOv.dataView
 
     // Layout object
-    let self = { tiMap }
+    let self = { indexBased: hub.indexBased }
     //var lm = layers_meta[id]
 
     // Split overlays by scale (default scale: 'A')
@@ -110,12 +110,13 @@ function GridMaker(id, specs, mainGrid = null) {
 
     // Select nearest good-loking t step (m is target scale)
     function timeStep() {
-        let k = tiMap.ib ? 60000 : 1
+        let k = self.indexBased ? 60000 : 1
         let xrange = (range[1] - range[0]) * k
         let m = xrange * (props.config.GRIDX / props.width)
         let s = TIMESCALES
         return Utils.nearestA(m, s)[1] / k
     }
+
 
     function gridX() {
 
@@ -137,11 +138,15 @@ function GridMaker(id, specs, mainGrid = null) {
 
             let m0 = Utils.getMonth(t0)*/
 
-            for (var i = 0; i < data.length; i++) {
-                let p = data[i]
-                let prev = data[i-1] || []
+            let fixOffset = dt / DAY > 10
+            let i0 = fixOffset ? findMonthStart(view.i1) : view.i1
+            for (var i = i0, n = view.i2; i <= n; i++) {
+                let p = view.src[i]
+                let prev = view.src[i-1] || []
                 let prev_xs = self.xs[self.xs.length - 1] || [0,[]]
                 let x = Math.floor((p[0] - range[0]) * r)
+
+                //if (x < 0) continue
 
                 insertLine(prev, p, x)
 
@@ -150,7 +155,7 @@ function GridMaker(id, specs, mainGrid = null) {
 
                 if (prev_xs === xs) continue
 
-                if (xs[1][0] - prev_xs[1][0] < self.tStep * 0.8) {
+                if (xs[1] - prev_xs[1] < self.tStep * 0.8) {
 
                     // prev_xs is a higher "rank" label
                     if (xs[2] <= prev_xs[2]) {
@@ -179,12 +184,21 @@ function GridMaker(id, specs, mainGrid = null) {
         }
     }
 
+    function findMonthStart(i1) {
+        let m0 = Utils.getMonth(view.src[i1][0])
+        for (var i = i1 - 1; i >= 0; i--) {
+            let mi = Utils.getMonth(view.src[i][0])
+            if (mi !== m0) return i
+        }
+        return 0
+    }
+
     function insertLine(prev, p, x, m0) {
 
-        let prev_t = tiMap.ib ? tiMap.i2t(prev[0]) : prev[0]
-        let p_t = tiMap.ib ? tiMap.i2t(p[0]) : p[0]
+        let prev_t = self.indexBased ? tiMap.i2t(prev[0]) : prev[0]
+        let p_t = self.indexBased ? tiMap.i2t(p[0]) : p[0]
 
-        if (tiMap.tf < DAY) {
+        if (interval < DAY) {
             prev_t += timezone * HOUR
             p_t += timezone * HOUR
         }
@@ -193,19 +207,19 @@ function GridMaker(id, specs, mainGrid = null) {
         // TODO: take this block =========> (see below)
         if ((prev[0] || interval === YEAR) &&
             Utils.getYear(p_t) !== Utils.getYear(prev_t)) {
-            self.xs.push([x, p, YEAR]) // [px, [...], rank]
+            self.xs.push([x, p[0], YEAR]) // [px, [...], rank]
         }
         else if (prev[0] &&
             Utils.getMonth(p_t) !== Utils.getMonth(prev_t)) {
-            self.xs.push([x, p, MONTH])
+            self.xs.push([x, p[0], MONTH])
         }
         // TODO: should be added if this day !== prev day
         // And the same for 'botbar.js', TODO(*)
         else if (Utils.dayStart(p_t) === p_t) {
-            self.xs.push([x, p, DAY])
+            self.xs.push([x, p[0], DAY])
         }
         else if (p[0] % self.tStep === 0) {
-            self.xs.push([x, p, interval])
+            self.xs.push([x, p[0], interval])
         }
     }
 
@@ -213,14 +227,14 @@ function GridMaker(id, specs, mainGrid = null) {
 
         if (!self.xs.length || !isFinite(r)) return
 
-        let t = self.xs[0][1][0]
+        let t = self.xs[0][1]
         while (true) {
             t -= self.tStep
             let x = Math.floor((t  - range[0]) * r)
             if (x < 0) break
             // TODO: ==========> And insert it here somehow
             if (t % interval === 0) {
-                self.xs.unshift([x,[t], interval])
+                self.xs.unshift([x, t, interval])
             }
         }
     }
@@ -229,13 +243,13 @@ function GridMaker(id, specs, mainGrid = null) {
 
         if (!self.xs.length || !isFinite(r)) return
 
-        let t = self.xs[self.xs.length - 1][1][0]
+        let t = self.xs[self.xs.length - 1][1]
         while (true) {
             t += self.tStep
             let x = Math.floor((t  - range[0]) * r)
             if (x > self.spacex) break
             if (t % interval === 0) {
-                self.xs.push([x,[t], interval])
+                self.xs.push([x, t, interval])
             }
         }
     }

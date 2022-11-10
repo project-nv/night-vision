@@ -94,6 +94,7 @@ function Layout(props, hub) {
     return {
         grids: grids,
         main: grids.find(x => x.main),
+        indexBased: props.indexBased,
         botbar: {
             width: props.width,
             height: props.config.BOTBAR,

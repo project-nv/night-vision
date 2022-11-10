@@ -24,6 +24,7 @@ class DataHub {
 
         // Raw data object
         this.data = data
+        this.indexBased = data.indexBased ?? false
 
         this.chart = null
         this.offchart = null
@@ -103,7 +104,9 @@ class DataHub {
 
     // Create a subset of timeseries
     filter (data, range) {
-        var ix = Utils.fastFilter2(
+        let filter = this.indexBased ?
+            Utils.fastFilterIB : Utils.fastFilter2
+        var ix = filter(
             data,
             range[0], // -interval
             range[1]
