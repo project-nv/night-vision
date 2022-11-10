@@ -35,7 +35,7 @@ const MAX_INT = Number.MAX_SAFE_INTEGER
 function GridMaker(id, specs, mainGrid = null) {
 
     let { hub, props, settings, height } = specs
-    let { interval, range, ctx, timezone } = props
+    let { interval, timeFrame, range, ctx, timezone } = props
 
     let y_t = null // TODO: implement
     let ls = !!settings.logScale // Pane's log scale
@@ -110,11 +110,11 @@ function GridMaker(id, specs, mainGrid = null) {
 
     // Select nearest good-loking t step (m is target scale)
     function timeStep() {
-        let k = self.indexBased ? 60000 : 1
+        let k = self.indexBased ? timeFrame : 1
         let xrange = (range[1] - range[0]) * k
         let m = xrange * (props.config.GRIDX / props.width)
         let s = TIMESCALES
-        return Utils.nearestA(m, s)[1] / k
+        return Utils.nearestA(m, s)[1]
     }
 
 
@@ -129,24 +129,17 @@ function GridMaker(id, specs, mainGrid = null) {
             self.tStep = timeStep()
             self.xs = []
             const dt = range[1] - range[0]
+            const realDt = data[data.length - 1][0] - data[0][0]
             const r = self.spacex / dt
 
-            /* TODO: remove the left-side glitch
-
-            let year_0 = Utils.getYear(data[0][0])
-            for (var t0 = year_0; t0 < range[0]; t0 += self.tStep) {}
-
-            let m0 = Utils.getMonth(t0)*/
-
-            let fixOffset = dt / DAY > 10
+            let fixOffset = realDt / DAY > 10
             let i0 = fixOffset ? findMonthStart(view.i1) : view.i1
             for (var i = i0, n = view.i2; i <= n; i++) {
                 let p = view.src[i]
                 let prev = view.src[i-1] || []
                 let prev_xs = self.xs[self.xs.length - 1] || [0,[]]
-                let x = Math.floor((p[0] - range[0]) * r)
-
-                //if (x < 0) continue
+                let ti = self.indexBased ? i : p[0]
+                let x = Math.floor((ti - range[0]) * r)
 
                 insertLine(prev, p, x)
 
@@ -168,7 +161,7 @@ function GridMaker(id, specs, mainGrid = null) {
             }
 
             // TODO: fix grid extension for bigger timeframes
-            if (interval < WEEK && r > 0) {
+            if (!self.indexBased && timeFrame < WEEK && r > 0) {
                 extendLeft(dt, r)
                 extendRight(dt, r)
             }
@@ -195,31 +188,31 @@ function GridMaker(id, specs, mainGrid = null) {
 
     function insertLine(prev, p, x, m0) {
 
-        let prev_t = self.indexBased ? tiMap.i2t(prev[0]) : prev[0]
-        let p_t = self.indexBased ? tiMap.i2t(p[0]) : p[0]
+        let prevT = prev[0]
+        let t = p[0]
 
-        if (interval < DAY) {
-            prev_t += timezone * HOUR
-            p_t += timezone * HOUR
+        if (timeFrame < DAY) {
+            prevT += timezone * HOUR
+            t += timezone * HOUR
         }
         let d = timezone * HOUR
 
         // TODO: take this block =========> (see below)
-        if ((prev[0] || interval === YEAR) &&
-            Utils.getYear(p_t) !== Utils.getYear(prev_t)) {
-            self.xs.push([x, p[0], YEAR]) // [px, [...], rank]
+        if ((prev[0] || timeFrame === YEAR) &&
+            Utils.getYear(t) !== Utils.getYear(prevT)) {
+            self.xs.push([x, t, YEAR]) // [px, time, rank]
         }
         else if (prev[0] &&
-            Utils.getMonth(p_t) !== Utils.getMonth(prev_t)) {
-            self.xs.push([x, p[0], MONTH])
+            Utils.getMonth(t) !== Utils.getMonth(prevT)) {
+            self.xs.push([x, t, MONTH])
         }
         // TODO: should be added if this day !== prev day
         // And the same for 'botbar.js', TODO(*)
-        else if (Utils.dayStart(p_t) === p_t) {
-            self.xs.push([x, p[0], DAY])
+        else if (Utils.dayStart(t) === t) {
+            self.xs.push([x, t, DAY])
         }
-        else if (p[0] % self.tStep === 0) {
-            self.xs.push([x, p[0], interval])
+        else if (t % self.tStep === 0) {
+            self.xs.push([x, t, timeFrame])
         }
     }
 
@@ -233,8 +226,8 @@ function GridMaker(id, specs, mainGrid = null) {
             let x = Math.floor((t  - range[0]) * r)
             if (x < 0) break
             // TODO: ==========> And insert it here somehow
-            if (t % interval === 0) {
-                self.xs.unshift([x, t, interval])
+            if (t % timeFrame === 0) {
+                self.xs.unshift([x, t, timeFrame])
             }
         }
     }

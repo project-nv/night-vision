@@ -13,9 +13,16 @@ export default function(self, range) {
     Object.assign(self, {
         // Time and global index to screen x-coordinate
         // (universal mapping that works both in timeBased
-        // & indexBased modes)
+        // & indexBased modes):
+
+        // Time-index switch (returns time or index depending on the mode)
+        ti: (t, i) => {
+            return self.indexBased ? i : t
+        },
+        // Time-or-index to screen x-coordinate
         ti2x: (t, i) => {
-            // TODO: implement    
+            let src = self.indexBased ? i : t
+            return Math.floor((src - range[0]) * r) - 0.5
         },
         // Time to screen x-coordinates
         time2x: t => {
@@ -51,6 +58,7 @@ export default function(self, range) {
         // Screen-X to time-index
         x2ti: x => {
             // TODO: implement
+            return range[0] + x / r
         },
         // $-axis nearest step
         $magnet: price => { },

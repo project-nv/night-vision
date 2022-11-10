@@ -403,20 +403,23 @@ export default class Input {
         // the chart continues to scale down a little.
         // Solution: I don't know yet
 
-        let data = this.hub.mainOv.dataSubset
+        let data = this.hub.mainOv.data
         if (!this.range.length || data.length < 2) return
 
         let l = data.length - 1
         let range = this.range
+        let layout = this.layout
 
         range[0] = Utils.clamp(
             range[0],
-            -Infinity, data[l][0] - this.interval * 5.5,
+            -Infinity,
+            layout.ti(data[l][0], l) - this.interval * 5.5,
         )
 
         range[1] = Utils.clamp(
             range[1],
-            data[0][0] + this.interval * 5.5, Infinity
+            layout.ti(data[0][0], 0) + this.interval * 5.5,
+            Infinity
         )
 
         this.events.emit('range-changed', range)

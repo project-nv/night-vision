@@ -24,11 +24,15 @@ class DataScanner {
         }
         let mainOv = all.find(x => x.main) || all[0]
         this.main = (mainOv || {}).data || []
-        this.interval = this.hub.data.indexBased ? 1 :
-            Utils.detectInterval(this.main)
+        this.tf = Utils.detectTimeframe(this.main)
+        this.interval = this.hub.data.indexBased ? 1 : this.tf
 
         return this.interval
 
+    }
+
+    getTimeframe() {
+        return this.tf
     }
 
     defaultRange() {

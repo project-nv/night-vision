@@ -48,6 +48,7 @@ let scan = Scan.instance(props.id)
 scan.init(props)
 
 let interval = scan.detectInterval()
+let timeFrame = scan.getTimeframe()
 let range = scan.defaultRange()
 let cursor = new Cursor()
 let storage = {} // Storage for helper variables
@@ -56,7 +57,7 @@ let chartRR = 0
 let layout = null
 
 $:chartProps = Object.assign(
-    {interval, range, ctx, cursor},
+    {interval, timeFrame, range, ctx, cursor},
     props
 )
 
@@ -145,6 +146,7 @@ function update(emit = true) {
 function fullUpdate(opt = {}) {
 
     interval = scan.detectInterval()
+    timeFrame = scan.getTimeframe()
     if (!range.length || opt.resetRange) {
         range = scan.defaultRange()
     }

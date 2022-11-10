@@ -102,8 +102,8 @@ export default {
         return panes.map(x => x.overlays || []).flat()
     },
 
-    // Detects candles interval
-    detectInterval(data) {
+    // Detects a timeframe of the data
+    detectTimeframe(data) {
         let len = Math.min(data.length - 1, 99)
         let min = Infinity
         data.slice(0, len).forEach((x, i) => {

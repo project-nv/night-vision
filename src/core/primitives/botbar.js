@@ -81,11 +81,11 @@ function formatDate(props, p) {
 
     // TODO: implement TI
     //t = grid_0.tiMap.i2t(t)
-    //let ti = props.layout.grids[0].tiMap.tf
-    let ti = props.interval
+    //let tf = props.layout.grids[0].tiMap.tf
+    let tf = props.timeFrame
 
     // Enable timezones only for tf < 1D
-    let k = ti < DAY ? 1 : 0
+    let k = tf < DAY ? 1 : 0
     let tZ = t + k * props.timezone * HOUR
 
     //t += new Date(t).getTimezoneOffset() * MINUTE
@@ -111,28 +111,28 @@ function formatCursorX(props) {
     let t = props.cursor.t
     // TODO: IMPLEMENT TI
     //t = grid_0.tiMap.i2t(t)
-    let ti = props.interval
+    let tf = props.timeFrame
     //let ti = props.layout.grids[0].tiMap.tf
     // Enable timezones only for tf < 1D
-    let k = ti < DAY ? 1 : 0
+    let k = tf < DAY ? 1 : 0
 
     //t += new Date(t).getTimezoneOffset() * MINUTE
     let d = new Date(t + k * props.timezone * HOUR)
 
-    if (ti === YEAR) {
+    if (tf === YEAR) {
         return d.getUTCFullYear()
     }
 
-    if (ti < YEAR) {
+    if (tf < YEAR) {
         var yr = '`' + `${d.getUTCFullYear()}`.slice(-2)
         var mo = MONTHMAP[d.getUTCMonth()]
         var dd = '01'
     }
-    if (ti <= WEEK) dd = d.getUTCDate()
+    if (tf <= WEEK) dd = d.getUTCDate()
     let date = `${dd} ${mo} ${yr}`
     let time = ''
 
-    if (ti < DAY) {
+    if (tf < DAY) {
         let h = Utils.addZero(d.getUTCHours())
         let m = Utils.addZero(d.getUTCMinutes())
         time = h + ":" + m
@@ -149,12 +149,12 @@ function formatCursorX(props) {
 // Solution: manipulate the grid, skew it, you know
 function lblHighlight(props, t) {
 
-    let ti = props.interval
+    let tf = props.timeFrame
 
     if (t === 0) return true
     if (Utils.monthStart(t) === t) return true
     if (Utils.dayStart(t) === t) return true
-    if (ti <= MINUTE15 && t % HOUR === 0) return true
+    if (tf <= MINUTE15 && t % HOUR === 0) return true
 
     return false
 
