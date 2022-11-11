@@ -8,7 +8,7 @@
   ],
   "scripts": {
     "dev": "vite --host",
-    "build": "vite build",
+    "build": "vite build && cp -r ./types/* ./dist",
     "preview": "vite preview"
   },
   "main": "./dist/night-vision.js",
