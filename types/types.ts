@@ -29,7 +29,7 @@ export type NightVisionProps = {
   config?: any[];
   indexBased?: boolean;
   timezone?: number;
-  // getters return null if not found: interference.js //TODO: Fix `any`
+  // getters return null if not found: interface.js //TODO: Fix `any`
   layout?: any | null;
   range?: any | null;
   cursor?: any | null;
