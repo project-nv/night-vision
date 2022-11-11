@@ -1,4 +1,4 @@
-import { Data, NightVisionProps } from "./types";
+import { ColorsObj, Data, NightVisionProps } from "./types";
 
 export class NightVision {
   constructor(target: string, props?: NightVisionProps);
@@ -17,8 +17,8 @@ export class NightVision {
   get width(): number;
   set height(arg: number);
   get height(): number;
-  set colors(arg: any); // Typescript cant assign different types for setter arg (string) & getter return type (Color). TODO: find better solution
-  get colors(): any;
+  set colors(arg: any); // can't use arg:string because TS requires getter & setter to have the same type. But `any` is allowed...
+  get colors(): ColorsObj;
   set showLogo(arg: boolean);
   get showLogo(): boolean;
   set scripts(arg: any[]); // TODO: Fix any

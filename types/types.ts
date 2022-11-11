@@ -15,13 +15,13 @@ export type Data = {
   panes: Pane[];
 };
 
-export type Color = { [key: string]: string }; //TODO: specify valid color keys
+export type ColorsObj = { [key: string]: string }; //TODO: specify valid color keys
 
 export type NightVisionProps = {
   id?: string;
   width?: number;
   height?: number;
-  colors?: Color;
+  colors?: ColorsObj;
   showLogo?: boolean;
   // TODO: Fix `any`
   scripts?: any[];
