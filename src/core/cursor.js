@@ -51,18 +51,22 @@ export default class Cursor {
         }
 
         let values = []
-        let v
+        let vi // [value, index]
         for (var pane of hub.panes()) {
             let arr = []
             for (var i = 0; i < pane.overlays.length; i++) {
                 let ov = pane.overlays[i]
                 if (!layout.indexBased) {
-                    v = Utils.nearestTs(this.ti, ov.dataSubset)[1]
+                    vi = Utils.nearestTs(this.ti, ov.dataSubset) || []
                 } else {
-                    v = Utils.nearestTsIb(this.ti, ov.data)[1]
-                    if (ov.main) this.time = v ? v[0] : undefined
+                    vi = Utils.nearestTsIb(this.ti, ov.data) || []
+
                 }
-                arr.push(v)
+                if (ov.main) {
+                    this.time = vi[1] ? vi[1][0] : undefined
+                    //this.index = vi[0] // TODO: ?add index 
+                }
+                arr.push(vi[1])
             }
             values.push(arr)
         }
