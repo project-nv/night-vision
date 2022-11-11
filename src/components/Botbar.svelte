@@ -58,7 +58,7 @@ function update($layout = layout) {
 
     // applyShaders()
 
-    if (props.cursor.x && props.cursor.t !== undefined) {
+    if (props.cursor.x && props.cursor.ti !== undefined) {
         bb.panel(props, layout, ctx)
     }
 }

@@ -9,7 +9,7 @@ export default class Mouse {
         this.pressed = false
         this.x = comp.$props.cursor.x
         this.y = comp.$props.cursor.y
-        this.t = comp.$props.cursor.t
+        this.t = comp.$props.cursor.ti
         this.y$ = comp.$props.cursor.y$
     }
 

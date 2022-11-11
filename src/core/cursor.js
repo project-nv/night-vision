@@ -17,7 +17,7 @@ export default class Cursor {
             return this
         }
 
-        let prevT = this.t
+        let prevT = this.ti
 
         Object.assign(this, update) // Merge the update
         let start = layout.main.startx
@@ -47,15 +47,21 @@ export default class Cursor {
         // Cursor time
         // TODO: refine cursor t
         if (!this.locked) {
-            this.t = layout.main.x2time(this.x)
+            this.ti = layout.main.x2time(this.x)
         }
 
         let values = []
+        let v
         for (var pane of hub.panes()) {
             let arr = []
             for (var i = 0; i < pane.overlays.length; i++) {
                 let ov = pane.overlays[i]
-                arr.push(Utils.nearestTs(this.t, ov.dataSubset)[1])
+                if (!layout.indexBased) {
+                    v = Utils.nearestTs(this.ti, ov.dataSubset)[1]
+                } else {
+                    v = Utils.nearestTsIb(this.ti, ov.data)[1]
+                }
+                arr.push(v)
             }
             values.push(arr)
         }
@@ -90,15 +96,15 @@ export default class Cursor {
         if (!this.values || !this.values[id]) return
         let v = this.values[id][ovId]
         if (!v) return
-        let r = Math.abs((v[0] - this.t) / props.interval)
+        let r = Math.abs((v[0] - this.ti) / props.interval)
 
         if (r >= 0.5) {
             // Outside the data range
             // TODO: check on a higher timeframes (1W)
-            let n = Math.round(this.t / props.interval)
-            this.t = n * props.interval
+            let n = Math.round(this.ti / props.interval)
+            this.ti = n * props.interval
         } else {
-            this.t = v[0]
+            this.ti = v[0]
         }
 
     }
@@ -121,6 +127,6 @@ export default class Cursor {
         delete this.scales
         delete this.x
         delete this.y
-        if (!this.locked) delete this.t
+        if (!this.locked) delete this.ti
     }
 }

@@ -77,6 +77,13 @@ export default {
         return [index, val]
     },
 
+    // Nearest value by index (in timeseries)
+    nearestTsIb(i, ts) {
+        let index = Math.floor(i) + 1
+        let val = ts[index] || null
+        return [index, val]
+    },
+
     round(num, decimals = 8) {
         return parseFloat(num.toFixed(decimals))
     },

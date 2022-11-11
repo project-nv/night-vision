@@ -108,7 +108,7 @@ function formatDate(props, p) {
 
 function formatCursorX(props) {
 
-    let t = props.cursor.t
+    let t = props.cursor.ti
     // TODO: IMPLEMENT TI
     //t = grid_0.tiMap.i2t(t)
     let tf = props.timeFrame
