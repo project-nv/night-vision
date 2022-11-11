@@ -1,4 +1,4 @@
-import Const from '../stuff/constants.js'
+import Const from '../stuff/constants'
 import Utils from '../stuff/utils.js'
 
 import layoutFn from './layoutFn.js'

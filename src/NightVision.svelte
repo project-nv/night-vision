@@ -3,7 +3,7 @@
 <script>
 
 import Chart from './components/Chart.svelte'
-import Const from './stuff/constants.js'
+import Const from './stuff/constants'
 
 let chart // Chart reference
 

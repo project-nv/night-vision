@@ -1,6 +1,6 @@
 // Drawing botbar with CanvasJS
 
-import Const from '../../stuff/constants.js'
+import Const from '../../stuff/constants'
 import Utils from '../../stuff/utils.js'
 
 const {

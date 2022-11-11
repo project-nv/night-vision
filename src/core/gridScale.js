@@ -4,7 +4,7 @@
 
 // TODO: feature: display only overlays on the current scale
 
-import Const from '../stuff/constants.js'
+import Const from '../stuff/constants'
 import Utils from '../stuff/utils.js'
 import math from '../stuff/math.js'
 import logScale from './logScale.js'

@@ -1,6 +1,6 @@
 
 import IndexedArray from 'arrayslicer'
-import Const from './constants.js'
+import Const from './constants'
 
 export default {
 

@@ -4,6 +4,7 @@ import { resolve } from 'path'
 import viteRawPlugin from './vite/vite-raw-plugin.js'
 import banner from 'vite-plugin-banner'
 import pkg from './package.json'
+import autoPreprocess from 'svelte-preprocess';
 
 
 // https://vitejs.dev/config/
@@ -17,6 +18,7 @@ export default defineConfig({
             outDir: '../dist'
         }),
         svelte({
+            preprocess: autoPreprocess(),
             emitCss: false
         }),
         viteRawPlugin({
