@@ -416,6 +416,8 @@ export default {
         }
     },
 
+    // Debug function, shows how many times
+    // this method is called per second
     callsPerSecond() {
         if (window.__counter__ === undefined) {
             window.__counter__ = 0
@@ -427,6 +429,34 @@ export default {
             window.__counter__ = 0
             window.__cpsId__ = null
         }, 1000)
+    },
+
+    // Calculate an index offset for a timeseries
+    // against the main ts. (for indexBased mode)
+    findIndexOffset(mainTs, ts) {
+        let set1 = {} // main set of time => index
+        let set2 = {} // another set
+        for (var i = 0; i < mainTs.length; i++) {
+            set1[mainTs[i][0]] = i
+        }
+        for (var i = 0; i < ts.length; i++) {
+            set2[ts[i][0]] = i
+        }
+        let deltas = []
+        for (var t in set2) {
+            if (set1[t] !== undefined) {
+                let d = set2[t] - set1[t]
+                if (!deltas.length || deltas[0] === d) {
+                    deltas.unshift(d)
+                }
+                // 3 equal deltas means that we likely found
+                // the true index offset
+                if (delats.length === 3) {
+                    return deltas.pop()
+                }
+            }
+        }
+        return 0 // We didn't find the offset
     },
 
     // Format cash values

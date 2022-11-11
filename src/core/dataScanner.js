@@ -60,6 +60,10 @@ class DataScanner {
         }
     }
 
+    calcIndexOffsets() {
+        Utils.findIndexOffset()
+    }
+
     // Calculte hash of the current panes
     calcPanesHash() {
         let hash = ''
