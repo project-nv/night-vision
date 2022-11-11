@@ -1,0 +1,80 @@
+declare namespace _default {
+    export { SECOND };
+    export { MINUTE };
+    export { MINUTE5 };
+    export { MINUTE15 };
+    export { MINUTE30 };
+    export { HOUR };
+    export { HOUR4 };
+    export { DAY };
+    export { WEEK };
+    export { MONTH };
+    export { YEAR };
+    export { MONTHMAP };
+    export { TIMESCALES };
+    export { $SCALES };
+    export { ChartConfig };
+    export { MAP_UNIT };
+    export { IB_TF_WARN };
+    export { COLORS };
+}
+export default _default;
+declare const SECOND: 1000;
+declare const MINUTE: number;
+declare const MINUTE5: number;
+declare const MINUTE15: number;
+declare const MINUTE30: number;
+declare const HOUR: number;
+declare const HOUR4: number;
+declare const DAY: number;
+declare const WEEK: number;
+declare const MONTH: number;
+declare const YEAR: number;
+declare const MONTHMAP: string[];
+declare const TIMESCALES: number[];
+declare const $SCALES: number[];
+declare namespace ChartConfig {
+    const FONT: string;
+}
+declare const MAP_UNIT: {
+    "1s": number;
+    "5s": number;
+    "10s": number;
+    "20s": number;
+    "30s": number;
+    "1m": number;
+    "3m": number;
+    "5m": number;
+    "15m": number;
+    "30m": number;
+    "1H": number;
+    "2H": number;
+    "3H": number;
+    "4H": number;
+    "12H": number;
+    "1D": number;
+    "1W": number;
+    "1M": number;
+    "1Y": number;
+};
+declare const IB_TF_WARN: string;
+declare namespace COLORS {
+    const back: string;
+    const grid: string;
+    const text: string;
+    const textHL: string;
+    const textLG: string;
+    const llValue: string;
+    const llBack: string;
+    const scale: string;
+    const cross: string;
+    const candleUp: string;
+    const candleDw: string;
+    const wickUp: string;
+    const wickDw: string;
+    const volUp: string;
+    const volDw: string;
+    const panel: string;
+    const tbBack: any;
+    const tbBorder: string;
+}
