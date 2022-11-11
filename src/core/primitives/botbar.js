@@ -76,12 +76,8 @@ function panel(props, layout, ctx) {
 }
 
 function formatDate(props, p) {
-    //let t = p[1][0]
-    let t = p[1]
 
-    // TODO: implement TI
-    //t = grid_0.tiMap.i2t(t)
-    //let tf = props.layout.grids[0].tiMap.tf
+    let t = p[1]
     let tf = props.timeFrame
 
     // Enable timezones only for tf < 1D
@@ -108,7 +104,8 @@ function formatDate(props, p) {
 
 function formatCursorX(props) {
 
-    let t = props.cursor.ti
+    let t = props.cursor.time
+    if (t === undefined) return `Out of range`
     // TODO: IMPLEMENT TI
     //t = grid_0.tiMap.i2t(t)
     let tf = props.timeFrame

@@ -60,6 +60,7 @@ export default class Cursor {
                     v = Utils.nearestTs(this.ti, ov.dataSubset)[1]
                 } else {
                     v = Utils.nearestTsIb(this.ti, ov.data)[1]
+                    if (ov.main) this.time = v ? v[0] : undefined
                 }
                 arr.push(v)
             }
@@ -67,7 +68,6 @@ export default class Cursor {
         }
         this.values = values
         this.quantizeTime(hub, layout, props)
-
         return this
     }
 
