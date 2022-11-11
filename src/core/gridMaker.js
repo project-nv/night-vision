@@ -129,8 +129,18 @@ function GridMaker(id, specs, mainGrid = null) {
             self.tStep = timeStep()
             self.xs = []
             const dt = range[1] - range[0]
-            const realDt = data[data.length - 1][0] - data[0][0]
             const r = self.spacex / dt
+
+            // Real dt determened by the data
+            let realDt = data[data.length - 1][0] - data[0][0]
+
+            // Fix calculation of fixOffset in index-based mode
+            // when showing not a full dataSubset
+            if (self.indexBased && range[1] - view.src.length > 0) {
+                let k = 1 - (range[1] - view.src.length) / dt
+                realDt /= k
+            }
+
 
             let fixOffset = realDt / DAY > 10
             let i0 = fixOffset ? findMonthStart(view.i1) : view.i1
