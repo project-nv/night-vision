@@ -1,7 +1,8 @@
 // CM: there are actually no definition of 'ohlcv' data.
 // It is just data: [[<timestamp>, <any>, <any>, .....] , .... ]
 // Probably any[][] ???
-type OHLCV = [number, number, number, number, number, number];
+
+// BS: Would like to look into whether eliminating `any` is possible, but looks good for now.
 
 // OVERLAY OBJECT
 
@@ -25,15 +26,15 @@ type Overlay = {
 // PANE OBJECT
 
 type Scale = {
-    precision?: number;
+  precision?: number;
 };
 
 type PaneSettings = {
-    scales?: { [key: string]: Scale };
-    scaleTemplate?: string[][]; // [['B', …], ['A', …]] ???
-    scaleIndex?: string;
-    scaleSideIdxs?: [];
-    height?: number
+  scales?: { [key: string]: Scale };
+  scaleTemplate?: string[][]; // [['B', …], ['A', …]] ???
+  scaleIndex?: string;
+  scaleSideIdxs?: [];
+  height?: number;
 };
 
 type Pane = {
@@ -54,7 +55,7 @@ export type Data = {
 
 export type ColorsObj = { [key: string]: string }; //TODO: specify valid color keys
 
-export type ChartConfig = { [key: string]: any }
+export type ChartConfig = { [key: string]: any };
 
 export type NightVisionProps = {
   id?: string;
@@ -62,16 +63,10 @@ export type NightVisionProps = {
   height?: number;
   colors?: ColorsObj;
   showLogo?: boolean;
-  // TODO: Fix `any`
   scripts?: string[]; // CM: array of strings
   data?: Data;
   config?: ChartConfig[];
   indexBased?: boolean;
   timezone?: number;
-  // getters return null if not found: interface.js //TODO: Fix `any`
-  // CM: hmmm. Layout, range, cursor are read-only props, are they really props?
-  layout?: any | null;
-  range?: any | null;
-  cursor?: any | null;
   autoResize?: boolean;
 };
