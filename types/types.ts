@@ -4,7 +4,8 @@ type ChartInfo = {
   name: string;
   type: string;
   main: boolean;
-  data: OHLCV[];
+  data: OHLCV[]; //TODO: fix, not completely accurate based on what I see in README
+  settings: any; // TODO: fix any
 };
 
 type Pane = {
