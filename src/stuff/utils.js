@@ -470,6 +470,12 @@ export default {
         if (n >= 1e12) return +(n / 1e12).toFixed(2) + "T"
     },
 
+    // Time range of a data subset (from i0 to iN-1)
+    realTimeRange(data) {
+        if (!data.length) return 0
+        return data[data.length - 1][0] - data[0][0]
+    },
+
     // WTF with modern web development
     isMobile: (w => 'onorientationchange' in w &&
        (!!navigator.maxTouchPoints ||

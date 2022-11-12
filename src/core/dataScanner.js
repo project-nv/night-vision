@@ -23,7 +23,8 @@ class DataScanner {
             )
         }
         let mainOv = this.all.find(x => x.main) || this.all[0]
-        this.main = (mainOv || {}).data || []
+        mainOv = mainOv || {}
+        this.main = mainOv.data || []
         let userTf = (mainOv.settings || {}).timeFrame
         if (userTf !== undefined) {
             this.tf = Utils.parseTf(userTf)

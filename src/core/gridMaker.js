@@ -132,7 +132,8 @@ function GridMaker(id, specs, mainGrid = null) {
             const r = self.spacex / dt
 
             // Real dt determened by the data
-            let realDt = data[data.length - 1][0] - data[0][0]
+
+            let realDt = Utils.realTimeRange(data)
 
             // Fix calculation of fixOffset in the index-based mode,
             // when showing dataSubset partially

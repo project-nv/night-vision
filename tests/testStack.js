@@ -2,7 +2,7 @@
 // Enviroment for running tests. Allows to stack
 // tests together, make groups, choose the speed
 
-// TODO: stop on a first console.error 
+// TODO: stop on a first console.error
 
 import Utils from '../src/stuff/utils.js'
 
@@ -27,7 +27,9 @@ export default class TestStack {
     }
 
     // Start executing a test group
-    async exec(group) {
+    async exec(group, speed = 1) {
+
+        this.speed = speed
 
         if (!this.groups[group]) {
             console.warn(`There's no test group ${group}`)
@@ -86,7 +88,9 @@ export default class TestStack {
     }
 
     // Execute all groups
-    async execAll() {
+    async execAll(speed = 1) {
+
+        this.speed = speed
 
         for (var group in this.groups) {
 
