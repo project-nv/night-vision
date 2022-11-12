@@ -72,7 +72,7 @@ const ChartConfig = {
     PANHEIGHT: 22,   // Scale panel height, px
     DEFAULT_LEN: 50, // Starting range, candles
     MINIMUM_LEN: 5,  // Minimal starting range, candles
-    MIN_ZOOM: 2,     // Minimal zoom, candles
+    MIN_ZOOM: 5,     // Minimal zoom, candles
     MAX_ZOOM: 5000,  // Maximal zoom, candles,
     VOLSCALE: 0.15,  // Volume bars height, %/100 of layout.height
     UX_OPACITY: 0.9, // Ux background opacity

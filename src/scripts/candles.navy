@@ -24,8 +24,9 @@ prop('showValueTracker', { type: 'boolean', def: true })
 draw(ctx) {
 
     let cnv = $lib.layoutCnv($core, true, $props.showVolume)
-    if (!cnv.upBodies.length) return
-    let w = Math.max(cnv.upBodies[0].w, 1)
+    let bodies = cnv.upBodies.length ? cnv.upBodies : cnv.dwBodies
+    if (!bodies.length) return
+    let w = Math.max(bodies[0].w, 1)
 
     drawCvPart(ctx, $lib.candleWick, cnv.dwWicks, 1, 'colorWickDw')
     drawCvPart(ctx, $lib.candleWick, cnv.upWicks, 1, 'colorWickUp')

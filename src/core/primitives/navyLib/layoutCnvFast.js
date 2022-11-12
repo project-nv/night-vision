@@ -9,7 +9,7 @@ export default function layoutCnv(core, $c = true, $v = true) {
     let config = core.props.config
     let interval = core.props.interval
     let data = core.data
-    let time2x = core.layout.time2x
+    let ti2x = core.layout.ti2x
     let layout = core.layout
     let view = core.view
     let volIndex = 5 // Volume data index
@@ -39,7 +39,7 @@ export default function layoutCnv(core, $c = true, $v = true) {
     for (var i = view.i1, n = view.i2; i <= n; i++) {
         let p = data[i]
         let green = p[4] >= p[1]
-        mid = time2x(p[0]) + 1
+        mid = ti2x(p[0], i) + 1
 
         // Clear volume bar if there is a time gap
         if (data[i - 1] && p[0] - data[i - 1][0] > interval) {

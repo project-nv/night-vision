@@ -222,7 +222,7 @@ export default {
     },
 
     // Parse timeframe or return value in ms
-    parseTF(smth) {
+    parseTf(smth) {
         if (typeof smth === 'string') {
             return Const.MAP_UNIT[smth]
         } else {

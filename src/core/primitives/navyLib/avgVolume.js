@@ -20,9 +20,14 @@ export default function avgVolume(ctx, core, props, cnv) {
     ctx.strokeStyle = props.colorAvgVol
     ctx.beginPath()
 
+    // TODO: implement
+    if (core.layout.indexBased) return
+
+    let offset = core.data.length - sma.length
+
     // TODO: Calculate layout index offset
     for (var i = 0, n = sma.length; i < n; i++) {
-        let x = layout.time2x(sma[i][0])
+        let x = layout.ti2x(sma[i][0], i + offset)
         let y = h - sma[i][1] * vs
         ctx.lineTo(x, y)
     }

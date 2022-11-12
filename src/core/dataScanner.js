@@ -24,7 +24,12 @@ class DataScanner {
         }
         let mainOv = this.all.find(x => x.main) || this.all[0]
         this.main = (mainOv || {}).data || []
-        this.tf = Utils.detectTimeframe(this.main)
+        let userTf = (mainOv.settings || {}).timeFrame
+        if (userTf !== undefined) {
+            this.tf = Utils.parseTf(userTf)
+        } else {
+            this.tf = Utils.detectTimeframe(this.main)
+        }
         this.interval = this.hub.data.indexBased ? 1 : this.tf
         this.ibMode = this.hub.data.indexBased
 
