@@ -1,3 +1,4 @@
+import { Events } from "./core/events";
 import { ColorsObj, ChartConfig, Data, NightVisionProps } from "./types";
 
 export class NightVision {
@@ -7,7 +8,7 @@ export class NightVision {
   hub: any;
   meta: any;
   scan: any;
-  events: any;
+  events: Events; // TODO: improve method param types
   scriptHub: any;
   root: HTMLElement;
   comp: any;
