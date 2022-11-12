@@ -18,7 +18,7 @@ type Overlay = {
   name: string;
   type: string;
   main?: boolean;
-  data: any[][]; //TODO: fix, not completely accurate based on what I see in README
+  data: any[][]; //TODO: fix any, if possible
   settings?: OverlaySettings;
   props?: Object;
 };
@@ -58,15 +58,36 @@ export type ColorsObj = { [key: string]: string }; //TODO: specify valid color k
 export type ChartConfig = { [key: string]: any };
 
 export type NightVisionProps = {
+  /** Unique html id */
   id?: string;
+
+  /** Width of the chart */
   width?: number;
+
+  /** Height of the chart */
   height?: number;
+
+  /** Colors (modify specific colors) */
   colors?: ColorsObj;
+
+  /** Show NightVision logo */
   showLogo?: boolean;
+
+  /** User-defined scripts */
   scripts?: string[]; // CM: array of strings
+
+  /** Chart data (full update is needed on reset) */
   data?: Data;
+
+  /** Override the default values */
   config?: ChartConfig[];
+
+  /** Index-based mode of rendering (for stocks) */
   indexBased?: boolean;
+
+  /** Timezone (Offset from UTC in hours) */
   timezone?: number;
+
+  /** Resize on window size change */
   autoResize?: boolean;
 };
