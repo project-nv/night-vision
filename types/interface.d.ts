@@ -17,7 +17,7 @@ export class NightVision {
   get width(): number;
   set height(arg: number);
   get height(): number;
-  set colors(arg: any); // can't use arg:string because TS requires getter & setter to have the same type. But `any` is allowed...
+  set colors(arg: ColorsObj);
   get colors(): ColorsObj;
   set showLogo(arg: boolean);
   get showLogo(): boolean;
