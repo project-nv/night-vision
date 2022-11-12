@@ -105,7 +105,7 @@ The template tells how to place scales, requested by overlays.
 }
 ```
 
-## pane.settings.scaleIdex <img src="/robot.png" class="rh-tag" title="robot" /> <img src="/human.png" class="rh-tag" title="human" />
+## pane.settings.scaleIndex <img src="/robot.png" class="rh-tag" title="robot" /> <img src="/human.png" class="rh-tag" title="human" />
 
 - **Type:** `string`
 - **Default**: `A`
@@ -114,7 +114,7 @@ Main scale index, used for building the grid (the actual # grid). You can set it
 
 ## pane.settings.scaleSideIdxs <img src="/robot.png" class="rh-tag" title="robot" /> <img src="/human.png" class="rh-tag" title="human" />
 
-- **Type:** `string`
+- **Type:** `Array`
 - **Default**: `['<First Left Scale>', '<First Right Scale>']`
 
 Sets which scales will be visible on both sidebars. It defaults to the first scale on each side of `scaleTemplate`. If a template side is empty, sets it to `undefined`.

@@ -1,9 +1,9 @@
-import { ColorsObj, Data, NightVisionProps } from "./types";
+import { ColorsObj, ChartConfig, Data, NightVisionProps } from "./types";
 
 export class NightVision {
   constructor(target: string, props?: NightVisionProps);
   private _data: Data;
-  private _scripts: any[];
+  private _scripts: string[];
   hub: any;
   meta: any;
   scan: any;
@@ -25,8 +25,8 @@ export class NightVision {
   get scripts(): any[]; // TODO: Fix any
   set data(arg: Data);
   get data(): Data;
-  set config(arg: any[]); //TODO: Fix any
-  get config(): any[]; //TODO: Fix any
+  set config(arg: ChartConfig[]); //TODO: Fix any
+  get config(): ChartConfig[]; //TODO: Fix any
   set indexBased(arg: boolean);
   get indexBased(): boolean;
   set timezone(arg: number);

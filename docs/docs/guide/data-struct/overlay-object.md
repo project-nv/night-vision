@@ -113,7 +113,7 @@ Flag that shows should the lib render the overlay or not. This includes calculat
 
 ## overlay.settings.scale
 
-- **Type:** `boolean`
+- **Type:** `string`
 - **Default** `A`
 
 Assigns a new or existing scale to the overlay. Scale definitions are in [pane.settings.scales](/guide/data-struct/pane-object.html#pane-settings-scales).
