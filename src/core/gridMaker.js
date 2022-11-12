@@ -135,7 +135,7 @@ function GridMaker(id, specs, mainGrid = null) {
             let realDt = data[data.length - 1][0] - data[0][0]
 
             // Fix calculation of fixOffset in the index-based mode,
-            // when showing dataSubset partially 
+            // when showing dataSubset partially
             if (self.indexBased && range[1] - view.src.length > 0) {
                 let k = 1 - (range[1] - view.src.length) / dt
                 realDt /= k

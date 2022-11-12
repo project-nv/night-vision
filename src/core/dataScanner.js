@@ -26,6 +26,7 @@ class DataScanner {
         this.main = (mainOv || {}).data || []
         this.tf = Utils.detectTimeframe(this.main)
         this.interval = this.hub.data.indexBased ? 1 : this.tf
+        this.ibMode = this.hub.data.indexBased
 
         return this.interval
 

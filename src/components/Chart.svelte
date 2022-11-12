@@ -113,7 +113,7 @@ function onCursorLocked(state) {
 function onRangeChanged($range, emit = true) {
     // Emit a global event (hook)
     if (emit) events.emit('$range-update', $range)
-    range = $range
+    rangeUpdate($range)
     hub.updateRange(range)
     // TODO: Shoud be enabled (*), but it crate cursor lag
     if (cursor.locked) return // filter double updates (**)
@@ -147,10 +147,12 @@ function update(emit = true) {
 // overlay changes. But it requires more work
 function fullUpdate(opt = {}) {
 
+    let prevIbMode = scan.ibMode
     interval = scan.detectInterval()
     timeFrame = scan.getTimeframe()
-    if (!range.length || opt.resetRange) {
-        range = scan.defaultRange()
+    let ibc = scan.ibMode !== prevIbMode
+    if (!range.length || opt.resetRange || ibc) {
+        rangeUpdate(scan.defaultRange())
     }
     scan.calcIndexOffsets()
     hub.calcSubset(range)
@@ -162,6 +164,12 @@ function fullUpdate(opt = {}) {
 
     update()
     events.emit('remake-grid')
+}
+
+// Instant range update
+function rangeUpdate($range) {
+    range = $range
+    chartProps.range = range // Instant update
 }
 
 </script>
