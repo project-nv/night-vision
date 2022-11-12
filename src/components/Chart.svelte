@@ -56,6 +56,8 @@ let ctx = new Context(props) // For measuring text
 let chartRR = 0
 let layout = null
 
+scan.calcIndexOffsets()
+
 $:chartProps = Object.assign(
     {interval, timeFrame, range, ctx, cursor},
     props
@@ -150,13 +152,12 @@ function fullUpdate(opt = {}) {
     if (!range.length || opt.resetRange) {
         range = scan.defaultRange()
     }
-
+    scan.calcIndexOffsets()
     hub.calcSubset(range)
     hub.init(hub.data)
     hub.detectMain()
     meta.store()
     meta.init(props)
-
     scan.updatePanesHash()
 
     update()

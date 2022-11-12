@@ -3,12 +3,15 @@
 import Utils from '../stuff/utils.js'
 import math from '../stuff/math.js'
 
-export default function(self, range) {
+// If `overlay` provided, that means this is an
+// overlay-specific layout-api
+export default function(self, range, overlay = null) {
 
     //const ib = self.tiMap.ib
     const dt = range[1] - range[0]
     const r = self.spacex / dt
     const ls = (self.scaleSpecs || {}).log || false // TODO: from scale specs
+    const offset = (overlay ? overlay.indexOffset : 0) ?? 0
 
     Object.assign(self, {
         // Time and global index to screen x-coordinate
@@ -21,13 +24,11 @@ export default function(self, range) {
         },
         // Time-or-index to screen x-coordinate
         ti2x: (t, i) => {
-            let src = self.indexBased ? i : t
+            let src = self.indexBased ? (i + offset) : t
             return Math.floor((src - range[0]) * r) - 0.5
         },
         // Time to screen x-coordinates
         time2x: t => {
-            //if (ib) t = self.tiMap.smth2i(t)
-            //return (t - range[0]) * r - 1 // DEBUG
             return Math.floor((t - range[0]) * r) - 0.5
         },
         // Price/value to screen y-coordinates

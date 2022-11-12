@@ -18,7 +18,7 @@ import Volbar from '../primitives/navyLib/volbar.js'
 import layoutCnv from '../primitives/navyLib/layoutCnvFast.js'
 import avgVolume from '../primitives/navyLib/avgVolume.js'
 import {
-    fastSma, candleColor 
+    fastSma, candleColor
 } from '../primitives/navyLib/helperFns.js'
 
 const formatCash = Utils.formatCash
@@ -63,7 +63,7 @@ export default class OverlayEnv {
         if (!layout) return // If not exists
         let core = this.$core
         core.layout = this.buildLayout(
-            layout, props.range
+            layout, props.range, overlay
         )
         core.dataSubset = overlay.dataSubset
         core.data = overlay.data
@@ -77,13 +77,14 @@ export default class OverlayEnv {
         core.cursor = props.cursor
         core.src = overlay
         core.props = props
+        core.indexOffset = overlay.indexOffset
 
     }
 
     // Build the final layout API by merging
     // the selected scale to the rest layout
     // variables
-    buildLayout(layout, range) {
+    buildLayout(layout, range, overlay) {
         let obj = {}
         // TODO: Disabling scaleId caching allows to
         // track changes with simple update(). Think.
@@ -93,7 +94,7 @@ export default class OverlayEnv {
         let s = layout.scales[this.scaleId]
         return layoutFn(
             Object.assign(obj, layout, s),
-            range
+            range, overlay
         )
     }
 

@@ -47,7 +47,7 @@ export default class Cursor {
         // Cursor time
         // TODO: refine cursor t
         if (!this.locked) {
-            this.ti = layout.main.x2time(this.x)
+            this.ti = layout.main.x2ti(this.x)
         }
 
         let values = []
@@ -59,12 +59,12 @@ export default class Cursor {
                 if (!layout.indexBased) {
                     vi = Utils.nearestTs(this.ti, ov.dataSubset) || []
                 } else {
-                    vi = Utils.nearestTsIb(this.ti, ov.data) || []
-
+                    let off = ov.indexOffset
+                    vi = Utils.nearestTsIb(this.ti, ov.data, off) || []
                 }
                 if (ov.main) {
                     this.time = vi[1] ? vi[1][0] : undefined
-                    //this.index = vi[0] // TODO: ?add index 
+                    //this.index = vi[0] // TODO: ?add index
                 }
                 arr.push(vi[1])
             }

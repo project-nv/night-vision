@@ -38,7 +38,8 @@ class DataHub {
     updateRange(range) {
         for (var pane of this.data.panes) {
             for (var ov of pane.overlays) {
-                ov.dataView = this.filter(ov.data, range)
+                let off = ov.indexOffset
+                ov.dataView = this.filter(ov.data, range, off)
                 ov.dataSubset = ov.dataView.makeSubset()
             }
         }
@@ -59,7 +60,10 @@ class DataHub {
                 ov.id = ovId++
                 ov.main = !!ov.main
                 ov.data = ov.data || []
-                ov.dataView = this.filter(ov.data, range)
+                ov.dataView = this.filter(
+                    ov.data, range,
+                    ov.indexOffset
+                )
                 ov.dataSubset = ov.dataView.makeSubset()
                 ov.settings = ov.settings || {}
                 ov.props = ov.props || {}
@@ -103,13 +107,13 @@ class DataHub {
     }
 
     // Create a subset of timeseries
-    filter (data, range) {
+    filter (data, range, offset = 0) {
         let filter = this.indexBased ?
             Utils.fastFilterIB : Utils.fastFilter2
         var ix = filter(
             data,
-            range[0], // -interval
-            range[1]
+            range[0] - offset,
+            range[1] - offset
         )
         return new DataView$(data, ix[0], ix[1])
     }

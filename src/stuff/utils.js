@@ -78,8 +78,8 @@ export default {
     },
 
     // Nearest value by index (in timeseries)
-    nearestTsIb(i, ts) {
-        let index = Math.floor(i) + 1
+    nearestTsIb(i, ts, offset) {
+        let index = Math.floor(i - offset) + 1
         let val = ts[index] || null
         return [index, val]
     },
@@ -445,13 +445,13 @@ export default {
         let deltas = []
         for (var t in set2) {
             if (set1[t] !== undefined) {
-                let d = set2[t] - set1[t]
+                let d = set1[t] - set2[t]
                 if (!deltas.length || deltas[0] === d) {
                     deltas.unshift(d)
                 }
                 // 3 equal deltas means that we likely found
                 // the true index offset
-                if (delats.length === 3) {
+                if (deltas.length === 3) {
                     return deltas.pop()
                 }
             }

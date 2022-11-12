@@ -16,13 +16,13 @@ class DataScanner {
     detectInterval() {
 
         // Find main overlay
-        let all = Utils.allOverlays(this.hub.data.panes)
-        if (all.filter(x => x.main).length > 1) {
+        this.all = Utils.allOverlays(this.hub.data.panes)
+        if (this.all.filter(x => x.main).length > 1) {
             console.warn(
                 `Two or more overlays with flagged as 'main'`
             )
         }
-        let mainOv = all.find(x => x.main) || all[0]
+        let mainOv = this.all.find(x => x.main) || this.all[0]
         this.main = (mainOv || {}).data || []
         this.tf = Utils.detectTimeframe(this.main)
         this.interval = this.hub.data.indexBased ? 1 : this.tf
@@ -35,6 +35,7 @@ class DataScanner {
         return this.tf
     }
 
+    // Range that shown on a chart startup
     defaultRange() {
 
         const dl = this.props.config.DEFAULT_LEN
@@ -60,8 +61,17 @@ class DataScanner {
         }
     }
 
+    // Calculate index offsets to adjust non-main ovs
     calcIndexOffsets() {
-        Utils.findIndexOffset()
+        if (!this.hub.data.indexBased) return
+        for (var ov of this.all) {
+            if (ov.data === this.main) {
+                ov.indexOffset = ov.indexOffset ?? 0
+                continue
+            }
+            let d = Utils.findIndexOffset(this.main, ov.data)
+            ov.indexOffset = ov.indexOffset ?? d
+        }
     }
 
     // Calculte hash of the current panes
