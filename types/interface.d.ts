@@ -37,11 +37,11 @@ export class NightVision {
   set scripts(arg: any[]); // TODO: Fix any
   get scripts(): any[]; // TODO: Fix any
 
-  /** Chart data (full update is needed on reset) */
+  /** Chart data */
   set data(arg: Data);
   get data(): Data;
 
-  /** Override the default values */
+  /** Overwrites the default values */
   set config(arg: ChartConfig[]); //TODO: Fix any
   get config(): ChartConfig[]; //TODO: Fix any
 
@@ -59,17 +59,18 @@ export class NightVision {
   /** Get the chart layout */
   get layout(): any | null;
 
-  // TODO: add a description
+  // Time (or index) range  that is currently visible
   set range(arg: any | null);
   get range(): any | null;
 
-  // TODO: add a description
+  // Chart cursor object (crosshair)
   set cursor(arg: any | null);
   get cursor(): any | null;
 
-  // TODO: add a description
+  // Various updates of the chart
+  // TODO: maybe add a full list of updates here?
   update(type?: string, opt?: {}): void;
 
-  /** Reset the chart */
+  /** Reset the chart with the range */
   fullReset(): void;
 }
