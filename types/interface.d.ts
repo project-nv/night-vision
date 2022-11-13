@@ -59,15 +59,15 @@ export class NightVision {
   /** Get the chart layout */
   get layout(): any | null;
 
-  // Time (or index) range  that is currently visible
+  /** Time (or index) range  that is currently visible */
   set range(arg: any | null);
   get range(): any | null;
 
-  // Chart cursor object (crosshair)
+  /** Chart cursor object (crosshair) */
   set cursor(arg: any | null);
   get cursor(): any | null;
 
-  // Various updates of the chart
+  /** Various updates of the chart */
   // TODO: maybe add a full list of updates here?
   update(type?: string, opt?: {}): void;
 
