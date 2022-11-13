@@ -19,7 +19,7 @@ type Overlay = {
   // BSoup: overlay.data has default = [] so is optional?
   //
   readonly dataSubset: any[][]; //TODO: fix any, if possible
-  readonly dataView: { [key: string]: any }; //TODO: more accurate typing
+  dataView: { [key: string]: any }; //TODO: more accurate typing
   props?: Object;
   settings?: OverlaySettings;
 };
