@@ -58,8 +58,8 @@ export default class TestStack {
             for (var tx of test.txs) {
 
                 if (this.stopFlag) {
-                    console.log('[ERROR STOP]')
-                    await this.errStop()
+                    console.log('[STOP] Call stack.resume()')
+                    await this.pitStop()
                 }
 
                 if (tx.props.name !== '__$pause__') {
@@ -154,17 +154,20 @@ export default class TestStack {
 
     // If you need to stop after a particular tx
     stop() {
-        this.add('__$pause__', () => {}, {
+        /*this.add('__$pause__', () => {}, {
             delay: 10000000
-        })
+        })*/
+        this.add('__$stop__', () => {
+            this.stopFlag = true
+        }, { delay: 0 })
     }
 
     // Endless loop, until continue()
-    async errStop() {
+    async pitStop() {
         while(this.stopFlag) await Utils.pause(100)
     }
 
-    continue() {
+    resume() {
         this.stopFlag = false
     }
 

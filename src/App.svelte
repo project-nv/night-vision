@@ -22,6 +22,11 @@ import ovDataChange from '../tests/data-sync/ovDataChange.js'
 // More tests
 import realTime from '../tests/real-time/realTime.js'
 
+// More tests
+import timeBased from '../tests/tfs-test/allTimeBased.js'
+import indexBased from '../tests/tfs-test/allIndexBased.js'
+
+
 /*
 TODO: data-api interface:
 .getPanes()
@@ -62,7 +67,13 @@ onMount(() => {
 
     realTime(stack, chart)
 
+    stack.setGroup('tfs-test')
+
+    timeBased(stack, chart)
+    indexBased(stack, chart)
+
     //  Type in the console: stack.execAll()
+    //  or: stack.exec('<group>')
 
 })
 
