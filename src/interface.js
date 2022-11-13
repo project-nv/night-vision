@@ -34,6 +34,7 @@ class NightVision {
             props: props
         })
 
+        // TODO: remove the observer on chart destroy 
         if (props.autoResize) {
             resizeTracker(this)
         }
@@ -43,7 +44,7 @@ class NightVision {
     // *** PROPS ***
     // (see the default values in NightVision.svelte)
 
-    // Unique html id (when multiple instances used)
+    // Chart container id (should be unique)
     get id() {
         return this.comp.id
     }
@@ -87,7 +88,7 @@ class NightVision {
     }
 
 
-    // User-defined scripts (overlays & studies)
+    // User-defined scripts (overlays & indicators)
     get scripts() {
         return this._scripts
     }
@@ -97,7 +98,7 @@ class NightVision {
         this.update('full')
     }
 
-    // The data (full update is needed on reset)
+    // The data (auto-updated on reset)
     get data() {
         return this._data
     }
@@ -106,7 +107,7 @@ class NightVision {
         this.update('full')
     }
 
-    // Override the default values
+    // Overwrites the default config values
     get config() {
         return this.comp.config
     }
@@ -114,7 +115,7 @@ class NightVision {
         this.comp.$set({config: val})
     }
 
-    // Index-based mode of rendering (for stocks)
+    // Index-based mode of rendering
     get indexBased() {
         return this.comp.indexBased
     }
@@ -162,8 +163,6 @@ class NightVision {
         if (!chart) return
         chart.setCursor(val)
     }
-
-    // TODO: autoResize - tracking the container
 
     // *** METHODS ***
 
