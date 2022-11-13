@@ -9,7 +9,7 @@
   ],
   "scripts": {
     "dev": "vite --host",
-    "build": "vite build",
+    "build": "vite build && node ./types/build-script.cjs",
     "preview": "vite preview"
   },
   "main": "./dist/night-vision.js",
