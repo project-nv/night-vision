@@ -34,7 +34,7 @@ type PaneSettings = {
   scales?: { [key: string]: Scale };
   scaleTemplate?: string[][]; // [['B', …], ['A', …]] ???
   scaleIndex?: string;
-  scaleSideIdxs?: [];
+  scaleSideIdxs?: any[]; //TODO: fix any
   height?: number;
 };
 
