@@ -16,11 +16,7 @@ type Overlay = {
   type: string;
   main?: boolean;
   data?: any[][]; //TODO: fix any, if possible
-  // BSoup: overlay.data has default = [] so is optional?
-  // CM: it's optional, but [] means theres nothing to display
   readonly dataSubset: any[][]; //TODO: fix any, if possible
-  // CM: https://github.com/project-nv/night-vision/blob/main/src/core/dataView.js
-  // Let's make this readonly too, coz I don't see cases when you need to change it
   readonly dataView: { [key: string]: any }; //TODO: more accurate typing
   props?: Object;
   settings?: OverlaySettings;
