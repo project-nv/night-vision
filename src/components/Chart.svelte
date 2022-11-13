@@ -115,7 +115,7 @@ function onRangeChanged($range, emit = true) {
     if (emit) events.emit('$range-update', $range)
     rangeUpdate($range)
     hub.updateRange(range)
-    // TODO: Shoud be enabled (*), but it crate cursor lag
+    // TODO: Shoud be enabled (*), but it creates cursor lag
     if (cursor.locked) return // filter double updates (**)
     cursor.xValues(hub, layout, chartProps)
     cursor.yValues(layout)

@@ -222,6 +222,9 @@ export default {
     },
 
     // Parse timeframe or return value in ms
+    // TODO: add full parser
+    // (https://github.com/tvjsx/trading-vue-js/
+    // blob/master/src/helpers/script_utils.js#L98)
     parseTf(smth) {
         if (typeof smth === 'string') {
             return Const.MAP_UNIT[smth]

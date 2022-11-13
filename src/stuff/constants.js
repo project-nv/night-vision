@@ -114,7 +114,16 @@ const MAP_UNIT = {
   "1D": DAY,
   "1W": WEEK,
   "1M": MONTH,
-  "1Y": YEAR
+  "1Y": YEAR,
+  // Lower case variants
+  "1h": HOUR,
+  "2h": HOUR * 2,
+  "3h": HOUR * 3,
+  "4h": HOUR4,
+  "12h": HOUR12,
+  "1d": DAY,
+  "1w": WEEK,
+  "1y": YEAR
 }
 
 export default {
