@@ -1,4 +1,3 @@
-
 // BS: Would like to look into whether eliminating `any` is possible, but looks good for now.
 
 // OVERLAY OBJECT
@@ -11,12 +10,18 @@ type OverlaySettings = {
 };
 
 type Overlay = {
+  readonly id: number;
+  readonly uuid: string;
   name: string;
   type: string;
   main?: boolean;
-  data: any[][]; //TODO: fix any, if possible
-  settings?: OverlaySettings;
+  data?: any[][]; //TODO: fix any, if possible
+  // BSoup: overlay.data has default = [] so is optional?
+  //
+  readonly dataSubset: any[][]; //TODO: fix any, if possible
+  readonly dataView: { [key: string]: any }; //TODO: more accurate typing
   props?: Object;
+  settings?: OverlaySettings;
 };
 
 // PANE OBJECT
@@ -35,7 +40,8 @@ type PaneSettings = {
 
 type Pane = {
   id: number;
-  uuid: string; // TODO: the question remains, does user need to see auto-gen props
+  readonly uuid: string; // TODO: the question remains, does user need to see auto-gen props
+  ///////////////////////// Bsoup: Changed to readonly, this good?
   overlays: Overlay[];
   settings: PaneSettings;
 };
