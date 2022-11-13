@@ -1,7 +1,7 @@
 {
     "panes": [{
         "overlays": [{
-            "name": "APE / Tether US FTX",
+            "name": "APE / Tether US",
             "type": "Candles",
             "main": true,
             "data": [

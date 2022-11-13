@@ -35,7 +35,7 @@ Unique id that stays the same even if the overlay changes its position. Generate
 
 - **Type:** `string`
 
-Human-readable name that will be shown in the legend. Example: `APE / Tether US FTX`.
+Human-readable name that will be shown in the legend. Example: `APE / Tether US`.
 
 ## overlay.type <img src="/human.png" class="rh-tag" title="human" />
 

@@ -4,7 +4,7 @@
         {
             "overlays": [
                 {
-                    "name": "APE / Tether US FTX",
+                    "name": "APE / Tether US",
                     "type": "Area",
                     "main": true,
                     "data": [

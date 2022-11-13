@@ -33,7 +33,7 @@ The dataset, although, should follow a specific format:
             // Defines overlays (layers of graphics)
             "overlays": [
                 {
-                    "name": "APE / Tether US FTX",
+                    "name": "APE / Tether US",
                     "type": "Spline", // Overlay type
                     "main": true, // Is this the main overlay
                     "data": […], // Time-series: [[<time>, value], …]
@@ -70,7 +70,7 @@ Now, it does look much better, doesn't it? And all we did was change the overlay
 {
     "overlays": [
         {
-            "name": "APE / Tether US FTX",
+            "name": "APE / Tether US",
             "type": "Area", // We are using a different overlay
             "main": true,
             "settings": {},
@@ -512,7 +512,6 @@ chart.events.on("app:$range-update", loadMore);
 setInterval(loadMore, 500);
 
 // Setup a trade data stream
-// (yes, from FTX, coz it works here)
 wsx.init(["APE-PERP"]);
 wsx.ontrades = (d) => {
   if (!chart.hub.mainOv) return;
