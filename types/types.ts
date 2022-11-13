@@ -17,9 +17,11 @@ type Overlay = {
   main?: boolean;
   data?: any[][]; //TODO: fix any, if possible
   // BSoup: overlay.data has default = [] so is optional?
-  //
+  // CM: it's optional, but [] means theres nothing to display
   readonly dataSubset: any[][]; //TODO: fix any, if possible
-  dataView: { [key: string]: any }; //TODO: more accurate typing
+  // CM: https://github.com/project-nv/night-vision/blob/main/src/core/dataView.js
+  // Let's make this readonly too, coz I don't see cases when you need to change it
+  readonly dataView: { [key: string]: any }; //TODO: more accurate typing
   props?: Object;
   settings?: OverlaySettings;
 };
@@ -32,16 +34,15 @@ type Scale = {
 
 type PaneSettings = {
   scales?: { [key: string]: Scale };
-  scaleTemplate?: string[][]; // [['B', …], ['A', …]] ???
+  scaleTemplate?: string[][];
   scaleIndex?: string;
-  scaleSideIdxs?: any[]; //TODO: fix any
+  scaleSideIdxs?: string[];
   height?: number;
 };
 
 type Pane = {
-  id: number;
-  readonly uuid: string; // TODO: the question remains, does user need to see auto-gen props
-  ///////////////////////// Bsoup: Changed to readonly, this good?
+  readonly id: number; // These are read-only for sure
+  readonly uuid: string;
   overlays: Overlay[];
   settings: PaneSettings;
 };
@@ -76,7 +77,7 @@ export type NightVisionProps = {
   showLogo?: boolean;
 
   /** User-defined scripts */
-  scripts?: string[]; // CM: array of strings
+  scripts?: string[];
 
   /** Chart data (auto-updates chart on reset) */
   data?: Data;
