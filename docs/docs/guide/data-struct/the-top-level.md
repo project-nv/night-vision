@@ -35,3 +35,17 @@ Following the notion of the [Low-Level API](/guide/intro/10-basic-examples.html#
 ::: info
 The dataset is made **unreactive** on purpose. Modern frameworks like Vue, try to track every small part of nested objects, decreasing the overall performance. In comparison with [TradingVueJS](https://github.com/tvjsx/trading-vue-js), this library has at least 30% boost due to the fact that data are not wrapped into **Proxies* and not being tracked with hidden `__ob__` objects.   
 :::
+
+## data.overlays <img src="/human.png" class="rh-tag" title="human" />
+
+- **Type:** `Array`
+- **Default** `[]`
+
+List of [Overlay](/guide/data-struct/overlay-object.html) objects.
+
+## data.indexBased <img src="/human.png" class="rh-tag" title="human" />
+
+- **Type:** `boolean`
+- **Default** `false`
+
+Sets the index-based mode. Read more [here](/guide/main-comp/layout.html#the-problem).
