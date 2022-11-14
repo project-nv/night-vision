@@ -134,6 +134,7 @@ function GridMaker(id, specs, mainGrid = null) {
             // Real dt determened by the data
 
             let realDt = Utils.realTimeRange(data)
+            if (!self.indexBased) realDt = dt
 
             // Fix calculation of fixOffset in the index-based mode,
             // when showing dataSubset partially
@@ -141,9 +142,17 @@ function GridMaker(id, specs, mainGrid = null) {
                 let k = 1 - (range[1] - view.src.length) / dt
                 realDt /= k
             }
-
+            // We should start outside of the screen to make marks
+            // presistent. Good starting points: start of a month,
+            // and start of a year
             let fixOffset = realDt / DAY > 10
-            let i0 = fixOffset ? findMonthStart(view.i1) : view.i1
+            let fixOffset2 = realDt / MONTH > 10
+            let i0 = view.i1
+            if (fixOffset2) {
+                i0 = findYearStart(view.i1)
+            } else if (fixOffset) {
+                i0 = findMonthStart(view.i1)
+            }
             for (var i = i0, n = view.i2; i <= n; i++) {
                 let p = view.src[i]
                 let prev = view.src[i-1] || []
@@ -161,7 +170,7 @@ function GridMaker(id, specs, mainGrid = null) {
                 if (xs[1] - prev_xs[1] < self.tStep * 0.8) {
 
                     // prev_xs is a higher "rank" label
-                    if (xs[2] <= prev_xs[2]) {
+                    if (xs[2] * xs[3] <= prev_xs[2] * prev_xs[3]) {
                         self.xs.pop()
                     } else {
                         // Otherwise
@@ -196,6 +205,15 @@ function GridMaker(id, specs, mainGrid = null) {
         return 0
     }
 
+    function findYearStart(i1) {
+        let y0 = Utils.getYear(view.src[i1][0])
+        for (var i = i1 - 1; i >= 0; i--) {
+            let yi = Utils.getYear(view.src[i][0])
+            if (yi !== y0) return i
+        }
+        return 0
+    }
+
     function insertLine(prev, p, x, m0) {
 
         let prevT = prev[0]
@@ -210,19 +228,21 @@ function GridMaker(id, specs, mainGrid = null) {
         // TODO: take this block =========> (see below)
         if ((prev[0] || timeFrame === YEAR) &&
             Utils.getYear(t) !== Utils.getYear(prevT)) {
-            self.xs.push([x, t, YEAR]) // [px, time, rank]
+            self.xs.push([x, t, YEAR, 1]) // [px, time, rank]
         }
         else if (prev[0] &&
             Utils.getMonth(t) !== Utils.getMonth(prevT)) {
-            self.xs.push([x, t, MONTH])
+            self.xs.push([x, t, MONTH, 1])
         }
         // TODO: should be added if this day !== prev day
         // And the same for 'botbar.js', TODO(*)
         else if (Utils.dayStart(t) === t) {
-            self.xs.push([x, t, DAY])
+            // rank2 = 0 means lower priority
+            let r2 = Utils.getDay(t) === 13 ? 0 : 0.9
+            self.xs.push([x, t, DAY, r2])
         }
         else if (t % self.tStep === 0) {
-            self.xs.push([x, t, timeFrame])
+            self.xs.push([x, t, timeFrame, 1])
         }
     }
 
@@ -237,7 +257,7 @@ function GridMaker(id, specs, mainGrid = null) {
             if (x < 0) break
             // TODO: ==========> And insert it here somehow
             if (t % timeFrame === 0) {
-                self.xs.unshift([x, t, timeFrame])
+                self.xs.unshift([x, t, timeFrame, 1])
             }
         }
     }
@@ -252,7 +272,7 @@ function GridMaker(id, specs, mainGrid = null) {
             let x = Math.floor((t  - range[0]) * r)
             if (x > self.spacex) break
             if (t % interval === 0) {
-                self.xs.push([x, t, interval])
+                self.xs.push([x, t, interval, 1])
             }
         }
     }

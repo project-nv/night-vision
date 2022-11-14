@@ -1,6 +1,6 @@
 
 
-![PepeNV](/docs/docs/public/nv-banner.jpeg)
+![PepeNV](https://github.com/project-nv/night-vision/blob/main/docs/docs/public/nv-banner.jpeg?raw=true)
 
 <div align="center">
 
@@ -14,7 +14,7 @@
 
 Start your charting journey with our interactive [**[DOCS]**](https://nightvision.dev/guide/intro/night-vision-charts.html).
 
-![Screen](/docs/docs/public/screen.png)
+![Screen](https://raw.githubusercontent.com/project-nv/night-vision/main/docs/docs/public/screen.png)
 
 ## Installation
 

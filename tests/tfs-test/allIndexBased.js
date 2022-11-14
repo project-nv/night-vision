@@ -8,8 +8,6 @@ for (var file in FILES) {
     let [fn, ext] = file.split('.json')
     let tf = fn.split('-').pop()
     TFS[tf] = FILES[file].default
-    TFS[tf].indexBased = true // Set the IB Mode
-    TFS[tf].panes[0].overlays[0].name += ' [IB]'
 }
 
 /* FIX:
@@ -28,6 +26,8 @@ export default function test(stack, chart) {
         stack.add(`Set ${tf} data`, ($tf => {
             return () => {
                 chart.data = TFS[$tf]
+                chart.data.indexBased = true // Set the IB Mode
+                chart.data.panes[0].overlays[0].name += ' [IB]'
                 chart.fullReset()
             }
         })(tf))
