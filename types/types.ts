@@ -10,14 +10,14 @@ type OverlaySettings = {
 };
 
 type Overlay = {
-  readonly id: number;
-  readonly uuid: string;
-  name: string;
+  readonly id?: number;
+  readonly uuid?: string;
+  name?: string;
   type: string;
   main?: boolean;
   data?: any[][]; //TODO: fix any, if possible
-  readonly dataSubset: any[][]; //TODO: fix any, if possible
-  readonly dataView: { [key: string]: any }; //TODO: more accurate typing
+  readonly dataSubset?: any[][]; //TODO: fix any, if possible
+  readonly dataView?: { [key: string]: any }; //TODO: more accurate typing
   props?: Object;
   settings?: OverlaySettings;
 };
@@ -37,16 +37,16 @@ type PaneSettings = {
 };
 
 type Pane = {
-  readonly id: number; // These are read-only for sure
-  readonly uuid: string;
+  readonly id?: number; // These are read-only for sure
+  readonly uuid?: string;
   overlays: Overlay[];
-  settings: PaneSettings;
+  settings?: PaneSettings;
 };
 
 // THE TOP LEVEL
 
 export type Data = {
-  indexBased: boolean; // new
+  indexBased?: boolean; // new
   panes: Pane[];
 };
 
