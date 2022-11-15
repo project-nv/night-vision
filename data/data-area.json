@@ -1,5 +1,5 @@
 {
-    "indexBased": true,
+    "indexBased": false,
     "panes": [
         {
             "overlays": [

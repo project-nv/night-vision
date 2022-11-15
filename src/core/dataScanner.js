@@ -9,8 +9,18 @@ class DataScanner {
     constructor() {}
 
     init(props) {
+        // [API] All read-only
+        // Chart props
         this.props = props
+        // DataHub ref
         this.hub = DataHub.instance(props.id)
+
+        // More [API] :
+        // this.all - all overlays
+        // this.main - main overlay data
+        // this.tf - timeframe (in ms)
+        // interval - can be tf or index (depending on IB mode)
+        // ibMode - index-based or not
     }
 
     detectInterval() {
@@ -42,7 +52,7 @@ class DataScanner {
         return this.tf
     }
 
-    // Range that shown on a chart startup
+    // [API] Range that shown on a chart startup
     defaultRange() {
 
         const dl = this.props.config.DEFAULT_LEN

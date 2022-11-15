@@ -43,13 +43,13 @@ export type Pane = {
   readonly id: number; // These are read-only for sure
   readonly uuid: string;
   overlays: Overlay[];
-  settings: PaneSettings;
+  settings?: PaneSettings;
 };
 
 // THE TOP LEVEL
 
 export type Data = {
-  indexBased: boolean; // new
+  indexBased?: boolean; // new
   panes: Pane[];
 };
 
