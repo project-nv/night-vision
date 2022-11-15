@@ -9,14 +9,17 @@ type OverlaySettings = {
   zIndex?: number;
 };
 
-type Overlay = {
+export type OverlayData = any[][]; //TODO: fix any, if possible
+export type OverlayDataSubset = any[][]; // BSOUP: Are these 2 always identical ?
+
+export type Overlay = {
   readonly id: number;
   readonly uuid: string;
   name: string;
   type: string;
   main?: boolean;
-  data?: any[][]; //TODO: fix any, if possible
-  readonly dataSubset: any[][]; //TODO: fix any, if possible
+  data?: OverlayData;
+  readonly dataSubset: OverlayDataSubset;
   readonly dataView: { [key: string]: any }; //TODO: more accurate typing
   props?: Object;
   settings?: OverlaySettings;
@@ -36,7 +39,7 @@ type PaneSettings = {
   height?: number;
 };
 
-type Pane = {
+export type Pane = {
   readonly id: number; // These are read-only for sure
   readonly uuid: string;
   overlays: Overlay[];

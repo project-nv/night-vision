@@ -1,3 +1,4 @@
+import { DataHub } from "./core/dataHub";
 import { Events } from "./core/events";
 import { ColorsObj, ChartConfig, Data, NightVisionProps } from "./types";
 
@@ -5,7 +6,7 @@ export class NightVision {
   constructor(target: string, props?: NightVisionProps);
   private _data: Data;
   private _scripts: string[];
-  hub: any;
+  hub: DataHub;
   meta: any;
   scan: any;
   events: Events; // TODO: improve method param types
