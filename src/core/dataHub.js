@@ -22,14 +22,17 @@ class DataHub {
 
     init(data) {
 
-        // Raw data object
+        // [API] All here are read-only
+        
+        // Data object
         this.data = data
+        // Index based mode
         this.indexBased = data.indexBased ?? false
 
-        this.chart = null
-        this.offchart = null
-        this.mainOv = null
-        this.mainPaneId = null
+        this.chart = null // Pane with the main overlay (main pane)
+        this.offchart = null // All other panes
+        this.mainOv = null // Main overlay ref
+        this.mainPaneId = null // Mane pane id
 
     }
 
@@ -106,7 +109,7 @@ class DataHub {
 
     }
 
-    // Create a subset of timeseries
+    // [API] Create a subset of timeseries
     filter (data, range, offset = 0) {
         let filter = this.indexBased ?
             Utils.fastFilterIB : Utils.fastFilter2
@@ -118,30 +121,30 @@ class DataHub {
         return new DataView$(data, ix[0], ix[1])
     }
 
-    // Short-cut
+    // [API] Get all active panes (with uuid)
     panes() {
         return (this.data.panes || []).filter(x =>
             x.uuid)
     }
 
-    // Short-cut
+    // [API] Get overlay ref by paneId & ovId
     overlay(paneId, ovId) {
         return this.panes()[paneId]?.overlays[ovId]
     }
 
-    // Short-cut
+    // [API] Get overlay data by paneId & ovId
     ovData(paneId, ovId) {
         return this.panes()[paneId]
             ?.overlays[ovId]?.data
     }
 
-    // Short-cut
+    // [API] Get overlay data subset by paneId & ovId
     ovDataSubset(paneId, ovId) {
         return this.panes()[paneId]
             ?.overlays[ovId]?.dataSubset
     }
 
-    // Short-cut
+    // [API] Get All overlays
     allOverlays() {
         return Utils.allOverlays(this.data.panes)
     }

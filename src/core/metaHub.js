@@ -24,6 +24,7 @@ class MetaHub {
     init(props) {
 
         this.panes = 0 // Panes processed
+        // [API] read-only
         this.legendFns = [] // Legend formatters
         this.yTransforms = [] // yTransforms of sidebars
         this.preSamplers = [] // Auto-precision samplers
@@ -78,6 +79,7 @@ class MetaHub {
         }
     }
 
+    // [API]
     getYtransform(gridId, scaleId) {
         return (this.yTransforms[gridId] || [])[scaleId]
     }
@@ -94,10 +96,12 @@ class MetaHub {
         return (this.autoPrecisions[gridId] || [])[ovId]
     }
 
+    // [API]
     getPreSampler(gridId, ovId) {
         return (this.preSamplers[gridId] || [])[ovId]
     }
 
+    // [API] 
     getLegendFns(gridId, ovId) {
         return (this.legendFns[gridId] || [])[ovId]
     }
