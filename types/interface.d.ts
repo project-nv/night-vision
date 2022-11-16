@@ -1,5 +1,6 @@
 import { DataHub } from "./core/dataHub";
 import { Events } from "./core/events";
+import { MetaHub } from "./core/metaHub";
 import { ColorsObj, ChartConfig, Data, NightVisionProps } from "./types";
 
 export class NightVision {
@@ -7,7 +8,7 @@ export class NightVision {
   private _data: Data;
   private _scripts: string[];
   hub: DataHub;
-  meta: any;
+  meta: MetaHub;
   scan: any;
   events: Events; // TODO: improve method param types
   scriptHub: any;
