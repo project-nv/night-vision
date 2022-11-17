@@ -16,6 +16,8 @@ class MetaHub {
 
         // EVENT INTERFACE
         events.on('meta:sidebar-transform', this.onYTransform.bind(this))
+        events.on('meta:select-overlay', this.onOverlaySelect.bind(this))
+        events.on('meta:grid-mousedown', this.onGridMousedown.bind(this))
 
         // Persistent meta storage
         this.storage = {}
@@ -33,6 +35,7 @@ class MetaHub {
         this.valueTrackers = [] // Price labels + price lines
         // TODO: legend formatters ...
         // TODO: last values
+        this.selectedOverlay = undefined
     }
 
     // Extract meta functions from overlay
@@ -69,16 +72,6 @@ class MetaHub {
 
     }
 
-    onYTransform(event) {
-        let yts = this.yTransforms[event.gridId] || {}
-        let tx = yts[event.scaleId] || {}
-        yts[event.scaleId] = Object.assign(tx, event)
-        this.yTransforms[event.gridId] = yts
-        if (event.updateLayout) {
-            this.#events.emitSpec('chart', 'update-layout')
-        }
-    }
-
     // [API]
     getYtransform(gridId, scaleId) {
         return (this.yTransforms[gridId] || [])[scaleId]
@@ -101,7 +94,7 @@ class MetaHub {
         return (this.preSamplers[gridId] || [])[ovId]
     }
 
-    // [API] 
+    // [API]
     getLegendFns(gridId, ovId) {
         return (this.legendFns[gridId] || [])[ovId]
     }
@@ -153,6 +146,37 @@ class MetaHub {
             yts[pane.id][ov.id] = this.storage[hash]
         }
         this.storage = {}
+    }
+
+    // EVENT HANDLERS
+
+    // User changed y-range
+    onYTransform(event) {
+        let yts = this.yTransforms[event.gridId] || {}
+        let tx = yts[event.scaleId] || {}
+        yts[event.scaleId] = Object.assign(tx, event)
+        this.yTransforms[event.gridId] = yts
+        if (event.updateLayout) {
+            this.#events.emitSpec('chart', 'update-layout')
+        }
+    }
+
+    // User tapped legend & selected the overlay
+    onOverlaySelect(event) {
+        this.selectedOverlay = event.index
+        this.#events.emit('$overlay-select', {
+            index: event.index,
+            ov: this.hub.overlay(...event.index)
+        })
+    }
+
+    // User tapped grid (& deselected all overlays)
+    onGridMousedown(event) {
+        this.selectedOverlay = undefined
+        this.#events.emit('$overlay-select', {
+            index: undefined,
+            ov: undefined
+        })
     }
 }
 

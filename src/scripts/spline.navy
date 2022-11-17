@@ -1,6 +1,7 @@
 
 // NavyJS ~ 0.1-lite
 
+// Single spline, format: [<timestamp>, <number>]
 [OVERLAY name=Spline, ctx=Canvas, author=ChartMaster, version=1.0.0]
 
 // Define new props

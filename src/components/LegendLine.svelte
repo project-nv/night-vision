@@ -25,12 +25,15 @@ let hover = false
 let ref // Reference to the legend-line div
 let nRef // Reference to the legend-name span
 let ctrlRef // Reference to the legend controls
+let selected = false
 
 $:updId = `ll-${gridId}-${ov.id}`
 
 onMount(() => {
     // EVENT INTEFACE
     events.on(`${updId}:update-ll`, update)
+    events.on(`${updId}:grid-mousedown`, onDeselect)
+    events.on(`${updId}:select-overlay`, onDeselect)
 })
 
 onDestroy(() => {
@@ -44,18 +47,24 @@ $:styleBase = `
     font-size: ${fontSz + (ov.main ? 5 : 3)}px;
     font-weight: 300;
     color: ${props.colors.textLG};
-    background: ${props.colors.llBack};
+    background: ${
+        selected ? props.colors.back : props.colors.llBack
+    };
     border: 1px solid transparent;
     margin-right: 30px;
     max-width: ${layout.width - 20}px;
     overflow-x: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
+    border-color: ${
+        selected ? props.colors.llSelect : 'auto'
+    } !important;
 `
 
 $:styleHover = `
     background: ${props.colors.back};
     border: 1px solid ${props.colors.grid};
+
 `
 
 $:dataStyle = `
@@ -129,6 +138,17 @@ function onMouseLeave(e) {
     })
 }
 
+function onClick() {
+    events.emit('select-overlay', {
+        index: [gridId, ov.id]
+    })
+    selected = true
+}
+
+function onDeselect(event) {
+    selected = false
+}
+
 // Format legend value
 function formatter(x, $prec = prec) {
     if (x == undefined) return 'x'
@@ -200,6 +220,7 @@ function updateBoundaries() {
 <div class="nvjs-legend-line" {style}
     on:mousemove={onMouseMove}
     on:mouseleave={onMouseLeave}
+    on:click={onClick}
     bind:this={ref}>
     {#if ov.main && props.showLogo}
     <div class="nvjs-logo" style={logoStyle}></div>
