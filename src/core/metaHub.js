@@ -114,6 +114,7 @@ class MetaHub {
         })
     }
 
+    // TODO: doesn't work, need to check again
     // Store some meta info such as ytransform by
     // (pane.uuid + overlay.uuid) hash
     store() {

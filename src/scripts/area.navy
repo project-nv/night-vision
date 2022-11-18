@@ -19,7 +19,7 @@ draw(ctx) {
     grd.addColorStop(1, $props.back2)
 
     // Line
-    ctx.lineWidth = $props.lineWidth
+    tx.lineWidth = $props.lineWidth
     ctx.strokeStyle = $props.color
     ctx.lineJoin = "round"
     ctx.beginPath()
