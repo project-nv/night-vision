@@ -5,7 +5,7 @@
 
 // Define new props
 prop('color', { type: 'Color', def: '#31ce31' })
-prop('lineWidth', { type: 'Integer', def: 1.25 })
+prop('lineWidth', { type: 'number', def: 1.25 })
 prop('back1', { type: 'Color', def: $props.color + '15' })
 prop('back2', { type: 'Color', def: $props.color + '01' })
 

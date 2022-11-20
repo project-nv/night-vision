@@ -6,7 +6,7 @@
 
 // Define new props
 prop('color', { type: 'Color', def: '#31ce31' })
-prop('lineWidth', { type: 'Integer', def: 1 })
+prop('lineWidth', { type: 'number', def: 1 })
 prop('dataIndex', { type: 'Integer', def: 1 })
 
 
