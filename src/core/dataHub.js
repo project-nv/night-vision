@@ -23,7 +23,7 @@ class DataHub {
     init(data) {
 
         // [API] All here are read-only
-        
+
         // Data object
         this.data = data
         // Index based mode
@@ -145,8 +145,9 @@ class DataHub {
     }
 
     // [API] Get All overlays
-    allOverlays() {
-        return Utils.allOverlays(this.data.panes)
+    allOverlays(type) {
+        let all = Utils.allOverlays(this.data.panes)
+        return type ? all.filter(x => x.type === type) : all
     }
 
     // Event handlers
