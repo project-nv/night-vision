@@ -66,3 +66,6 @@ yRange() {
     }
     return [high, low]
 }
+
+// Legend, defined as pairs [value, color]
+legend(x) => [[x[$props.dataIndex], $props.color]]

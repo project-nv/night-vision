@@ -99,8 +99,9 @@ legendHtml(x, prec, f) {
         <span class="nvjs-ll-value">${f(x[3])}</span>
         <span style="color: ${color1}">C</span>
         <span class="nvjs-ll-value">${f(x[4])}</span>
-        <span style="color: ${color1}">V</span>
-        <span class="nvjs-ll-value">${sym+fc(x[5])}</span>
-    <span>
     `
-}
+    + ($props.showVolume ? `
+        <span style="color: ${color1}">V</span>
+        <span class="nvjs-ll-value">${sym+fc(x[5])}</span>` : ``)
+    + `</span>`
+    }
