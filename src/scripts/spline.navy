@@ -5,9 +5,9 @@
 [OVERLAY name=Spline, ctx=Canvas, author=ChartMaster, version=1.1.0]
 
 // Define new props
-prop('color', { type: 'Color', def: '#31ce31' })
+prop('color', { type: 'color', def: '#31ce31' })
 prop('lineWidth', { type: 'number', def: 1 })
-prop('dataIndex', { type: 'Integer', def: 1 })
+prop('dataIndex', { type: 'integer', def: 1 })
 
 
 draw(ctx) {

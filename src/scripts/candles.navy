@@ -4,17 +4,17 @@
 [OVERLAY name=Candles, ctx=Canvas, author=ChartMaster, version=1.0.0]
 
 // Define the props
-prop('colorBodyUp', { type: 'Color', def: $core.colors.candleUp })
-prop('colorBodyDw', { type: 'Color', def: $core.colors.candleDw })
-prop('colorWickUp', { type: 'Color', def: $core.colors.wickUp })
-prop('colorWickDw', { type: 'Color', def: $core.colors.wickDw })
-prop('colorVolUp', { type: 'Color', def: $core.colors.volUp })
-prop('colorVolDw', { type: 'Color', def: $core.colors.volDw })
+prop('colorBodyUp', { type: 'color', def: $core.colors.candleUp })
+prop('colorBodyDw', { type: 'color', def: $core.colors.candleDw })
+prop('colorWickUp', { type: 'color', def: $core.colors.wickUp })
+prop('colorWickDw', { type: 'color', def: $core.colors.wickDw })
+prop('colorVolUp', { type: 'color', def: $core.colors.volUp })
+prop('colorVolDw', { type: 'color', def: $core.colors.volDw })
 prop('showVolume', { type: 'boolean', def: true })
 prop('currencySymbol', { type: 'string', def: '$' })
 prop('showAvgVolume', { type: 'boolean', def: true })
-prop('avgVolumeSMA', { type: 'string', def: 20 })
-prop('colorAvgVol', { type: 'Color', def: '#1cccb777'})
+prop('avgVolumeSMA', { type: 'number', def: 20 })
+prop('colorAvgVol', { type: 'color', def: '#1cccb777'})
 prop('scaleSymbol', { type: 'string|boolean', def: false })
 prop('priceLine', { type: 'boolean', def: true })
 prop('showValueTracker', { type: 'boolean', def: true })
@@ -35,7 +35,9 @@ draw(ctx) {
     drawCvPart(ctx, $lib.volumeBar, cnv.dwVolbars, w, 'colorVolDw')
     drawCvPart(ctx, $lib.volumeBar, cnv.upVolbars, w, 'colorVolUp')
 
-    if ($props.showAvgVolume) $lib.avgVolume(ctx, $core, $props, cnv)
+    if ($props.showVolume && $props.showAvgVolume) {
+        $lib.avgVolume(ctx, $core, $props, cnv)
+    }
 
 }
 

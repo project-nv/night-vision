@@ -3,15 +3,15 @@
 
 import { fastSma } from './helperFns.js'
 
-export default function avgVolume(ctx, core, props, cnv) {
+export default function avgVolume(ctx, core, props, cnv, vIndex = 5) {
 
     let i1 = core.view.i1
     let i2 = core.view.i2
     let len = props.avgVolumeSMA
-    let sma = fastSma(core.data, 5, i1, i2, len)
+    let sma = fastSma(core.data, vIndex, i1, i2, len)
     let layout  = core.layout
     let maxv = cnv.maxVolume
-    let vs = core.props.config.VOLSCALE * layout.height / maxv
+    let vs = cnv.volScale
     let h = layout.height
     let h05 = core.props.config.VOLSCALE * 0.5 * h
 
