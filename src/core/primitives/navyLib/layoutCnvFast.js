@@ -4,7 +4,7 @@ import Utils from '../../../stuff/utils.js'
 
 // Calulate positions & sizes for candles (if $c),
 // volume bars (if $v), or both by default
-export default function layoutCnv(core, $c = true, $v = true, vScale) {
+export default function layoutCnv(core, $c = true, $v = true, vIndex = 5, vScale) {
 
     let config = core.props.config
     let interval = core.props.interval
@@ -12,7 +12,6 @@ export default function layoutCnv(core, $c = true, $v = true, vScale) {
     let ti2x = core.layout.ti2x
     let layout = core.layout
     let view = core.view
-    let volIndex = 5 // Volume data index
 
     let upBodies = []
     let dwBodies = []
@@ -26,7 +25,7 @@ export default function layoutCnv(core, $c = true, $v = true, vScale) {
 
     if ($v) {
         var volScale = vScale ?? config.VOLSCALE
-        var maxv = maxVolume(core.dataSubset, volIndex)
+        var maxv = maxVolume(core.dataSubset, vIndex)
         var vs = volScale * layout.height / maxv
     }
     var x1, x2, mid, prev = undefined
@@ -74,7 +73,7 @@ export default function layoutCnv(core, $c = true, $v = true, vScale) {
             let volbar = {
                 x1: x1,
                 x2: x2,
-                h: p[5] * vs,
+                h: p[vIndex] * vs,
                 green: green,
                 src: p
             }
