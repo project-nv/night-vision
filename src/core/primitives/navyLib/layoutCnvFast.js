@@ -4,7 +4,7 @@ import Utils from '../../../stuff/utils.js'
 
 // Calulate positions & sizes for candles (if $c),
 // volume bars (if $v), or both by default
-export default function layoutCnv(core, $c = true, $v = true) {
+export default function layoutCnv(core, $c = true, $v = true, vScale) {
 
     let config = core.props.config
     let interval = core.props.interval
@@ -25,8 +25,9 @@ export default function layoutCnv(core, $c = true, $v = true) {
     // the chart's height (VOLSCALE)
 
     if ($v) {
+        var volScale = vScale ?? config.VOLSCALE
         var maxv = maxVolume(core.dataSubset, volIndex)
-        var vs = config.VOLSCALE * layout.height / maxv
+        var vs = volScale * layout.height / maxv
     }
     var x1, x2, mid, prev = undefined
     let { A, B, pxStep } = layout
