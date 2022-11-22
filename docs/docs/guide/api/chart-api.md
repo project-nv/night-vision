@@ -185,7 +185,7 @@ chart.update()
 A function that allows you to perform different chart updates:
 - **"layout"**
     A regular fast update, re-calculating the [Layout](/guide/main-comp/layout.html) & triggering renderers.
-- **"range"**
+- **"data"** (**"range"** will be deprecated) 
     An update to be used when the overlay data changes (if the length, timestamp sequence changes).  
 - **"full"**
     A full update, resetting [pane & overlay](/guide/data-struct/the-top-level) structure. Slower than the previous.

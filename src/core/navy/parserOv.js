@@ -180,6 +180,7 @@ export default class ParserOV {
             var legend = null
             var legendHtml = null
             var valueTracker = null
+            var ohlc = null
 
             // Overlay code
             ${code}
@@ -192,7 +193,7 @@ export default class ParserOV {
                 draw, drawSidebar, drawBotbar,
                 yRange, preSampler,
                 legend, legendHtml,
-                valueTracker,
+                valueTracker, ohlc,
                 // Generated flags
                 ${flags}
             }

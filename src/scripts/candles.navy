@@ -71,6 +71,9 @@ yRange() {
 // Use [Open, Close] for precision detection
 preSampler(x) => [x[1], x[4]]
 
+// Map data item to OHLC (for candle magnets etc.) 
+ohlc(x) => [x[1], x[2], x[3], x[4]]
+
 // Price label + Scale symbol + price line
 valueTracker(x) => {
     show: $props.showValueTracker,

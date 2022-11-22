@@ -39,6 +39,10 @@ draw(ctx) {
 
 preSampler(x) => [x[$props.dataIndex]]
 
+// Map data item to OHLC (for candle magnets etc.)
+// Here we simulate a candle with 0 height
+ohlc(x) => Array(4).fill(x[$props.dataIndex])
+
 yRange() {
     let data = $core.hub.ovDataSubset($core.paneId, $core.id)
     let di = $props.dataIndex

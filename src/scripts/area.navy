@@ -53,6 +53,10 @@ draw(ctx) {
 // Precision sampling
 preSampler(x) => [x[$props.dataIndex]]
 
+// Map data item to OHLC (for candle magnets etc.)
+// Here we simulate a candle with 0 height
+ohlc(x) => Array(4).fill(x[$props.dataIndex])
+
 // Legend, defined as pairs [value, color]
 yRange() {
     let data = $core.hub.ovDataSubset($core.paneId, $core.id)

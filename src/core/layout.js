@@ -5,7 +5,7 @@ import Utils from '../stuff/utils.js'
 import math from '../stuff/math.js'
 import logScale from './logScale.js'
 
-function Layout(props, hub) {
+function Layout(props, hub, meta) {
 
     let chart = hub.chart
     let offchart = hub.offchart
@@ -55,7 +55,7 @@ function Layout(props, hub) {
     //  Place all grids in the right order
     const hs = gridHs()
     let specs = i => ({
-        hub, props, settings: panes[i].settings,
+        hub, meta, props, settings: panes[i].settings,
         height: hs[i]
     })
     let mainGm = new GridMaker(

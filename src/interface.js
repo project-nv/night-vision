@@ -34,7 +34,7 @@ class NightVision {
             props: props
         })
 
-        // TODO: remove the observer on chart destroy 
+        // TODO: remove the observer on chart destroy
         if (props.autoResize) {
             resizeTracker(this)
         }
@@ -174,10 +174,12 @@ class NightVision {
             case 'layout':
                 ev.emitSpec('chart', 'update-layout', opt)
             break
-            case 'range':
+            case 'range': // TODO: Will be depracated
+            case 'data':
                 // TODO: update cursor if it's ahead of the last candle
                 // (needs to track the new last)
                 this.hub.updateRange(this.range)
+                this.meta.calcOhlcMap()
                 ev.emitSpec('chart', 'update-layout', opt)
             break
             case 'full':

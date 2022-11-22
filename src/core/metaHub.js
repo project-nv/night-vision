@@ -1,6 +1,6 @@
 
 // Container for y-transforms, meta functions, other info
-// of overlays (e.g. yRange)
+// about overlays (e.g. yRange)
 
 import Utils from '../stuff/utils.js'
 import Events from './events.js'
@@ -36,6 +36,15 @@ class MetaHub {
         // TODO: legend formatters ...
         // TODO: last values
         this.selectedOverlay = undefined
+        /* OHLC Map format: {
+            timestamp: {
+                ref: [], // Reference to n-th data item
+                index: n // Item global index
+            }, ...
+        }*/
+        this.ohlcMap = [] // time => OHLC map of the main ov
+        this.ohlcFn = undefined // OHLC mapper function
+
     }
 
     // Extract meta functions from overlay
@@ -65,6 +74,12 @@ class MetaHub {
         var vts = this.valueTrackers[gridId] || []
         vts[id] = overlay.valueTracker
 
+        // Ohlc mapper function
+        let main = this.hub.overlay(gridId, id).main
+        if (main) {
+            this.ohlcFn = overlay.ohlc
+        }
+
         this.yRangeFns[gridId] = yrfs
         this.preSamplers[gridId] = aps
         this.legendFns[gridId] = lfs
@@ -72,9 +87,16 @@ class MetaHub {
 
     }
 
-    // [API]
-    getYtransform(gridId, scaleId) {
-        return (this.yTransforms[gridId] || [])[scaleId]
+    // Maps timestamp => ohlc, index
+    calcOhlcMap() {
+        this.ohlcMap = {}
+        let data = this.hub.mainOv.data
+        for (var i = 0; i < data.length; i++) {
+            this.ohlcMap[data[i][0]] = {
+                ref: data[i],
+                index: i
+            }
+        }
     }
 
     // Store auto precision for a specific overlay
@@ -82,21 +104,6 @@ class MetaHub {
         let aps = this.autoPrecisions[gridId] || []
         aps[ovId] = prec
         this.autoPrecisions[gridId] = aps
-    }
-
-    // Store auto precision for a specific overlay
-    getAutoPrec(gridId, ovId) {
-        return (this.autoPrecisions[gridId] || [])[ovId]
-    }
-
-    // [API]
-    getPreSampler(gridId, ovId) {
-        return (this.preSamplers[gridId] || [])[ovId]
-    }
-
-    // [API]
-    getLegendFns(gridId, ovId) {
-        return (this.legendFns[gridId] || [])[ovId]
     }
 
     // Call this after all overlays are processed
@@ -108,6 +115,7 @@ class MetaHub {
         if (this.panes < this.hub.panes().length) return
         this.autoPrecisions = [] // wait for preSamplers
         this.restore()
+        this.calcOhlcMap()
         setTimeout(() => {
             this.#events.emitSpec('chart', 'update-layout')
             this.#events.emit('update-legend')
@@ -147,6 +155,33 @@ class MetaHub {
             yts[pane.id][ov.id] = this.storage[hash]
         }
         this.storage = {}
+    }
+
+    // [API] Get y-transform of a specific scale
+    getYtransform(gridId, scaleId) {
+        return (this.yTransforms[gridId] || [])[scaleId]
+    }
+
+    // [API] Get auto precision of a specific overlay
+    getAutoPrec(gridId, ovId) {
+        return (this.autoPrecisions[gridId] || [])[ovId]
+    }
+
+    // [API] Get a precision smapler of a specific overlay
+    getPreSampler(gridId, ovId) {
+        return (this.preSamplers[gridId] || [])[ovId]
+    }
+
+    // [API] Get legend formatter of a specific overlay
+    getLegendFns(gridId, ovId) {
+        return (this.legendFns[gridId] || [])[ovId]
+    }
+
+    // [API] Get OHLC values to use as "magnet" values
+    ohlc(t) {
+        let el = this.ohlcMap[t]
+        if (!el || !this.ohlcFn) return
+        return this.ohlcFn(el.ref)
     }
 
     // EVENT HANDLERS

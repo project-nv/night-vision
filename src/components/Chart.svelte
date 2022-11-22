@@ -78,7 +78,7 @@ onMount(() => {
 
     scan.updatePanesHash()
 
-    layout = new Layout(chartProps, hub)
+    layout = new Layout(chartProps, hub, meta)
 
     // console.log(layout) // DEBUG
 })
@@ -136,7 +136,7 @@ function update(emit = true) {
     //Utils.callsPerSecond()
     if (scan.panesChanged()) return fullUpdate()
     cursor = cursor // Trigger Svelte update
-    layout = new Layout(chartProps, hub)
+    layout = new Layout(chartProps, hub, meta)
     events.emit('update-pane', layout) // Update all panes
     events.emitSpec('botbar', 'update-bb', layout)
 }

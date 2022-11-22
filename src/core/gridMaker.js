@@ -34,7 +34,7 @@ const MAX_INT = Number.MAX_SAFE_INTEGER
 // mainGrid - ref to the main grid
 function GridMaker(id, specs, mainGrid = null) {
 
-    let { hub, props, settings, height } = specs
+    let { hub, meta, props, settings, height } = specs
     let { interval, timeFrame, range, ctx, timezone } = props
 
     let y_t = null // TODO: implement
@@ -49,7 +49,6 @@ function GridMaker(id, specs, mainGrid = null) {
 
     // Layout object
     let self = { indexBased: hub.indexBased }
-    //var lm = layers_meta[id]
 
     // Split overlays by scale (default scale: 'A')
     function scaleSplit() {
@@ -364,6 +363,7 @@ function GridMaker(id, specs, mainGrid = null) {
 
             // Here we add some helpful functions for
             // plugin creators
+            self.ohlc = meta.ohlc.bind(meta)
             return layoutFn(self, range)
 
         },
