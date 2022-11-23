@@ -1,4 +1,5 @@
 import { DataHub } from "./core/dataHub";
+import { DataScanner } from "./core/dataScanner";
 import { Events } from "./core/events";
 import { MetaHub } from "./core/metaHub";
 import { Scripts } from "./core/scripts";
@@ -10,7 +11,7 @@ export class NightVision {
   private _scripts: string[];
   hub: DataHub;
   meta: MetaHub;
-  scan: any;
+  scan: DataScanner;
   events: Events; // TODO: improve method param types
   scriptHub: Scripts;
   root: HTMLElement;
