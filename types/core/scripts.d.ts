@@ -1,5 +1,5 @@
-declare namespace _default {
-    export { instance };
+// init() method is internal ?
+
+export interface Scripts {
+  parse(): void;
 }
-export default _default;
-declare function instance(id: any): any;
