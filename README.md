@@ -71,6 +71,6 @@ chart.data = {
 
 Happy charting!
 
-<img src="/docs/docs/public/wink.gif" alt="wink" width="64"/>
+<img src="https://raw.githubusercontent.com/project-nv/night-vision/main/docs/docs/public/wink.gif" alt="wink" width="64"/>
 
 </div>
