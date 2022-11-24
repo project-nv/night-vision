@@ -8,7 +8,8 @@ export default {
     ],
     themeConfig: {
         socialLinks: [
-            { icon: 'github', link: 'https://github.com/project-nv/night-vision' }
+            { icon: 'github', link: 'https://github.com/project-nv/night-vision' },
+            { icon: 'twitter', link: 'https://twitter.com/nvxbased' }
         ],
         logo: '/favicon.png',
         nav: [
