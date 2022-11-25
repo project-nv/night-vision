@@ -292,6 +292,8 @@ export default class Input {
 
         delta = Utils.smartWheel(delta)
 
+        const dpr = window.devicePixelRatio ?? 1;
+
         // TODO: mouse zooming is a little jerky,
         // needs to follow f(mouse_wheel_speed) and
         // if speed is low, scroll shoud be slower
@@ -303,7 +305,7 @@ export default class Input {
         let tl = this.props.config.ZOOM_MODE === 'tl'
         if (event.originalEvent.ctrlKey || tl) {
             let offset = event.originalEvent.offsetX
-            let diff1 = offset / (this.canvas.width-1) * diff
+            let diff1 = offset / (this.canvas.width/dpr-1) * diff
             let diff2 = diff - diff1
             this.range[0] -= diff1
             this.range[1] += diff2
@@ -313,7 +315,7 @@ export default class Input {
 
         if (tl) {
             let offset = event.originalEvent.offsetY
-            let diff1 = offset / (this.canvas.height-1) * 2
+            let diff1 = offset / (this.canvas.height/dpr-1) * 2
             let diff2 = 2 - diff1
             let z = diff / (this.range[1] - this.range[0])
             //rezoom_range(z, diff_x, diff_y)
