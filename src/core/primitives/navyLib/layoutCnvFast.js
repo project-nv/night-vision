@@ -4,7 +4,8 @@ import Utils from '../../../stuff/utils.js'
 
 // Calulate positions & sizes for candles (if $c),
 // volume bars (if $v), or both by default
-export default function layoutCnv(core, $c = true, $v = true) {
+export default function layoutCnv(
+    core, $c = true, $v = true, vIndex = 5, dirIndex, vScale) {
 
     let config = core.props.config
     let interval = core.props.interval
@@ -12,7 +13,6 @@ export default function layoutCnv(core, $c = true, $v = true) {
     let ti2x = core.layout.ti2x
     let layout = core.layout
     let view = core.view
-    let volIndex = 5 // Volume data index
 
     let upBodies = []
     let dwBodies = []
@@ -25,8 +25,9 @@ export default function layoutCnv(core, $c = true, $v = true) {
     // the chart's height (VOLSCALE)
 
     if ($v) {
-        var maxv = maxVolume(core.dataSubset, volIndex)
-        var vs = config.VOLSCALE * layout.height / maxv
+        var volScale = vScale ?? config.VOLSCALE
+        var maxv = maxVolume(core.dataSubset, vIndex)
+        var vs = volScale * layout.height / maxv
     }
     var x1, x2, mid, prev = undefined
     let { A, B, pxStep } = layout
@@ -38,7 +39,7 @@ export default function layoutCnv(core, $c = true, $v = true) {
     // A === scale,  B === Y-axis shift
     for (var i = view.i1, n = view.i2; i <= n; i++) {
         let p = data[i]
-        let green = p[4] >= p[1]
+        let green = dirIndex ? p[dirIndex] > 0 : p[4] >= p[1]
         mid = ti2x(p[0], i) + 1
 
         // Clear volume bar if there is a time gap
@@ -73,7 +74,7 @@ export default function layoutCnv(core, $c = true, $v = true) {
             let volbar = {
                 x1: x1,
                 x2: x2,
-                h: p[5] * vs,
+                h: p[vIndex] * vs,
                 green: green,
                 src: p
             }
@@ -90,7 +91,8 @@ export default function layoutCnv(core, $c = true, $v = true) {
     return {
         upBodies, upWicks, dwBodies, dwWicks,
         upVolbars, dwVolbars,
-        maxVolume: maxv
+        maxVolume: maxv,
+        volScale: vs
     }
 
 }

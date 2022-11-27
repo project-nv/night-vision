@@ -88,7 +88,11 @@ function update($layout = layout) {
         let r = l.overlay
         //if (r.preDraw) r.preDraw(ctx)
         if (l.opacity) ctx.globalAlpha = l.opacity
-        r.draw(ctx)
+        try {
+            r.draw(ctx)
+        } catch(e) {
+            console.log(`Layer ${id}.${l.id}`, e)
+        }
         ctx.globalAlpha = 1
         //if (r.postDraw) r.postDraw(ctx)
         ctx.restore()

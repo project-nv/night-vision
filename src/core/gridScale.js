@@ -90,7 +90,14 @@ export default function Scale(id, src, specs) {
                 }
             }
             if (yfn) {
-                var [h, l, exp] = yfn.exec(h, l)
+                // Check if result is 'null', then this overlay
+                // should not affect the range at all
+                var yfnResult = yfn.exec(h, l)
+                if (yfnResult) {
+                    var [h, l, exp] = yfn.exec(h, l)
+                } else {
+                    var [h, l] = [hi, lo]
+                }
             }
 
             // maximum & minimum over all overlays

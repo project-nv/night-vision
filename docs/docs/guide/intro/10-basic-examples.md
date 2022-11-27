@@ -292,13 +292,14 @@ const _3Y = 60 * 60 * 24 * 365 * 3 * 1000
 // Library provides a lot of useful variables to make
 // overlays ($core in the main collection)
 draw(ctx) {
+    
     ctx.strokeStyle = $props.back
     ctx.lineWidth = 1
     const layout = $core.layout
     const data = $core.data // Full dataset
     const view = $core.view // Visible view
     const radius = $props.radius
-    ctx.beginPath()
+
     for (var i = view.i1, n = view.i2; i <= n; i++) {
         ctx.beginPath()
         let p = data[i]

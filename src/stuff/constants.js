@@ -40,6 +40,7 @@ const COLORS = {
     textLG: '#c4c4c4', // Legend text color
     llValue: '#818989', // Legend value color
     llBack: '#14151c77', // Legend bar background
+    llSelect: '#2d7b2f', // Legend select border
     scale: '#606060', // Scale edge color
     cross: '#8091a0', // Crosshair color
     candleUp: '#41a376', // "Green" candle color

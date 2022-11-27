@@ -50,5 +50,5 @@ function onDisplayClick() {
 }
 </style>
 <div class="nvjs-eye" style={eyeStyle}
-    on:click={onDisplayClick}>
+    on:click|stopPropagation={onDisplayClick}>
 </div>

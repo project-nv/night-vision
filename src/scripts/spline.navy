@@ -1,12 +1,13 @@
 
 // NavyJS ~ 0.1-lite
 
-[OVERLAY name=Spline, ctx=Canvas, author=ChartMaster, version=1.0.0]
+// Single spline, format: [<timestamp>, <number>]
+[OVERLAY name=Spline, ctx=Canvas, author=ChartMaster, version=1.1.0]
 
 // Define new props
-prop('color', { type: 'Color', def: '#31ce31' })
-prop('lineWidth', { type: 'Integer', def: 1 })
-prop('dataIndex', { type: 'Integer', def: 1 })
+prop('color', { type: 'color', def: '#31ce31' })
+prop('lineWidth', { type: 'number', def: 1 })
+prop('dataIndex', { type: 'integer', def: 1 })
 
 
 draw(ctx) {
@@ -35,6 +36,25 @@ draw(ctx) {
     color: $props.color,
     value: x[$props.dataIndex]
 }*/
+
+preSampler(x) => [x[$props.dataIndex]]
+
+// Map data item to OHLC (for candle magnets etc.)
+// Here we simulate a candle with 0 height
+ohlc(x) => Array(4).fill(x[$props.dataIndex])
+
+yRange() {
+    let data = $core.hub.ovDataSubset($core.paneId, $core.id)
+    let di = $props.dataIndex
+    let len = data.length
+    var h, l, high = -Infinity, low = Infinity
+    for(var i = 0; i < len; i++) {
+        let point = data[i][di]
+        if (point > high) high = point
+        if (point < low) low = point
+    }
+    return [high, low]
+}
 
 // Legend, defined as pairs [value, color]
 legend(x) => [[x[$props.dataIndex], $props.color]]
