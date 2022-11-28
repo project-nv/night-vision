@@ -40,3 +40,5 @@ export function candleColor(props, candle = []) {
         return props.colorBodyDw
     }
 }
+
+// TODO: work with colors & opacity
