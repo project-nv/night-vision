@@ -1,4 +1,4 @@
-name: "\U0001F41E Bug report"
+name: "Bug report"
 description: Report an issue with NightVision
 labels: [pending triage]
 body:

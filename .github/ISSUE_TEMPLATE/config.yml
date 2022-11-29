@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Website
+    url: https://nightvision.dev/
+    about: Website/docs
+  - name: Twitter
+    url: https://twitter.com/nvxbased
+    about: Follow us on twitter
