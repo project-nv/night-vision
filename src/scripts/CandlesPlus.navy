@@ -1,10 +1,11 @@
 
 // NavyJS ~ 0.1-lite
 
-// <ds>Standart japanese candles</ds>, format:
-// [<timestamp>, <open>, <high>, <low>, <close>, <?volume>]
+// <ds>Colored Candles (Warning: coloring makes it slower)</ds>
+// Format: [<timestamp>, <open>, <high>, <low>, <close>, <?volume>, <?color>]
+// <?color> :: Candle body color
 
-[OVERLAY name=Candles, ctx=Canvas, author=ChartMaster, version=1.0.0]
+[OVERLAY name=CandlesPlus, ctx=Canvas, author=ChartMaster, version=1.0.0]
 
 // Define the props
 prop('colorBodyUp', { type: 'color', def: $core.colors.candleUp })
@@ -14,6 +15,7 @@ prop('colorWickDw', { type: 'color', def: $core.colors.wickDw })
 prop('colorVolUp', { type: 'color', def: $core.colors.volUp })
 prop('colorVolDw', { type: 'color', def: $core.colors.volDw })
 prop('showVolume', { type: 'boolean', def: true })
+prop('showWicks', { type: 'boolean', def: true })
 prop('currencySymbol', { type: 'string', def: '$' })
 prop('showAvgVolume', { type: 'boolean', def: true })
 prop('avgVolumeSMA', { type: 'number', def: 20 })
@@ -21,7 +23,9 @@ prop('colorAvgVol', { type: 'color', def: '#1cccb777'})
 prop('scaleSymbol', { type: 'string|boolean', def: false })
 prop('priceLine', { type: 'boolean', def: true })
 prop('showValueTracker', { type: 'boolean', def: true })
-
+prop('coloringBodies', { type: 'boolean', def: true })
+prop('coloringWicks', { type: 'boolean', def: false })
+prop('coloringVolume', { type: 'boolean', def: false })
 
 // Draw call
 draw(ctx) {
@@ -30,13 +34,19 @@ draw(ctx) {
     let bodies = cnv.upBodies.length ? cnv.upBodies : cnv.dwBodies
     if (!bodies.length) return
     let w = Math.max(bodies[0].w, 1)
+    let sw = $props.showWicks
+    let cb = $props.coloringBodies
+    let cw = $props.coloringWicks
+    let cv = $props.coloringVolume
 
-    drawCvPart(ctx, $lib.candleWick, cnv.dwWicks, 1, 'colorWickDw')
-    drawCvPart(ctx, $lib.candleWick, cnv.upWicks, 1, 'colorWickUp')
-    drawCvPart(ctx, $lib.candleBody, cnv.dwBodies, w, 'colorBodyDw')
-    drawCvPart(ctx, $lib.candleBody, cnv.upBodies, w, 'colorBodyUp')
-    drawCvPart(ctx, $lib.volumeBar, cnv.dwVolbars, w, 'colorVolDw')
-    drawCvPart(ctx, $lib.volumeBar, cnv.upVolbars, w, 'colorVolUp')
+    if (sw) {
+        drawCvPart(ctx, $lib.candleWick, cnv.dwWicks, 1, 'colorWickDw', cw)
+        drawCvPart(ctx, $lib.candleWick, cnv.upWicks, 1, 'colorWickUp', cw)
+    }
+    drawCvPart(ctx, $lib.candleBody, cnv.dwBodies, w, 'colorBodyDw', cb)
+    drawCvPart(ctx, $lib.candleBody, cnv.upBodies, w, 'colorBodyUp', cb)
+    drawCvPart(ctx, $lib.volumeBar, cnv.dwVolbars, w, 'colorVolDw', cv)
+    drawCvPart(ctx, $lib.volumeBar, cnv.upVolbars, w, 'colorVolUp', cv)
 
     if ($props.showVolume && $props.showAvgVolume) {
         $lib.avgVolume(ctx, $core, $props, cnv)
@@ -45,12 +55,29 @@ draw(ctx) {
 }
 
 // Draw candle part
-drawCvPart(ctx, f, arr, w, color) {
+drawCvPart(ctx, f, arr, w, color, coloring = false) {
     let layout = $core.layout
+    let prevColor = null
     ctx.lineWidth = w
     ctx.strokeStyle = $props[color]
     ctx.beginPath()
     for (var i = 0, n = arr.length; i < n; i++) {
+        if (coloring) {
+            var c = arr[i].src[6]
+            if (c) {
+                if (c !== prevColor) {
+                    ctx.stroke()
+                    ctx.beginPath()
+                }
+                ctx.strokeStyle = c
+            } else if (prevColor !== $props[color]) {
+                ctx.stroke()
+                ctx.beginPath()
+                ctx.strokeStyle = $props[color]
+                prevColor = $props[color]
+            }
+            prevColor = c
+        }
         f(ctx, arr[i], layout)
     }
     ctx.stroke()
@@ -93,6 +120,9 @@ legendHtml(x, prec, f) {
     let sym = $props.currencySymbol
     let color2 = v[4] >= v[1] ?
         $props.colorBodyUp : $props.colorBodyDw
+    if ($props.coloringBodies && x[6]) {
+        color2 = x[6]
+    }
     let fc = $lib.formatCash
     return `
     <span style="color: ${color2}">

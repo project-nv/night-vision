@@ -1,0 +1,102 @@
+
+// Navy ~ 0.1-lite
+
+// <ds>Simple trades</ds>
+// Format: [<timestamp>, <dir>, <price>, <?label>]
+// <dir> :: 1 for buy -1 for sell
+// <price> :: trade price
+// <?label> :: trade label
+[OVERLAY name=Trades, ctx=Canvas, author=ChartMaster, version=1.0.0]
+
+prop('buyColor', {  type: 'color', def: '#08b2c6' })
+prop('sellColor', {  type: 'color', def: '#e42633' })
+prop('radius', {  type: 'number', def: 4 })
+prop('showLabels', {  type: 'boolean', def: true })
+prop('markerOutline', {  type: 'boolean', def: true })
+prop('outlineWidth', {  type: 'number', def: 4 })
+
+// Draw function (called on each update)
+// Library provides a lot of useful variables to make
+// overlays ($core in the main collection)
+draw(ctx) {
+    ctx.lineWidth = $props.outlineWidth
+    const layout = $core.layout
+    const data = $core.data // Full dataset
+    const view = $core.view // Visible view
+
+    // Outline
+    if ($props.markerOutline) {
+        ctx.strokeStyle = $core.colors.back
+        ctx.beginPath()
+        iterArcs(ctx, view, data, layout)
+        ctx.stroke()
+    }
+
+    // Fill sell trades
+    ctx.fillStyle = $props.buyColor
+    ctx.beginPath()
+    iterArcs(ctx, view, data, layout, -1)
+    ctx.fill()
+
+    // Fill buy trades
+    ctx.fillStyle = $props.sellColor
+    ctx.beginPath()
+    iterArcs(ctx, view, data, layout, 1)
+    ctx.fill()
+
+    // Draw labels
+    if ($props.showLabels) {
+        ctx.fillStyle = $core.colors.textHL
+        ctx.font = $core.props.config.FONT
+        ctx.textAlign = 'center'
+        drawLabels(ctx, view, data, layout)
+    }
+
+}
+
+// Iter through arcs
+iterArcs(ctx, view, data, layout, dir) {
+    const radius = $props.radius
+    for (var i = view.i1, n = view.i2; i <= n; i++) {
+        let p = data[i]
+        if (Math.sign(p[1]) === dir) continue
+        let x = layout.ti2x(p[0], i)
+        let y = layout.value2y(p[2])
+        ctx.moveTo(x+radius, y)
+        ctx.arc(x, y, radius, 0, Math.PI * 2, false)
+    }
+}
+
+// Draw simple lables
+drawLabels(ctx, view, data, layout) {
+    for (var i = view.i1, n = view.i2; i <= n; i++) {
+        let p = data[i]
+        let x = layout.ti2x(p[0], i)
+        let y = layout.value2y(p[2])
+        ctx.fillText(p[3], x, y - 25)
+    }
+}
+
+// Sample data point with index 2
+preSampler(x) => x[2]
+
+// Not affecting the y-range
+yRange() => null
+
+// Legend formatter, Array of [value, color] pairs
+// x represents one data item e.g. [<time>, <value>]
+legend(x) {
+    if (x[1] > 0) {
+        return [
+            ['Buy', $props.buyColor],
+            [x[2], $core.colors.text],
+            [x[3]]
+        ]
+    } else {
+        return [
+            ['Sell', $props.sellColor],
+            [x[2], $core.colors.text],
+            [x[3]]
+        ]
+    }
+}

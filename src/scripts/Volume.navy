@@ -1,0 +1,61 @@
+// Navy ~ 0.1-lite
+
+// <ds>Regular volume</ds> 
+// Format: [<timestamp>, <volume>, <direction>]
+
+[OVERLAY name=Volume, ctx=Canvas, author=ChartMaster, verion=1.0.0]
+
+// Overlay props
+prop('colorVolUp', { type: 'color', def: '#41a37682' })
+prop('colorVolDw', { type: 'color', def: '#de464682' })
+prop('barsHeight', { type: 'number', def: 0.15, step: 0.1 })
+prop('currencySymbol', { type: 'string', def: '$' })
+prop('showAvgVolume', { type: 'boolean', def: true })
+prop('avgVolumeSMA', { type: 'number', def: 20 })
+prop('colorAvgVol', { type: 'color', def: '#17e2bb99'})
+
+// Draw call
+draw(ctx) {
+
+    let height = $core.id === 0 ? 0.8 : $props.barsHeight
+    let cnv = $lib.layoutCnv($core, false, true, 1, 2, height)
+    let bars = cnv.upVolbars.length ? cnv.upVolbars : cnv.dwVolbars
+    if (!bars.length) return
+
+    drawCvPart(ctx, $lib.volumeBar, cnv.dwVolbars, 'colorVolDw')
+    drawCvPart(ctx, $lib.volumeBar, cnv.upVolbars, 'colorVolUp')
+
+    if ($props.showAvgVolume) $lib.avgVolume(ctx, $core, $props, cnv, 1)
+}
+
+// Draw candle part
+drawCvPart(ctx, f, arr, color) {
+    let layout = $core.layout
+    ctx.strokeStyle = $props[color]
+    ctx.beginPath()
+    for (var i = 0, n = arr.length; i < n; i++) {
+        f(ctx, arr[i], layout)
+    }
+    ctx.stroke()
+}
+
+// Custom y-range
+yRange(hi, lo) {
+    // Remove this overlay for yRange calculation
+    // if it's not the main overlay of the pane
+    if ($core.id !== 0) {
+        return null
+    } else {
+        return [hi, lo, false]
+    }
+}
+
+// Legend, defined as pairs [value, color]
+legend(x) {
+    let v = $core.cursor.getValue($core.paneId, $core.id)
+    let sym = $props.currencySymbol
+    let color = v[2] > 0 ?
+        $props.colorVolUp : $props.colorVolDw
+    let fc = $lib.formatCash
+    return [[sym + fc(x[1]), color.slice(0, 7)]]
+}

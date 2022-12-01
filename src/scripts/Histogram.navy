@@ -1,0 +1,135 @@
+// Navy ~ 0.1-lite
+
+// <ds>Colored histogram, can be used for MACD</ds> 
+// Format: [<timestamp>, <hist>, <?value>, <?signal>]
+// <hist> :: histogram value (e.g. MACD bars)
+// <value> :: value of the first line (e.g. MACD value)
+// <signal> :: value of the second line (e.g. MACD signal)
+
+[OVERLAY name=Histogram, ctx=Canvas, author=ChartMaster, verion=1.0.0]
+// "#35a776", "#79e0b3", "#e54150", "#ea969e"
+// Overlay props
+prop('barWidth', { type: 'number', def: 4 })
+prop('lineWidth', { type: 'number', def: 1 })
+prop('colorUp', { type: 'Color', def: '#35a776' })
+prop('colorDw', { type: 'Color', def: '#e54150' })
+prop('colorSemiUp', { type: 'Color', def: '#79e0b3' })
+prop('colorSemiDw', { type: 'Color', def: '#ea969e' })
+prop('colorValue', { type: 'Color', def: '#3782f2' })
+prop('colorSignal', { type: 'Color', def: '#f48709' })
+
+// Draw call
+draw(ctx) {
+
+    const layout = $core.layout
+    const view = $core.view
+
+    let groups = splitBars(view, layout, view.src)
+
+    ctx.lineWidth = detectBarWidth(view, layout, view.src)
+
+    // Semi-down
+
+    ctx.strokeStyle = $props.colorSemiDw
+    drawBars(ctx, layout, groups.semiDw)
+
+    // Semi-up
+    ctx.strokeStyle = $props.colorSemiUp
+    drawBars(ctx, layout, groups.semiUp)
+
+    // Down
+    ctx.strokeStyle = $props.colorDw
+    drawBars(ctx, layout, groups.dw)
+
+    // Up
+    ctx.strokeStyle = $props.colorUp
+    drawBars(ctx, layout, groups.up)
+
+    // Drawing the lines
+    ctx.lineWidth = $props.lineWidth
+    ctx.lineJoin = "round"
+
+    ctx.strokeStyle = $props.colorValue
+    drawSpline(ctx, view, layout, 2)
+
+    ctx.strokeStyle = $props.colorSignal
+    drawSpline(ctx, view, layout, 3)
+
+}
+
+detectBarWidth(view, layout, data) {
+    let p1 = layout.ti2x(data[view.i2 - 1][0], view.i2 - 1)
+    let p2 = layout.ti2x(data[view.i2][0], view.i2)
+    if ((p2 - p1) < 1) {
+        return 1
+    } else {
+        return $props.barWidth
+    }
+}
+
+splitBars(view, layout, data) {
+    const off = $props.barWidth % 2 ? 0 : 0.5
+    let semiDw = []
+    let semiUp = []
+    let dw = []
+    let up = []
+    for (var i = view.i1, n = view.i2; i <= n; i++) {
+        let prev = data[i - 1]
+        let p = data[i]
+        let x = layout.ti2x(p[0], i) - off
+        let y = layout.value2y(p[1]) - 0.5
+        let bar = {x, y}
+        if (p[1] >= 0) {
+            var color = 0
+            if (prev && p[1] < prev[1]) color = 1
+        } else {
+            var color = 2
+            if (prev && p[1] > prev[1]) color = 3
+        }
+        switch(color) {
+            case 0:
+                up.push(bar)
+                break
+            case 1:
+                semiUp.push(bar)
+                break
+            case 2:
+                dw.push(bar)
+                break
+            case 3:
+                semiDw.push(bar)
+                break
+        }
+    }
+    return { semiDw, semiUp, dw, up }
+}
+
+drawBars(ctx, layout, group) {
+    const data = $core.data
+    const base = layout.value2y(0) + 0.5
+    ctx.beginPath()
+    for (var bar of group) {
+        ctx.moveTo(bar.x, base)
+        ctx.lineTo(bar.x, bar.y)
+    }
+    ctx.stroke()
+}
+
+drawSpline(ctx, view, layout, idx) {
+    ctx.beginPath()
+    const data = view.src
+    for (var i = view.i1, n = view.i2; i <= n; i++) {
+        let p = data[i]
+        let x = layout.ti2x(p[0], i)
+        let y = layout.value2y(p[idx])
+        ctx.lineTo(x, y)
+    }
+    ctx.stroke()
+}
+
+// Legend, defined as pairs [value, color]
+legend(x) => [
+    [x[1], $props.color],
+    [x[2], $props.colorValue],
+    [x[3], $props.colorSignal]
+]

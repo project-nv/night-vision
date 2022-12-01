@@ -1,6 +1,8 @@
 
 // NavyJS ~ 0.1-lite
 
+// <ds>Area chart</ds>, format: [<timestamp>, <value>]
+
 [OVERLAY name=Area, ctx=Canvas, author=ChartMaster, version=1.0.0]
 
 // Define new props

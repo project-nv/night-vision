@@ -1,0 +1,124 @@
+// Navy ~ 0.1-lite
+
+// <ds>Sparse data: points, squares, crosses, tringles</ds>
+// Format: [<timestamp>, <value>, <?direction>]
+// <value> :: Price/value
+// <?direction> :: Triangle direction: 1 | -1
+
+[OVERLAY name=Sparse, ctx=Canvas, author=ChartMaster, verion=1.0.0]
+
+// Overlay props
+prop('color', { type: 'Color', def: '#898989' })
+prop('size', { type: 'number', def: 3 })
+prop('shape', {
+    type: 'string',
+    def: 'point',
+    options: ['point', 'square', 'cross', 'triangle']
+})
+
+// Draw call
+draw(ctx) {
+    const layout = $core.layout
+    const view = $core.view
+
+    ctx.fillStyle = $props.color
+    ctx.strokeStyle = $props.color
+
+    switch($props.shape) {
+        case 'point':
+            drawArcs(ctx, view, layout)
+        break
+        case 'square':
+            drawSquares(ctx, view, layout)
+        break
+        case 'cross':
+            drawCrosses(ctx, view, layout)
+        break
+        case 'triangle':
+            drawTriandles(ctx, view, layout)
+        break
+    }
+}
+
+drawArcs(ctx, view, layout) {
+    const radius = $props.size
+    const data = view.src
+    ctx.beginPath()
+    for (var i = view.i1, n = view.i2; i <= n; i++) {
+        let p = data[i]
+        let x = layout.ti2x(p[0], i)
+        let y = layout.value2y(p[1])
+        ctx.moveTo(x+radius, y)
+        ctx.arc(x, y, radius, 0, Math.PI * 2, false)
+    }
+    ctx.fill()
+}
+
+drawSquares(ctx, view, layout) {
+    const half = $props.size
+    const side = half * 2
+    const data = view.src
+    ctx.beginPath()
+    for (var i = view.i1, n = view.i2; i <= n; i++) {
+        let p = data[i]
+        let x = layout.ti2x(p[0], i)
+        let y = layout.value2y(p[1])
+        ctx.moveTo(x-half, y-half)
+        ctx.lineTo(x+half, y-half)
+        ctx.lineTo(x+half, y+half)
+        ctx.lineTo(x-half, y+half)
+    }
+    ctx.fill()
+}
+
+drawCrosses(ctx, view, layout) {
+    const half = $props.size
+    const side = half * 2
+    const data = view.src
+    ctx.lineWidth = Math.max(half - 1, 1)
+    ctx.beginPath()
+    for (var i = view.i1, n = view.i2; i <= n; i++) {
+        let p = data[i]
+        let x = layout.ti2x(p[0], i)
+        let y = layout.value2y(p[1])
+        ctx.moveTo(x-half, y)
+        ctx.lineTo(x+half, y)
+        ctx.moveTo(x, y-half)
+        ctx.lineTo(x, y+half)
+    }
+    ctx.stroke()
+}
+
+drawTriandles(ctx, view, layout) {
+    const half = $props.size
+    const side = half * 2
+    const data = view.src
+    ctx.beginPath()
+    for (var i = view.i1, n = view.i2; i <= n; i++) {
+        let p = data[i]
+        let x = layout.ti2x(p[0], i)
+        let y = layout.value2y(p[1])
+        let dir = p[2] ?? 1
+        ctx.moveTo(x, y)
+        ctx.lineTo(x + side * dir * 0.63, y + side * dir)
+        ctx.lineTo(x - side * dir * 0.63, y + side * dir)
+    }
+    ctx.fill()
+}
+
+yRange() {
+    let data = $core.hub.ovDataSubset($core.paneId, $core.id)
+    let len = data.length
+    var h, l, high = -Infinity, low = Infinity
+    for(var i = 0; i < len; i++) {
+        let point = data[i][1]
+        if (point > high) high = point
+        if (point < low) low = point
+    }
+    return [high, low]
+}
+
+preSampler(x) => [x[1]]
+
+// Legend, defined as pairs [value, color]
+legend(x) => [[Math.random(), $props.color]]

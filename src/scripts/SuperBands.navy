@@ -1,0 +1,65 @@
+// Navy ~ 0.1-lite
+
+// <ds>Two bands: above and below the price (like LuxAlgo Reverse Zones)</ds>
+// Format: [<timestamp>, <high1>, <mid1>, <low1>, <high2>, <mid2>, <low2>]
+/*
+--- <high1> ---
+--- <mid1> ---
+--- <low1> ---
+~~~ price ~~~
+--- <high2> ---
+--- <mid2> ---
+--- <low2> ---
+*/
+
+[OVERLAY name=SuperBands, ctx=Canvas, author=ChartMaster, verion=1.0.0]
+
+// Overlay props
+prop('color1', { type: 'color', def: '#d80d3848' })
+prop('color1dark', { type: 'color', def: '#d80d3824' })
+prop('color2', { type: 'color', def: '#1edbbe33' })
+prop('color2dark', { type: 'color', def: '#1edbbe15' })
+
+// Draw call
+draw(ctx) {
+    const view = $core.view
+    const layout = $core.layout
+
+    ctx.fillStyle = $props.color1
+    drawBand(ctx, layout, view, 1, 2)
+
+    ctx.fillStyle = $props.color1dark
+    drawBand(ctx, layout, view, 2, 3)
+
+    ctx.fillStyle = $props.color2dark
+    drawBand(ctx, layout, view, 4, 5)
+
+    ctx.fillStyle = $props.color2
+    drawBand(ctx, layout, view, 5, 6)
+
+}
+
+
+drawBand(ctx, layout, view, i1, i2) {
+    let data = $core.view.src
+    ctx.beginPath()
+    for (var i = view.i1, n = view.i2; i <= n; i++) {
+        let p = data[i]
+        let x = layout.ti2x(p[0], i)
+        let y = layout.value2y(p[i1] || undefined)
+        ctx.lineTo(x, y)
+    }
+    for (var i = view.i2, i1 = view.i1; i >= i1; i--) {
+        let p = data[i]
+        let x = layout.ti2x(p[0], i)
+        let y = layout.value2y(p[i2] || undefined)
+        ctx.lineTo(x, y)
+    }
+    ctx.fill()
+}
+
+// Legend, defined as pairs [value, color]
+legend(x) => [
+    [x[1], $props.color1], [x[2], $props.color1], [x[3], $props.color1],
+    [x[4], $props.color2], [x[5], $props.color2], [x[6], $props.color2]
+]

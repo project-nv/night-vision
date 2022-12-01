@@ -1,0 +1,108 @@
+
+// Navy ~ 0.1-lite
+
+// <ds>Stacked arrow trades</ds>
+// Format: [<timestamp>, [<dir>, <?label> <?big>], ...]
+// <dir> :: 1 for buy -1 for sell
+// <?label> :: trade label (null for no label)
+// <?big> :: true/false, make an arrow big
+
+[OVERLAY name=ArrowTrades, ctx=Canvas, author=ChartMaster, version=1.0.0]
+
+prop('buyColor', {  type: 'color', def: '#08c65e' })
+prop('sellColor', {  type: 'color', def: '#e42633' })
+prop('size', {  type: 'number', def: 7 })
+prop('showLabels', {  type: 'boolean', def: true })
+prop('markerOutline', {  type: 'boolean', def: true })
+prop('outlineWidth', {  type: 'number', def: 4 })
+
+// Draw function (called on each update)
+// Library provides a lot of useful variables to make
+// overlays ($core in the main collection)
+draw(ctx) {
+    ctx.lineWidth = $props.outlineWidth
+    const layout = $core.layout
+    const data = $core.data // Full dataset
+    const view = $core.view // Visible view
+
+    // Fill sell trades
+    ctx.fillStyle = $props.buyColor
+    ctx.beginPath()
+    let lbls1 = iterTrades(ctx, view, data, layout, -1)
+    ctx.fill()
+
+    // Fill buy trades
+    ctx.fillStyle = $props.sellColor
+    ctx.beginPath()
+    let lbls2 = iterTrades(ctx, view, data, layout, 1)
+    ctx.fill()
+
+    // Draw labels
+    if ($props.showLabels) {
+        ctx.fillStyle = $core.colors.textHL
+        ctx.font = $core.props.config.FONT
+        let all = [...lbls1, ...lbls2]
+        drawLabels(ctx, view, layout, all)
+    }
+
+}
+
+// Iter through arcs
+iterTrades(ctx, view, data, layout, dir) {
+    let lables = []
+    for (var i = view.i1, n = view.i2; i <= n; i++) {
+        let p = data[i]
+        let ohlc = layout.ohlc(p[0])
+        if (!ohlc) continue
+        let x = layout.ti2x(p[0], i)
+        if (dir > 0) {
+            var y = layout.value2y(ohlc[1])
+        } else {
+            var y = layout.value2y(ohlc[2])
+        }
+        for (var k = 1; k < p.length; k++) {
+            if (Math.sign(p[k][0]) === dir) continue
+            let size = $props.size
+            if (p[k][2]) size *= 1.5
+            let yk = y - dir * (15 * (k - 1) + 10)
+            let align = dir < 0 ? 'right' : 'left'
+            let dy = p[k][2] ? - dir * 1 : 0
+            if (p[k][1]) {
+                lables.push([ x + 10 * dir, yk + dy, p[k][1], align])
+            }
+            drawArrow(ctx, x, yk, -dir, size)
+        }
+    }
+    return lables
+}
+
+drawArrow(ctx, x, y, dir, size) {
+    ctx.moveTo(x, y)
+    ctx.lineTo(x + size * dir * 0.63, y + size * dir)
+    ctx.lineTo(x - size * dir * 0.63, y + size * dir)
+}
+
+// Draw simple lables
+drawLabels(ctx, view, layout, lables) {
+    for (var l of lables) {
+        ctx.textAlign = l[3]
+        let dy = l[3] === 'right' ? 7 : 0
+        ctx.fillText(l[2], l[0], l[1] + dy)
+    }
+}
+
+// Not affecting the y-range
+yRange() => null
+
+// Legend formatter, Array of [value, color] pairs
+// x represents one data item e.g. [<time>, <value>]
+legend(x) {
+    let items = []
+    for (var i = 1; i < x.length; i++) {
+        items.push([
+            x[i][1] || (x[i][0] > 0 ? 'Buy' : 'Sell'),
+            x[i][0] > 0 ? $props.buyColor : $props.sellColor
+        ])
+    }
+    return items
+}

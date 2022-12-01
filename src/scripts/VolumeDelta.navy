@@ -1,0 +1,89 @@
+// Navy ~ 0.1-lite
+
+// <ds>Volume bars with delta ( = buyVol - sellVol)</ds>
+// Format: [<timestamp>, <buyVol>, <sellVol>, <total>, <delta>]
+
+[OVERLAY name=VolumeDelta, ctx=Canvas, author=ChartMaster, verion=1.0.0]
+
+// Overlay props
+prop('colorVolUp', { type: 'color', def: '#41a37682' })
+prop('colorVolDw', { type: 'color', def: '#de464682' })
+prop('colorVolDeltaUp', { type: 'color', def: '#41a376' })
+prop('colorVolDeltaDw', { type: 'color', def: '#de4646' })
+prop('barsHeight', { type: 'number', def: 0.15, step: 0.1 })
+
+// Draw call
+draw(ctx) {
+
+    let height = $core.id === 0 ? 0.8 : $props.barsHeight
+    let cnv = $lib.layoutCnv($core, false, true, 1, 4, height)
+    let bars = cnv.upVolbars.length ? cnv.upVolbars : cnv.dwVolbars
+    if (!bars.length) return
+
+    drawCvPart(ctx, $lib.volumeBar, cnv.dwVolbars, 'colorVolDw')
+    drawCvPart(ctx, $lib.volumeBar, cnv.upVolbars, 'colorVolUp')
+
+    let dwDelta = makeDelta(cnv.dwVolbars)
+    let upDelta = makeDelta(cnv.upVolbars)
+
+    drawCvPart(ctx, $lib.volumeBar, dwDelta, 'colorVolDeltaDw')
+    drawCvPart(ctx, $lib.volumeBar, upDelta, 'colorVolDeltaUp')
+
+}
+
+// Draw candle part
+drawCvPart(ctx, f, arr, color) {
+    let layout = $core.layout
+    ctx.strokeStyle = $props[color]
+    ctx.beginPath()
+    for (var i = 0, n = arr.length; i < n; i++) {
+        f(ctx, arr[i], layout)
+    }
+    ctx.stroke()
+}
+
+makeDelta(bars) {
+    let delta = []
+    for (var bar of bars) {
+        let src = bar.src
+        let k = Math.abs(src[4]) / src[3]
+        bar.h =  bar.h * k
+        delta.push(bar)
+    }
+    return delta
+}
+
+// Custom y-range
+yRange(hi, lo) {
+    // Remove this overlay for yRange calculation
+    // if it's not the main overlay of the pane
+    if ($core.id !== 0) {
+        return null
+    } else {
+        return [hi, lo, false]
+    }
+}
+
+// Legend, defined as pairs [value, color]
+legendHtml(x) {
+    let v = $core.cursor.getValue($core.paneId, $core.id)
+    let sym = $props.currencySymbol
+    let color1 = $core.colors.text
+    let color2 = v[4] > 0 ?
+        $props.colorVolDeltaUp : $props.colorVolDeltaDw
+    let fc = $lib.formatCash
+    let sign = v[4] > 0 ? '+' : ''
+    return `
+    <span style="color: ${color2}">
+        <span style="margin-left: 3px;"></span>
+        <span style="color: ${color1}">B</span>
+        <span class="nvjs-ll-value">${fc(x[1])}</span>
+        <span style="color: ${color1}">S</span>
+        <span class="nvjs-ll-value">${fc(x[2])}</span>
+        <span style="color: ${color1}">Σ</span>
+        <span class="nvjs-ll-value">${fc(x[3])}</span>
+        <span style="color: ${color1}">Δ</span>
+        <span class="nvjs-ll-value">${sign}${fc(x[4])}</span>
+    `
+    //return [[sym + fc(x[1]), color.slice(0, 7)]]
+}

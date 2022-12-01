@@ -1,0 +1,111 @@
+// Navy ~ 0.1-lite
+
+// <ds>Price labels that stick to candles</ds>
+// Format: [<timestamp>, <LabelObject>]
+// <LabelObject> {
+//   text :: string, text of the label
+//   dir :: direction, 1 = points up, -1 = points down
+//   pin :: "open" | "high" | "low" | "close"
+//   ?color :: color, text color
+//   ?back :: color, background
+//   ?stroke :: stroke color
+//   ?offset, px, offest from the pin
+// }
+
+[OVERLAY name=PriceLabels, ctx=Canvas, author=ChartMaster, verion=1.0.0]
+
+// Overlay props
+prop('color', { type: 'Color', def: $core.colors.text })
+prop('back', { type: 'Color', def: $core.colors.back })
+prop('stroke', { type: 'Color', def: $core.colors.scale })
+prop('borderRadius', { type: 'number', def: 3 })
+prop('offset', { type: 'number', def: 5 })
+
+const PINMAP = {
+    open: 0,
+    high: 1,
+    low: 2,
+    close: 3
+}
+
+// Draw call
+draw(ctx) {
+    const layout = $core.layout
+    const view = $core.view
+    const data = $core.data
+
+    ctx.font = $core.props.config.FONT
+
+    let items = calcItems(ctx, layout, view, data)
+
+    // Draw items
+    ctx.lineWidth = 1
+    ctx.textAlign = 'center'
+    for (var item of items) {
+        let off = (item.o ?? $props.offset) * item.dir
+        let dy = (item.dir > 0 ? 19 : -11)
+        item.y += off
+        ctx.strokeStyle = item.s || $props.stroke
+        ctx.fillStyle = item.b || $props.back
+        ctx.beginPath()
+        drawBody(ctx, item)
+        ctx.stroke()
+        ctx.fill()
+        ctx.fillStyle = item.c || $props.color
+        ctx.fillText(item.text, item.x, item.y + dy)
+    }
+
+
+
+    // Draw texts
+
+}
+
+calcItems(ctx, layout, view, data) {
+
+    let items = []
+    for (var i = view.i1, n = view.i2; i <= n; i++) {
+        let p = data[i]
+        let specs = p[1]
+        let ohlc = layout.ohlc(p[0])
+        if (!ohlc) continue
+        let x = layout.ti2x(p[0], i)
+        let y = layout.value2y(ohlc[PINMAP[specs.pin]])
+        let w = ctx.measureText(specs.text).width
+        let h = 20
+        let dir = specs.dir
+        items.push({
+            x, y, w, h, dir,
+            c: specs.color,
+            b: specs.back,
+            s: specs.stroke,
+            o: specs.offset,
+            text: specs.text})
+    }
+    return items
+}
+
+drawBody(ctx, item) {
+    let r = $props.borderRadius
+    let hw = item.w // half width
+    let d = - item.dir
+    let x = item.x
+    let y = item.y
+    ctx.moveTo(x, y)
+    ctx.lineTo(x + 5, y - 5 * d)
+    ctx.lineTo(x + hw - r, y - 5 * d)
+    ctx.quadraticCurveTo(x + hw, y - 5 * d, x + hw, y - (5 + r) * d)
+    ctx.lineTo(x + hw, y - (5 + item.h - r) * d)
+    ctx.quadraticCurveTo(x + hw, y - (5 + item.h) * d, x + hw - r, y - (5 + item.h) * d)
+    ctx.lineTo(x - hw + r, y - (5 + item.h) * d)
+    ctx.quadraticCurveTo(x - hw, y - (5 + item.h) * d, x - hw, y - (5 + item.h - r) * d)
+    ctx.lineTo(x - hw, y - (5 + r) * d)
+    ctx.quadraticCurveTo(x - hw, y - 5 * d, x - hw + r, y - 5 * d)
+    ctx.lineTo(x - 5, y - 5 * d)
+    ctx.lineTo(x, y)
+
+
+}
+
+// Legend, defined as pairs [value, color]
+legend(x) => [[x[1].text, x[1].color || $props.color]]
