@@ -84,7 +84,7 @@ Now, it does look much better, doesn't it? And all we did was change the overlay
 }
 ```
 
-In this example we used `Area`, which is a part of the [Built-in overlay collection](/guide/built-in/overlays.html) (here you'll find all props and their descriptions)
+In this example we used `Area`, which is a part of the [Built-in overlay collection](/guide/built-in/Candles) (here you'll find all props and their descriptions)
 
 ## 3. Candlestick chart with TA
 
@@ -292,7 +292,7 @@ const _3Y = 60 * 60 * 24 * 365 * 3 * 1000
 // Library provides a lot of useful variables to make
 // overlays ($core in the main collection)
 draw(ctx) {
-    
+
     ctx.strokeStyle = $props.back
     ctx.lineWidth = 1
     const layout = $core.layout
