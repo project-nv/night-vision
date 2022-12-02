@@ -17,9 +17,9 @@ export default {
             { text: 'Examples', link: '/guide/intro/10-basic-examples' },
             { text: 'Roadmap', link: 'https://github.com/project-nv/night-vision#roadmap' },
             {
-               text: '0.1.0',
+               text: '0.2.5',
                items: [
-                 { text: '0.1.0', link: 'https://www.npmjs.com/package/night-vision' },
+                 { text: '0.2.5', link: 'https://www.npmjs.com/package/night-vision' },
                ]
              }
         ],
@@ -130,10 +130,68 @@ export default {
             },
             {
                 text: 'Built-in Overlays',
+                collapsible: true,
+                collapsed: true,
                 items: [
                     {
-                        text: 'Overlays',
-                        link: '/guide/built-in/overlays'
+                        "text": "Area",
+                        "link": "/guide/built-in/Area"
+                    },
+                    {
+                        "text": "ArrowTrades",
+                        "link": "/guide/built-in/ArrowTrades"
+                    },
+                    {
+                        "text": "Band",
+                        "link": "/guide/built-in/Band"
+                    },
+                    {
+                        "text": "Candles",
+                        "link": "/guide/built-in/Candles"
+                    },
+                    {
+                        "text": "CandlesPlus",
+                        "link": "/guide/built-in/CandlesPlus"
+                    },
+                    {
+                        "text": "Histogram",
+                        "link": "/guide/built-in/Histogram"
+                    },
+                    {
+                        "text": "PriceLabels",
+                        "link": "/guide/built-in/PriceLabels"
+                    },
+                    {
+                        "text": "Range",
+                        "link": "/guide/built-in/Range"
+                    },
+                    {
+                        "text": "Sparse",
+                        "link": "/guide/built-in/Sparse"
+                    },
+                    {
+                        "text": "Spline",
+                        "link": "/guide/built-in/Spline"
+                    },
+                    {
+                        "text": "Splines",
+                        "link": "/guide/built-in/Splines"
+                    },
+                    {
+                        "text": "SuperBands",
+                        "link": "/guide/built-in/SuperBands"
+                    },
+                    {
+                        "text": "Trades",
+                        "link": "/guide/built-in/Trades"
+                    },
+                    {
+                        "text": "Volume",
+                        "link": "/guide/built-in/Volume"
+                    },
+                    {
+                        "text": "VolumeDelta",
+                        "link": "/guide/built-in/VolumeDelta"
                     }
                 ]
             },

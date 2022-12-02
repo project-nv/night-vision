@@ -1,6 +1,6 @@
 // Navy ~ 0.1-lite
 
-// <ds>Sparse data: points, squares, crosses, tringles</ds>
+// <ds>Sparse data: points, squares, crosses, triangles</ds>
 // Format: [<timestamp>, <value>, <?direction>]
 // <value> :: Price/value
 // <?direction> :: Triangle direction: 1 | -1
