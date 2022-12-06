@@ -39,6 +39,7 @@ let input = null
 // EVENT INTEFACE
 events.on(`grid-${id}:update-grid`, update)
 events.on(`grid-${id}:remake-grid`, make)
+events.on(`grid-${id}:propagate`, propagate)
 events.on(`grid-${id}:run-grid-task`, onTask)
 
 $:style = `
@@ -57,6 +58,8 @@ function make(event) {
     if (!hub.panes()[id]) return // If not exists
 
     // console.log(`Grid ${id} ${event || 're-made'}`)
+
+    destroyLayers()
 
     layers = makeLayers()
     renderers = mergeByCtx()
@@ -78,6 +81,13 @@ function make(event) {
 function detachInputs() {
     for (var rr of renderers) {
         rr.ref.detach()
+    }
+}
+
+// Call destroy() function on each layer
+function destroyLayers() {
+    for (var layer of layers) {
+        layer.overlay.destroy()
     }
 }
 
@@ -164,6 +174,24 @@ function update($layout = layout) {
     for (var rr of renderers) {
         events.emitSpec(`rr-${id}-${rr.id}`,
             'update-rr', layout)
+    }
+}
+
+function propagate(e) {
+    let { name, event } = e
+    for (var layer of layers) {
+        if (layer.overlay[name]) {
+            layer.overlay[name](event)
+        }
+        // TODO: reimplement
+        /*const mouse = layer.overlay.mouse
+        const keys = layer.overlay.keys
+        if (mouse.listeners) {
+            mouse.emit(name, event)
+        }
+        if (keys && keys.listeners) {
+            keys.emit(name, event)
+        }*/
     }
 }
 

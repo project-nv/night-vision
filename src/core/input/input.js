@@ -28,6 +28,7 @@ export default class Input {
         this.props = comp.props
         this.layout = comp.layout
         this.rrId = comp.rrUpdId
+        this.gridUpdId = comp.gridUpdId
         this.gridId = comp.id
         this.cursor = {} // TODO: implement
         this.oldMeta = {} // TODO: implement
@@ -47,7 +48,7 @@ export default class Input {
     }
 
     mouseEvents(cmd) {
-        ['mousemove', 'mouseout', 'mouseup', 'mousedown']
+        ['mousemove', 'mouseout', 'mouseup', 'mousedown', 'click']
         .forEach(e => {
             if (cmd === 'addEventListener') {
                 // Save the handler to remove it later
@@ -429,20 +430,9 @@ export default class Input {
 
     // Propagate mouse event to overlays
     propagate(name, event) {
-        // TODO: reimplement
-        /*for (var layer of this.overlays) {
-            if (layer.renderer[name]) {
-                layer.renderer[name](event)
-            }
-            const mouse = layer.renderer.mouse
-            const keys = layer.renderer.keys
-            if (mouse.listeners) {
-                mouse.emit(name, event)
-            }
-            if (keys && keys.listeners) {
-                keys.emit(name, event)
-            }
-        }*/
+        this.events.emitSpec(this.gridUpdId, 'propagate', {
+            name, event
+        })
     }
 
     destroy() {

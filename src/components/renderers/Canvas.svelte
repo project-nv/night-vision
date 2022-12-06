@@ -18,6 +18,7 @@ export let layout = {} // Grid layout
 let events = Events.instance(props.id)
 
 let rrUpdId = `rr-${id}-${rr.id}`
+let gridUpdId = `grid-${id}`
 let rrId = `${props.id}-rr-${id}-${rr.id}`
 let canvasId = `${props.id}-canvas-${id}-${rr.id}`
 
@@ -51,7 +52,9 @@ onDestroy(() => {
 // Remove input listeners on renderer dostroy() event
 export function attach($input) {
     input = $input
-    input.setup({id, canvas, ctx, props, layout, rrUpdId})
+    input.setup({
+        id, canvas, ctx, props, layout, rrUpdId, gridUpdId
+    })
 }
 
 export function detach() {

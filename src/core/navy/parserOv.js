@@ -182,6 +182,16 @@ export default class ParserOV {
             var valueTracker = null
             var ohlc = null
 
+            // Event handler stubs
+            var mousemove = null
+            var mouseout = null
+            var mouseup = null
+            var mousedown = null
+            var click = null
+            var keyup = null
+            var keydown = null
+            var keypress = null
+
             // Overlay code
             ${code}
 
@@ -194,6 +204,9 @@ export default class ParserOV {
                 yRange, preSampler,
                 legend, legendHtml,
                 valueTracker, ohlc,
+                mousemove, mouseout, mouseup,
+                mousedown, click, keyup, keydown,
+                keypress,
                 // Generated flags
                 ${flags}
             }
