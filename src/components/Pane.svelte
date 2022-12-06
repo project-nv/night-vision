@@ -2,7 +2,7 @@
 
 // Pane component: combines grid, sidebars & legend
 
-import { onMount } from 'svelte'
+import { onMount, onDestroy } from 'svelte'
 import Grid from './Grid.svelte'
 import Sidebar from './Sidebar.svelte'
 import SidebarStub from './SidebarStub.svelte'
@@ -37,6 +37,10 @@ events.on(`pane-${id}:update-pane`, update)
 
 onMount(() => {
     // console.log(`Pane ${id} mounted`)
+})
+
+onDestroy(() => {
+    events.off(`pane-${id}`)
 })
 
 // Send updates to all child components

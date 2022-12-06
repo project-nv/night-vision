@@ -5,14 +5,15 @@
 // Input: props (tf, range, ...), overlay scripts, data
 // Output: bunch of renderers, each for different context
 
-import { onMount } from 'svelte'
+import { onMount, onDestroy } from 'svelte'
 import Scripts from '../core/scripts.js'
 import DataHub from '../core/dataHub.js'
 import MetaHub from '../core/metaHub.js'
 import Events from '../core/events.js'
 import OverlayEnv from '../core/navy/overlayEnv.js'
 import Layer from '../core/layer.js'
-import Input from '../core/input/input.js'
+import Pointer from '../core/input/pointer.js'
+import Keyboard from '../core/input/keyboard.js'
 import Crosshair from '../core/primitives/crosshair.js'
 import Grid from '../core/primitives/grid.js'
 import Trackers from '../core/primitives/trackers.js'
@@ -35,6 +36,7 @@ let scripts = Scripts.instance(props.id)
 let layers = []
 let renderers = []
 let input = null
+let keyboard = null
 
 // EVENT INTEFACE
 events.on(`grid-${id}:update-grid`, update)
@@ -51,6 +53,12 @@ $:style = `
 
 onMount(() => {
     make('mounted')
+    keyboard = new Keyboard(`grid-${id}`, events)
+})
+
+onDestroy(() => {
+    events.off(`grid-${id}`)
+    keyboard.off()
 })
 
 function make(event) {
@@ -72,7 +80,7 @@ function make(event) {
             // TODO: when grid is 're-made', input
             // internal state is lost, need to store it,
             // or just reuse the input instance
-            last.ref.attach(input = new Input())
+            last.ref.attach(input = new Pointer())
         }
     })
 }
