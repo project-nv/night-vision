@@ -2,6 +2,7 @@
 // NavyScript parser
 
 import ParserOV from './parserOv.js'
+import ParserIND from './parserInd.js'
 
 const VERSION = 0.1
 const TAG = 'lite'
@@ -39,6 +40,7 @@ export default class Parser {
         }
 
         this.overlayTags()
+        this.indicatorTags()
     }
 
     // Parse the version

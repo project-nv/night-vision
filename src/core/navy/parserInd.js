@@ -3,12 +3,9 @@
 
 import tools from './tools.js'
 
-// Functions with brackets: fname() { }
-/*const FREGX1 = /(function[\s]+|)([$A-Z_][0-9A-Z_$\.]*)[\s]*?\(([^()]*?)\)[\s]*?{/gmi
-const FREGX2 = /(function[\s]+|)([$A-Z_][0-9A-Z_$\.]*)[\s]*?\(([^()]*?)\)[\s]*?=>[\s]*?{/gmi
-const FREGX3 = /(function[\s]+|)([$A-Z_][0-9A-Z_$\.]*)[\s]*?\(([^()]*?)\)[\s]*?=>/gmi
-
-const KWORDS = ['if', 'for', 'while', 'switch', 'catch', 'with']*/
+const SPLIT = /\[[\s]*?UPDATE[\s]*?\]|\[[\s]*?POST[\s]*?\]/gm
+const UPDATE = /\[[\s]*?UPDATE[\s]*?\]([\s\S]*?)(\[POST|\[UPDATE|\[EOF)/gm
+const POST = /\[[\s]*?POST[\s]*?\]([\s\S]*?)(\[POST|\[UPDATE|\[EOF)/gm
 
 export default class ParserIND {
 
@@ -35,9 +32,17 @@ export default class ParserIND {
 
     parseBody() {
 
-        let code = tools.decomment(this.src)
+        SPLIT.lastIndex = 0
+        UPDATE.lastIndex = 0
+        POST.lastIndex = 0
 
-        // ...
+        let code = tools.decomment(this.src) + '\n[EOF]'
+
+        this.init = code.split(SPLIT)[0]
+        this.update = (UPDATE.exec(code) || [])[1]
+        this.post = (POST.exec(code) || [])[1]
+
+        console.log(this)
 
     }
 }
