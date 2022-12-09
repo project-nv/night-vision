@@ -6,7 +6,8 @@ import ParserOV from './parserOv.js'
 const VERSION = 0.1
 const TAG = 'lite'
 const VERS_REGX = /\/\*[\s\S]*?\*\/|([^\\:]|^)\/\/.*$/gm
-const OV_REGX = /\[OVERLAY[\s]+([\s\S]*?)]([\s\S]*?)(\[OVERLAY|\[SCRIPT|\[EOF)/gm
+const OV_REGX = /\[OVERLAY[\s]+([\s\S]*?)]([\s\S]*?)(\[OVERLAY|\[INDICATOR|\[EOF)/gm
+const IND_REGX = /\[INDICATOR[\s]+([\s\S]*?)]([\s\S]*?)(\[OVERLAY|\[INDICATOR|\[EOF)/gm
 
 export default class Parser {
 
@@ -59,6 +60,7 @@ export default class Parser {
 
     // Parse [OVERLAY] tags
     overlayTags() {
+        OV_REGX.lastIndex = 0
         var match
         while (match = OV_REGX.exec(this.src)) {
             this.overlays.push(new ParserOV(
@@ -67,6 +69,18 @@ export default class Parser {
             ))
             OV_REGX.lastIndex -= 10 // Exclude stopping tags
         }
+    }
 
+    // Parse [INDICATOR] tags
+    indicatorTags() {
+        IND_REGX.lastIndex = 0
+        var match
+        while (match = IND_REGX.exec(this.src)) {
+            this.overlays.push(new ParserIND(
+                match[1],
+                match[2]
+            ))
+            IND_REGX.lastIndex -= 12 // Exclude stopping tags
+        }
     }
 }

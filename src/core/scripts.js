@@ -8,11 +8,15 @@ import Parser from '../core/navy/parser.js'
 const Overlays = import.meta.glob(
     '../scripts/*.navy', { eager: true })
 
+const Indicators = import.meta.glob(
+    '../scripts/indicators/*.navy', { eager: true })
+
 class Scripts {
 
     init(srcs) {
 
         this.srcLib = Object.values(Overlays).map(x => x.default)
+        this.srcLib.push(...Object.values(Indicators).map(x => x.default))
         this.srcLib.push(...srcs)
         this.prefabs = {} // Overlay prefabs
         this.parse()

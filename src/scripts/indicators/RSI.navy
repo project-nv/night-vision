@@ -1,0 +1,30 @@
+
+// Navy ~ 0.1-lite
+
+[INDICATOR name=RSI]
+
+prop('length', { type: 'integer', def: 14 })
+prop('color', { type: 'color', def: '#39f' })
+legendName('RSI, {length}')
+
+[UPDATE]
+
+range(rsi(close, length))
+/*
+
+range([t, rsi(close, length)], {
+    settings: {
+        zIndex: 1
+    },
+    props: {
+        color: '#fff'
+    }
+})
+
+pane.self.range(rsi(close, length))
+
+*/
+
+[POST]
+
+// Post-updates
