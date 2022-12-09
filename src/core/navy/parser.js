@@ -20,7 +20,7 @@ export default class Parser {
         this.scriptVers = this.navyVers()[0]
         this.scriptTag = this.navyVers()[1]
         this.overlays = []
-        this.scripts = []
+        this.indicators = []
 
         if (this.scriptVers === 0) {
             console.warn(`${name}: There is no script version string`)
@@ -78,7 +78,7 @@ export default class Parser {
         IND_REGX.lastIndex = 0
         var match
         while (match = IND_REGX.exec(this.src)) {
-            this.overlays.push(new ParserIND(
+            this.indicators.push(new ParserIND(
                 match[1],
                 match[2]
             ))

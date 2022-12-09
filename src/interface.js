@@ -7,6 +7,7 @@ import MetaHub from './core/metaHub.js'
 import DataScan from './core/dataScanner.js'
 import Scripts from './core/scripts.js'
 import Events from './core/events.js'
+import WebWork from './core/se/webWork.js'
 
 import resizeTracker from './stuff/resizeTracker.js'
 
@@ -18,6 +19,9 @@ class NightVision {
         this._scripts = props.scripts || []
 
         let id = props.id || 'nvjs'
+
+        // Script engine web-worker interface
+        this.ww = WebWork.instance(id, this)
 
         // Singleton stores for data & scripts
         this.hub = DataHub.instance(id)

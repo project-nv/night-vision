@@ -16,6 +16,8 @@ export default class ParserIND {
 
         this.parseBody()
 
+        
+
     }
 
     parseTagProps(src) {
@@ -36,13 +38,12 @@ export default class ParserIND {
         UPDATE.lastIndex = 0
         POST.lastIndex = 0
 
-        let code = tools.decomment(this.src) + '\n[EOF]'
+        let code = tools.decomment(this.src)
 
         this.init = code.split(SPLIT)[0]
+        code += '\n[EOF]'
         this.update = (UPDATE.exec(code) || [])[1]
         this.post = (POST.exec(code) || [])[1]
-
-        console.log(this)
 
     }
 }
