@@ -74,6 +74,7 @@ onMount(() => {
 
     hub.calcSubset(range)
     hub.detectMain()
+    hub.loadScripts(range, scan.tf)
     meta.init(props)
 
     scan.updatePanesHash()
@@ -158,6 +159,7 @@ function fullUpdate(opt = {}) {
     hub.calcSubset(range)
     hub.init(hub.data)
     hub.detectMain()
+    hub.loadScripts(range, scan.tf)
     meta.store()
     meta.init(props)
     scan.updatePanesHash()

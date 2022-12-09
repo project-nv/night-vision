@@ -5,15 +5,19 @@
 
 import Utils from '../stuff/utils.js'
 import Events from './events.js'
+import WebWork from './se/webWork.js'
 import DataView$ from './dataView.js'
 
 class DataHub {
 
     #events
+    #ww
     constructor(nvId) {
 
         let events = Events.instance(nvId)
+        let ww = WebWork.instance(nvId)
         this.#events = events
+        this.#ww = ww
 
         // EVENT INTERFACE
         events.on('hub:set-scale-index', this.onScaleIndex.bind(this))
@@ -75,6 +79,28 @@ class DataHub {
             // Flag that pane is ready for rendering
             pane.uuid = pane.uuid || Utils.uuid3()
         }
+    }
+
+    // Load indicator scripts
+    async loadScripts(range, tf) {
+        for (var pane of this.data.panes || []) {
+            var scriptId = 0
+            pane.scripts = pane.scripts || []
+            for (var s of pane.scripts) {
+                s.props = s.props || {}
+                s.uuid = s.uuid || Utils.uuid3()
+            }
+        }
+        let map = {}
+        this.panes().forEach(x => {
+            map[x.uuid] = x.scripts
+        })
+        await this.#ww.exec('upload-data', {
+            range: range,
+            tf: tf,
+            data: this.mainOv.data
+        })
+        await this.#ww.exec('exec-all-scripts', map)
     }
 
     // Detect the main chart, define offcharts
