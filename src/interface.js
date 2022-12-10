@@ -8,6 +8,7 @@ import DataScan from './core/dataScanner.js'
 import Scripts from './core/scripts.js'
 import Events from './core/events.js'
 import WebWork from './core/se/webWork.js'
+import SeClient from './core/se/seClient.js'
 
 import resizeTracker from './stuff/resizeTracker.js'
 
@@ -20,8 +21,9 @@ class NightVision {
 
         let id = props.id || 'nvjs'
 
-        // Script engine web-worker interface
+        // Script engine & web-worker interfaces
         this.ww = WebWork.instance(id, this)
+        this.se = SeClient.instance(id, this)
 
         // Singleton stores for data & scripts
         this.hub = DataHub.instance(id)

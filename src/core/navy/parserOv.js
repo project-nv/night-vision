@@ -6,8 +6,6 @@
 
 // TODO: check overlay names collisions, when [export=true]
 
-// TODO: destroy() handler
-
 // TODO: way to define primitives, maybe with [PRIMITIVE] tag
 
 import tools from './tools.js'
@@ -199,7 +197,7 @@ export default class ParserOV {
             return {
                 gridId: () => $core.layout.id,
                 id: () => $core.id,
-                init, meta, dataFormat,
+                init, destroy, meta, dataFormat,
                 draw, drawSidebar, drawBotbar,
                 yRange, preSampler,
                 legend, legendHtml,

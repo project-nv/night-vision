@@ -5,19 +5,18 @@
 
 import Utils from '../stuff/utils.js'
 import Events from './events.js'
-import WebWork from './se/webWork.js'
+import SeClient from './se/seClient.js'
 import DataView$ from './dataView.js'
 
 class DataHub {
 
-    #events
-    #ww
     constructor(nvId) {
 
         let events = Events.instance(nvId)
-        let ww = WebWork.instance(nvId)
-        this.#events = events
-        this.#ww = ww
+        let se = SeClient.instance(nvId)
+        this.events = events
+        this.se = se
+        se.hub = this // Set a ref to the hub
 
         // EVENT INTERFACE
         events.on('hub:set-scale-index', this.onScaleIndex.bind(this))
@@ -91,16 +90,7 @@ class DataHub {
                 s.uuid = s.uuid || Utils.uuid3()
             }
         }
-        let map = {}
-        this.panes().forEach(x => {
-            map[x.uuid] = x.scripts
-        })
-        await this.#ww.exec('upload-data', {
-            range: range,
-            tf: tf,
-            data: this.mainOv.data
-        })
-        await this.#ww.exec('exec-all-scripts', map)
+        this.se.uploadScripts(range, tf)
     }
 
     // Detect the main chart, define offcharts
@@ -190,7 +180,7 @@ class DataHub {
         // display the correct Scale
         pane.settings.scaleSideIdxs = event.sideIdxs
 
-        this.#events.emitSpec('chart', 'update-layout')
+        this.events.emitSpec('chart', 'update-layout')
     }
 
     onDisplayOv(event) {
@@ -206,8 +196,8 @@ class DataHub {
         // Legend-line id
         let llId = `${event.paneId}-${event.ovId}`
 
-        this.#events.emitSpec('chart', 'update-layout')
-        this.#events.emitSpec(`ll-${llId}`, 'update-ll')
+        this.events.emitSpec('chart', 'update-layout')
+        this.events.emitSpec(`ll-${llId}`, 'update-ll')
 
     }
 

@@ -6,7 +6,7 @@ import WebWorker from './worker.js?worker'
 
 class WebWork {
 
-    constructor(chart) {
+    constructor(id, chart) {
         this.chart = chart
         this.tasks = {}
         this.onevent = () => {}

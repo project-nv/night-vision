@@ -7,12 +7,12 @@ import Events from './events.js'
 import DataHub from './dataHub.js'
 
 class MetaHub {
-    #events
+
     constructor(nvId) {
 
         let events = Events.instance(nvId)
         this.hub = DataHub.instance(nvId)
-        this.#events = events
+        this.events = events
 
         // EVENT INTERFACE
         events.on('meta:sidebar-transform', this.onYTransform.bind(this))
@@ -117,8 +117,8 @@ class MetaHub {
         this.restore()
         this.calcOhlcMap()
         setTimeout(() => {
-            this.#events.emitSpec('chart', 'update-layout')
-            this.#events.emit('update-legend')
+            this.events.emitSpec('chart', 'update-layout')
+            this.events.emit('update-legend')
         })
     }
 
@@ -193,14 +193,14 @@ class MetaHub {
         yts[event.scaleId] = Object.assign(tx, event)
         this.yTransforms[event.gridId] = yts
         if (event.updateLayout) {
-            this.#events.emitSpec('chart', 'update-layout')
+            this.events.emitSpec('chart', 'update-layout')
         }
     }
 
     // User tapped legend & selected the overlay
     onOverlaySelect(event) {
         this.selectedOverlay = event.index
-        this.#events.emit('$overlay-select', {
+        this.events.emit('$overlay-select', {
             index: event.index,
             ov: this.hub.overlay(...event.index)
         })
@@ -209,7 +209,7 @@ class MetaHub {
     // User tapped grid (& deselected all overlays)
     onGridMousedown(event) {
         this.selectedOverlay = undefined
-        this.#events.emit('$overlay-select', {
+        this.events.emit('$overlay-select', {
             index: undefined,
             ov: undefined
         })
