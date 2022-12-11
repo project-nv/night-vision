@@ -12,17 +12,25 @@ class SeClient {
 
     }
 
-    async uploadScripts(range, tf) {
-        let map = {}
-        this.hub.panes().forEach(x => {
-            map[x.uuid] = x.scripts
-        })
+    async uploadData(range, tf) {
         await this.ww.exec('upload-data', {
-            range: range,
-            tf: tf,
-            data: this.hub.mainOv.data
+            meta: {
+                range: range,
+                tf: tf,
+            },
+            dss: {
+                ohlcv: this.hub.mainOv.data
+            }
         })
-        await this.ww.exec('exec-all-scripts', map)
+    }
+
+    async execScripts() {
+        let list = this.hub.panes().map(x => ({
+            id: x.id,
+            uuid: x.uuid,
+            scripts: x.scripts
+        }))
+        await this.ww.exec('exec-all-scripts', list)
     }
 }
 

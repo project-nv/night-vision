@@ -86,11 +86,13 @@ class DataHub {
             var scriptId = 0
             pane.scripts = pane.scripts || []
             for (var s of pane.scripts) {
+                s.settings = s.settings || {}
                 s.props = s.props || {}
                 s.uuid = s.uuid || Utils.uuid3()
             }
         }
-        this.se.uploadScripts(range, tf)
+        await this.se.uploadData(range, tf)
+        await this.se.execScripts()
     }
 
     // Detect the main chart, define offcharts

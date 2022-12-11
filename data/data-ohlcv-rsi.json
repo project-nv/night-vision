@@ -33611,8 +33611,13 @@
         }],
         "scripts": [{
             "type": "RSI",
+            "settings": {
+                "execOrder": 1,
+                "execOnRange": false,
+                "execInterval": 0
+            },
             "props": {
-                "length": 14 
+                "length": 14
             }
         }]
     }]

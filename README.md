@@ -58,8 +58,9 @@ chart.data = {
 - ~~Add stocks support (Index-Based mode)~~
 - ~~Improve the layout: x/y axis calculation~~
 - ~~Expand the built-in overlay collection~~
+- ~~Add keyboard & mouse events~~
 - **Port the script system from TVJS**
-- Add keyboard & mouse events
+- Create a built-in indicator collection
 - NavyJS tutorial
 - Data API (the high-level API)
 - Add tool overlays

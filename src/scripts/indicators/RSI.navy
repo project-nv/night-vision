@@ -9,7 +9,7 @@ legendName('RSI, {length}')
 
 [UPDATE]
 
-range(rsi(close, length))
+Range(rsi(close, length)[0])
 /*
 
 range([t, rsi(close, length)], {
@@ -21,7 +21,7 @@ range([t, rsi(close, length)], {
     }
 })
 
-pane.self.range(rsi(close, length))
+pane.self.Range(rsi(close, length)[0])
 
 */
 
