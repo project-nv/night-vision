@@ -182,13 +182,16 @@ export default class ScriptEnv {
                 let fkeyword = m[1].trim()
                 let fname = m[2]
                 let fargs = m[3]
+                //console.log('---')
                 //console.log(fkeyword, fname, fargs)
                 if (fkeyword === 'function') {
                     // TODO: add _ids to inline functions
                 } else {
                     let off = m.index + m[0].indexOf('(')
                     let i1 = m.index
-                    let i2 = m.index + m[0].length
+                    let m0 = this.parentheses(m[0])
+                    let i2 = m.index + m0.length
+                    let args2 = this.args2(m[0])
                     // Std Functions
                     if (this.std[fname]) {
                         src = this.postfix(src, m, ++call_id)
@@ -199,7 +202,7 @@ export default class ScriptEnv {
                         off+= 10 // 'pane.self.'
                         let utsid = `_pref+"f${++call_id}"`
                         src = this.replace(src,
-                            `pane.self.${fname}(${fargs}, ${utsid})`,
+                            `pane.self.${fname}(${args2}, ${utsid})`,
                             i1, i2
                         )
                     // pane.self.<OverlayType>(...) function
@@ -207,7 +210,7 @@ export default class ScriptEnv {
                         fname.split('.').pop() in prefabs) {
                         let utsid = `_pref+"f${++call_id}"`
                         src = this.replace(src,
-                            `${fname}(${fargs}, ${utsid})`,
+                            `${fname}(${args2}, ${utsid})`,
                             i1, i2
                         )
                     }
@@ -256,6 +259,24 @@ export default class ScriptEnv {
             }
             if (first && count === 0) {
                 return str.substr(0, i+1)
+            }
+        }
+        return str
+    }
+
+    args2(str) {
+        var count = 0, first = false
+        var i1 = 0
+        for (var i = 0; i < str.length; i++) {
+            if (str[i] === '(') {
+                count++
+                if (!first) i1 = i + 1
+                first = true
+            } else if (str[i] === ')') {
+                count--
+            }
+            if (first && count === 0) {
+                return str.substring(i1, i)
             }
         }
         return str
