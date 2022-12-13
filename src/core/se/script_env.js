@@ -8,6 +8,7 @@ import ScriptStd from './script_std.js'
 import se from './script_engine.js'
 import * as u from './script_utils.js'
 import TS from './script_ts.js'
+import Pane from './pane.js'
 
 const FDEFS1 = /(function |)([$A-Z_][0-9A-Z_$\.]*)[\s]*?\((.*?\s*)\)/mi
 const FDEFS2 = /(function |)([$A-Z_][0-9A-Z_$\.]*)[\s]*?\((.*\s*)\)/gmis
@@ -26,10 +27,12 @@ export default class ScriptEnv {
         this.syms = {}
         this.views = {}
         this.shared = data
-        this.output.box_maker = this.make_box(s.src)
+        this.output.box_maker = this.make_box()
+//console.log(this.output.box_maker.toString())
         this.chart = {}
         this.onchart = {}
         this.offchart = {}
+        this.pane = new Pane(this)
     }
 
     build() {
@@ -94,8 +97,9 @@ export default class ScriptEnv {
 
     // A small sandbox for a particular script
     // TODO: add support of 'Source' prop type (open, high, hl2 ...)
-    make_box(src) {
+    make_box() {
 
+        let code = this.src.code
         let proto = Object.getPrototypeOf(this.std)
         let std = ``
         for (var k of Object.getOwnPropertyNames(proto)) {
@@ -103,17 +107,8 @@ export default class ScriptEnv {
             std += `const std_${k} = self.std.${k}.bind(self.std)\n`
         }
 
-        let props = ``
-        for (var k in src.props || {}) {
-            if (src.props[k].val !== undefined) {
-                var val = src.props[k].val
-            } else if (this.src.sett[k] !== undefined) {
-                val = this.src.sett[k]
-            } else {
-                val = src.props[k].def
-            }
-            props += `var ${k} = ${JSON.stringify(val)}\n`
-        }
+        // TODO: Replace $someVar with $props.someVar
+
         // TODO: add argument values to _id
 
         let tss = ``
@@ -123,17 +118,17 @@ export default class ScriptEnv {
             }
         }
 
-        // Datasets
+        // TODO: Datasets
         let dss = ``
-        for (var k in src.data || {}) {
-            let id = se.match_ds(this.id, src.data[k].type)
+        /*for (var k in code.data || {}) {
+            let id = se.match_ds(this.id, code.data[k].type)
             if (!this.shared.dss[id]) {
-                let T = src.data[k].type
+                let T = code.data[k].type
                 console.warn(`Dataset '${T}' is undefined`)
                 continue
             }
             dss += `const ${k} = shared.dss['${id}'].data\n`
-        }
+        }*/
 
         try {
             return Function('self,shared,se', `
@@ -154,25 +149,26 @@ export default class ScriptEnv {
                 ${dss}
 
                 // Script's properties (init)
-                ${props}
+                const $props = self.src.props
 
                 // Globals
-                const settings = self.src.sett
+                const settings = self.src.settings
                 const tf = shared.tf
                 const range = shared.range
+                const pane = self.pane
 
                 this.init = (_id = 'root') => {
-                    ${this.prep(src.init)}
+                    ${this.prep(code.init)}
                 }
 
                 this.update = (_id = 'root') => {
                     const t = shared.t()
                     const iter = shared.iter()
-                    ${this.prep(src.update)}
+                    ${this.prep(code.update)}
                 }
 
                 this.post = (_id = 'root') => {
-                    ${this.prep(src.post_src)}
+                    ${this.prep(code.post)}
                 }
             `)
         } catch(e) {
@@ -209,6 +205,7 @@ export default class ScriptEnv {
 
         FDEFS2.lastIndex = 0
         let call_id = 0 // Function call id (to make each call unique)
+        let prefabs = self.scriptLib.prefabs
 
         do {
             var m = FDEFS2.exec(src)
@@ -225,7 +222,17 @@ export default class ScriptEnv {
                         src = this.postfix(src, m, ++call_id)
                         //console.log(src)
                         off+=4 // 'std_'
+                    } else if (fname in prefabs) {
+                        let i1 = m.index
+                        let i2 = m.index + m[0].length
+                        off+= 10 // 'pane.self.'
+                        let utsid = `_pref+"f${++call_id}"`
+                        src = this.replace(src,
+                            `pane.self.${fname}(${fargs}, ${utsid})`,
+                            i1, i2
+                        )
                     }
+
                     // Quick fix
                     FDEFS2.lastIndex = off
                 }
@@ -252,6 +259,11 @@ export default class ScriptEnv {
 
         return src.replace(m0, `std_${m[2]}(${args.join(', ')})`)
 
+    }
+
+    // Insert string into text
+    replace(src, str, i1, i2) {
+         return [src.slice(0, i1), str, src.slice(i2)].join('')
     }
 
     parentheses(str) {

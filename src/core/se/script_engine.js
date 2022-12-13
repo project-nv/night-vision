@@ -25,12 +25,12 @@ class ScriptEngine {
         this.tf = undefined     // Main chart TF
     }
 
-    async exec_all(struct) {
+    async exec_all() {
 
         // Wait for the data
         if (!this.data.ohlcv) return
 
-        this.map = this.struct_to_map(struct)
+        this.map = this.struct_to_map(self.paneStruct)
 
         if (!this.init_state()) return
         this.init_map()
@@ -40,9 +40,7 @@ class ScriptEngine {
             this.drain_queues()
         }
         /*this.send_state()*/
-
-
-    console.log(this)
+console.log(self.paneStruct)
     }
 
     // Exec selected
@@ -88,7 +86,7 @@ class ScriptEngine {
         let script = self.scriptLib.iScripts[s.type]
         if (!script) return console.log('Unknown script: ', s.type)
 
-        s.src = {
+        s.code = {
             init: script.code.init || '',
             update: script.code.update || '',
             post: script.code.post || ''

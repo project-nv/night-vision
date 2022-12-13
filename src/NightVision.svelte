@@ -90,6 +90,7 @@ $:style = `
 }
 .night-vision {
     position: relative;
+    direction: ltr; /* TODO: Explore */
 }
 </style>
 <!-- Main component  -->

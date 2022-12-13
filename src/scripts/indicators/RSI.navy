@@ -5,11 +5,12 @@
 
 prop('length', { type: 'integer', def: 14 })
 prop('color', { type: 'color', def: '#39f' })
-legendName('RSI, {length}')
-
+//legendName('Range', 'RSI, $length')
 [UPDATE]
 
-Range(rsi(close, length)[0])
+Range(rsi(close, $props.length)[0], {
+    name: 'RSI, ' + $props.length
+})
 /*
 
 range([t, rsi(close, length)], {

@@ -15,8 +15,8 @@ const SYMSTD = /(?:hl2|hlc3|ohlc4)/gm
 export default {
 
     parse(s) {
-        let ss = s.src
-        let all = `${ss.init}\n${ss.update}\n${ss.post_src}`
+        let ss = s.code
+        let all = `${ss.init}\n${ss.update}\n${ss.post}`
 
         SYMTF.lastIndex = 0
         FNSTD.lastIndex = 0

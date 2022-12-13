@@ -45,6 +45,8 @@ export default class ScriptStd {
                 case 'offchart':
                 case 'sym':
                 case 'view':
+                case 'prop':
+                case 'legendName':
                     continue
 
             }
@@ -52,6 +54,26 @@ export default class ScriptStd {
             if (f) this[k] = f
         }
 
+    }
+
+    /**
+     * Declare new script property
+     * @param {string} name - Propery name
+     * @param {string} descr - Propery descriptor
+     */
+    prop(name, descr) {
+        let props = this.env.src.props
+        if (!(name in props)) {
+            props[name] = descr.def
+        }
+    }
+
+    /**
+     * Sets legend name template
+     * @param {string} temp - Template, e.g.: `Smth $prop1, $prop2 ...`
+     */
+    legendName(temp) {
+        // TODO: Implement
     }
 
     // Add index tracking to the function

@@ -10,6 +10,9 @@ import { DatasetWW} from './dataset.js'
 // Storage of indicators & overlays
 self.scriptLib = {}
 
+// Pane structure
+self.paneStruct = {}
+
 // DC => WW
 self.onmessage = async e => {
     //console.log('Worker got:', e.data.type)
@@ -36,7 +39,8 @@ self.onmessage = async e => {
             break
         case 'exec-all-scripts':
             console.log('EXEC', e.data.data)
-            se.exec_all(e.data.data)
+            self.paneStruct = e.data.data
+            se.exec_all()
             break
         case 'update-data':
             DatasetWW.update_all(se, e.data.data)
