@@ -66,7 +66,7 @@ export default class Pane {
             name: specs.name ?? name,
             type: type,
             settings: specs.settings ?? {},
-            props: this.env.src.props,
+            props: specs.props ?? {},
             //uuid: Utils.uuid3(),
             prod: this.scriptId,
             data: []

@@ -26,7 +26,6 @@ class ScriptEngine {
     }
 
     async exec_all() {
-
         // Wait for the data
         if (!this.data.ohlcv) return
 
@@ -39,8 +38,8 @@ class ScriptEngine {
             await this.run()
             this.drain_queues()
         }
-        /*this.send_state()*/
-console.log(self.paneStruct)
+        this.send_state()
+
     }
 
     // Exec selected
@@ -336,7 +335,7 @@ console.log(self.paneStruct)
         this.perf = Utils.now() - t1
         this.running = false
 
-        this.send('overlay-data', this.format_map(sel))
+        this.send('overlay-data', this.format_data())
     }
 
     step(data, unshift = true) {
@@ -398,40 +397,12 @@ console.log(self.paneStruct)
         }
     }
 
-    format_map(sel, range, output) {
-        sel = sel || Object.keys(this.map)
-        let res = []
-        for (var id of sel) {
-            let x = this.map[id]
-            let f = x => x
-            if ((x.output === false || x.output === 'none') &&
-                !output) {
-                res.push({id: id, data: null})
-                continue
-            }
-            // TODO: allow to make views without range limit
-            // even if the mode is 'range'
-            if (x.output === 'range' || range) {
-                var [t1, t2] = range || this.range
-                f = x => x.filter(
-                    y => y[0] >= t1 && y[0] <= t2
-                )
-            }
-            res.push({
-                id: id, data: f(x.env.data), new_ovs: {
-                    chart: u.ovf(x.env.chart, f),
-                    onchart: u.ovf(x.env.onchart, f),
-                    offchart: u.ovf(x.env.offchart, f)
-                }
-            })
-        }
-        if (this.custom_main) {
-            res.push({
-                id: 'chart',
-                data: this.data.ohlcv.data
-            })
-        }
-        return res
+    format_data() {
+        return self.paneStruct.map(x => ({
+            id: x.id,
+            uuid: x.uuid,
+            overlays: x.overlays
+        }))
     }
 
     format_update() {

@@ -159,7 +159,8 @@ function fullUpdate(opt = {}) {
     hub.calcSubset(range)
     hub.init(hub.data)
     hub.detectMain()
-    hub.loadScripts(range, scan.tf)
+    // TODO: load only if scripts changed
+    //hub.loadScripts(range, scan.tf)
     meta.store()
     meta.init(props)
     scan.updatePanesHash()

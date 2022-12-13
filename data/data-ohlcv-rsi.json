@@ -33608,7 +33608,8 @@
             ],
             "settings": {},
             "props": {}
-        }],
+        }]
+    }, {
         "scripts": [{
             "type": "RSI",
             "settings": {

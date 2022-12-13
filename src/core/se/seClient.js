@@ -9,7 +9,17 @@ class SeClient {
 
         this.chart = chart
         this.ww = chart.ww
+        this.ww.onevent = this.onEvent.bind(this)
 
+    }
+
+    // Listen to the events from web-worker
+    onEvent(e) {
+        switch (e.data.type) {
+            case 'overlay-data':
+                this.onOverlayData(e.data.data)
+            break
+        }
     }
 
     async uploadData(range, tf) {
@@ -31,6 +41,20 @@ class SeClient {
             scripts: x.scripts
         }))
         await this.ww.exec('exec-all-scripts', list)
+    }
+
+    // Event handlers
+
+    onOverlayData(data) {
+        for (var pane of this.hub.panes()) {
+            // Filter old produced overlays
+            pane.overlays = pane.overlays.filter(x => !x.prod)
+            let p = data.find(x => x.uuid === pane.uuid)
+            if (p && p.overlays) {
+                pane.overlays.push(...p.overlays)
+            }
+        }
+        this.chart.update()
     }
 }
 

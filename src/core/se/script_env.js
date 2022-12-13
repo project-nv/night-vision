@@ -21,17 +21,14 @@ export default class ScriptEnv {
         this.std = se.std_inject(new ScriptStd(this))
         this.id = s.uuid
         this.src = s
-        this.output = TS('output', [])
+        this.output = {}
         this.data = []
         this.tss = {}
         this.syms = {}
         this.views = {}
         this.shared = data
         this.output.box_maker = this.make_box()
-//console.log(this.output.box_maker.toString())
-        this.chart = {}
-        this.onchart = {}
-        this.offchart = {}
+        //console.log(this.output.box_maker.toString())
         this.pane = new Pane(this)
     }
 
@@ -46,13 +43,11 @@ export default class ScriptEnv {
 
     step(unshift = true) {
         if (unshift) this.unshift()
-        let v = this.output.update()
-        this.copy(v, unshift)
+        this.output.update()
         this.limit()
     }
 
     unshift() {
-        this.output.unshift(undefined)
         // Update all temp symbols
         for (var id in this.tss) {
             if (this.tss[id].__tf__) continue
@@ -62,36 +57,10 @@ export default class ScriptEnv {
 
     // Limit env.output length
     limit() {
-        let out = this.output
-        out.length = out.__len__ || DEF_LIMIT
         for (var id in this.tss) {
             let ts = this.tss[id]
             //console.log(ts.__id__, ts.__len__)
             ts.length = ts.__len__ || DEF_LIMIT
-        }
-    }
-
-    // Copy the recent value to the direct buff
-    copy(v, unshift = true) {
-        let off = this.output.__offset__
-        if (v != undefined) {
-            this.output[0] = v.__id__ ? v[0] : v
-            off = off || v.__offset__
-        }
-        let val = this.output[0]
-        let t = se.t
-        if (off) t += off * se.tf
-        if (val == null || !val.length) {
-            // Number / object
-            var point = [t, val]
-        } else {
-            // Array
-            point = [t, ...val]
-        }
-        if (unshift) {
-            this.data.push(point)
-        } else {
-            this.data[this.data.length - 1] = point
         }
     }
 
@@ -213,22 +182,32 @@ export default class ScriptEnv {
                 let fkeyword = m[1].trim()
                 let fname = m[2]
                 let fargs = m[3]
-
+                //console.log(fkeyword, fname, fargs)
                 if (fkeyword === 'function') {
                     // TODO: add _ids to inline functions
                 } else {
                     let off = m.index + m[0].indexOf('(')
+                    let i1 = m.index
+                    let i2 = m.index + m[0].length
+                    // Std Functions
                     if (this.std[fname]) {
                         src = this.postfix(src, m, ++call_id)
                         //console.log(src)
                         off+=4 // 'std_'
+                    // <OverlayType>(...) function
                     } else if (fname in prefabs) {
-                        let i1 = m.index
-                        let i2 = m.index + m[0].length
                         off+= 10 // 'pane.self.'
                         let utsid = `_pref+"f${++call_id}"`
                         src = this.replace(src,
                             `pane.self.${fname}(${fargs}, ${utsid})`,
+                            i1, i2
+                        )
+                    // pane.self.<OverlayType>(...) function
+                    } else if (fname.slice(0, 4) === 'pane' &&
+                        fname.split('.').pop() in prefabs) {
+                        let utsid = `_pref+"f${++call_id}"`
+                        src = this.replace(src,
+                            `${fname}(${fargs}, ${utsid})`,
                             i1, i2
                         )
                     }
