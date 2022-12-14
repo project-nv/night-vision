@@ -41,12 +41,9 @@ export default class ScriptStd {
                 case '_v':
                 case '_add_i':
                 case 'chart':
-                case 'onchart':
-                case 'offchart':
                 case 'sym':
                 case 'view':
                 case 'prop':
-                case 'legendName':
                     continue
 
             }
@@ -66,14 +63,6 @@ export default class ScriptStd {
         if (!(name in props)) {
             props[name] = descr.def
         }
-    }
-
-    /**
-     * Sets legend name template
-     * @param {string} temp - Template, e.g.: `Smth $prop1, $prop2 ...`
-     */
-    legendName(temp) {
-        // TODO: Implement
     }
 
     // Add index tracking to the function
@@ -991,95 +980,6 @@ export default class ScriptStd {
             [se.t + off, ...x] : [se.t + off, x]
         u.update(this.env.chart[view].data, v)
     }
-
-    // TODO: optionally enable scripts for $synth ovs
-    // TODO: add indexBased option
-    /** Display data point onchart
-     * (create a new overlay in DataCube)
-     * @param {(TS|TS[]|*)} x - Data point / TS / array of TS
-     * @param {string} [name] - Overlay name
-     * @param {Object} [sett] - Object with settings & OV type
-     */
-    onchart(x, name, sett = {}, _id) {
-        let off = 0
-        name = name || u.get_fn_id('Onchart', _id)
-        if (x && x.__id__) {
-            off = x.__offset__ || 0
-            x = x[0]
-        }
-        if (Array.isArray(x) && x[0] && x[0].__id__) {
-            off = x[0].__offset__ || 0
-            x = x.map(x => x[0])
-        }
-        if (!this.env.onchart[name]) {
-            let type = sett.type
-            sett.$synth = true
-            sett.skipNaN = true
-            let post = Array.isArray(x) ? 's': ''
-            this.env.onchart[name] = {
-                name: name,
-                type: type || 'Spline' + post,
-                data: [],
-                settings: sett,
-                scripts: false,
-                grid: sett.grid || {},
-                view: sett.view,
-                vprops: sett.vprops
-            }
-            delete sett.type
-            delete sett.view
-            delete sett.vprops
-            delete sett.grid
-        }
-        off *= se.tf
-        let v = Array.isArray(x) ?
-            [se.t + off, ...x] : [se.t + off, x]
-        u.update(this.env.onchart[name].data, v)
-    }
-
-    /** Display data point offchart
-     * (create a new overlay in DataCube)
-     * @param {(TS|TS[]|*)} x - Data point / TS / array of TS
-     * @param {string} [name] - Overlay name
-     * @param {Object} [sett] - Object with settings & OV type
-     */
-    offchart(x, name, sett = {}, _id) {
-        name = name || u.get_fn_id('Offchart', _id)
-        let off = 0
-        if (x && x.__id__) {
-            off = x.__offset__ || 0
-            x = x[0]
-        }
-        if (Array.isArray(x) && x[0] && x[0].__id__) {
-            off = x[0].__offset__ || 0
-            x = x.map(x => x[0])
-        }
-        if (!this.env.offchart[name]) {
-            let type = sett.type
-            sett.$synth = true
-            sett.skipNaN = true
-            let post = Array.isArray(x) ? 's': ''
-            this.env.offchart[name] = {
-                name: name,
-                type: type || 'Spline' + post,
-                data: [],
-                settings: sett,
-                scripts: false,
-                grid: sett.grid || {},
-                view: sett.view,
-                vprops: sett.vprops
-            }
-            delete sett.type
-            delete sett.view
-            delete sett.vprops
-            delete sett.grid
-        }
-        off *= se.tf
-        let v = Array.isArray(x) ?
-            [se.t + off, ...x] : [se.t + off, x]
-        u.update(this.env.offchart[name].data, v)
-    }
-
 
     /** Returns true when the candle(<tf>) is being closed
      * (create a new overlay in DataCube)

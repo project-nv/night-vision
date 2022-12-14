@@ -129,4 +129,4 @@ Set the precision of this overlay. It will not affect other overlays on the pane
 - **Type:** `number`
 - **Default** `-1` for regular overlay, `0` for the main overlay
 
-**zIndex** determines an order in which overlays are rendered. The bigger the number is, the higher the overlay's layer is placed. For example, `Grid` layer has zIndex of `-1000000`, `Crosshair` instead, has value of `1000000`.       
+**zIndex** (z-index) determines an order in which overlays are rendered. The bigger the number is, the higher the overlay's layer is placed. For example, `Grid` layer has zIndex of `-1000000`, `Crosshair` instead, has value of `1000000`.       

@@ -318,7 +318,6 @@ class ScriptEngine {
                     mfs2[m](sel) // post_step
                 }
 
-                if (this.custom_main) this.make_ohlcv()
                 this.limit()
             }
 
@@ -471,55 +470,6 @@ class ScriptEngine {
             }
         }
         return arr
-    }
-
-    data_required(s) {
-
-        let all = Object.values(this.map)
-        if (s) all.push(s)
-
-        let types = [{ type: 'OHLCV' }]
-        for (var s of all) {
-            if (s.src.data) {
-                let reqs = Object.values(s.src.data)
-                types.push(...reqs.map(x => ({
-                    id: s.uuid,
-                    type: x.type
-                })))
-            }
-        }
-        let unf = types.filter(x =>
-            !Object.values(this.data)
-            .find(y => y.type === x.type)
-        )
-        return unf.length ? unf : null
-    }
-
-    // Match dataset id using script id & required type
-    match_ds(id, type) {
-        // TODO: develop further
-        for (var id in this.data) {
-            if (this.data[id].type === type) {
-                return id
-            }
-        }
-    }
-
-    // Make a ohlcv data point if there is a symbol
-    // with { main: true } props (overwrites ohlcv).
-    make_ohlcv() {
-        let sym = this.custom_main
-        let tNext = this.t + this.tf
-        if (sym.update(null, tNext)) {
-            this.data.ohlcv.data.push([
-                tNext,
-                sym.open[0],
-                sym.high[0],
-                sym.low[0],
-                sym.close[0],
-                sym.vol[0]
-            ])
-        }
     }
 
     // Calculate data size
