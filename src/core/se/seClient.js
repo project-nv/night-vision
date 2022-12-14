@@ -39,12 +39,24 @@ class SeClient {
     }
 
     // Update data (when new live data arrives)
+    // TODO: autoscroll
     async updateData() {
         let ohlcv = this.hub.mainOv.data
-        await this.ww.exec('update-data', {
+        let data = await this.ww.exec('update-data', {
             // Send the last two candles
             ohlcv: ohlcv.slice(-2)
         })
+        for (var ov of this.hub.allOverlays()) {
+            if (data[ov.uuid]) {
+                let last = ov.data[ov.data.length - 1]
+                let nw = data[ov.uuid]
+                if (!last || nw[0] > last[0]) {
+                    ov.data.push(nw)
+                } else if (nw[0] === last[0]) {
+                    ov.data[ov.data.length - 1] = nw
+                }
+            }
+        }
     }
 
     async execScripts() {

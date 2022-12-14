@@ -46,7 +46,7 @@ self.onmessage = async e => {
             console.log('UPDATE', e.data.data)
             DatasetWW.update_all(se, e.data.data)
             if (e.data.data.ohlcv) {
-                se.update(e.data.data.ohlcv)
+                se.update(e.data.data.ohlcv, e)
             }
             break
     }

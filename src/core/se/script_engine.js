@@ -125,7 +125,7 @@ class ScriptEngine {
     }
 
     // Live update
-    update(candles) {
+    update(candles, e) {
 
         if (!this.data.ohlcv || !this.data.ohlcv.data.length) {
             return
@@ -183,7 +183,7 @@ class ScriptEngine {
             step(sel, unshift)
 
             this.limit()
-            this.send_update()
+            this.send_update(e.data.id)
             this.send_state()
 
         } catch(e) {
@@ -258,9 +258,10 @@ class ScriptEngine {
         })
     }
 
-    send_update() {
+    send_update(taskId) {
         this.send(
-            'overlay-update', this.format_update()
+            'overlay-update', this.format_update(),
+            taskId
         )
     }
 
@@ -403,13 +404,13 @@ class ScriptEngine {
     }
 
     format_update() {
-        return self.paneStruct.map(x => ({
-            id: x.id,
-            uuid: x.uuid,
-            overlays: (x.overlays || []).map(x => ({
-                data: x.data[x.data.length - 1]
-            }))
-        }))
+        let map = {}
+        for (var pane of self.paneStruct) {
+            for (var ov of pane.overlays || []) {
+                map[ov.uuid] = ov.data[ov.data.length - 1]
+            }
+        }
+        return map
     }
 
     restarted() {
