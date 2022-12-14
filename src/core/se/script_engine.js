@@ -51,8 +51,6 @@ class ScriptEngine {
 
         let sel = Object.keys(delta).filter(x => x in this.map)
 
-
-
         if (!this.init_state(sel)) {
             this.delta_queue.push(delta)
             return
@@ -68,7 +66,7 @@ class ScriptEngine {
                 }
             }
 
-            this.exec(this.map[id])
+            this.add_script(this.map[id])
 
         }
 
@@ -78,8 +76,8 @@ class ScriptEngine {
 
     }
 
-    // Exec script (create a new ScriptEnv, add to the map)
-    exec(s) {
+    // Add script (create a new ScriptEnv, add to the map)
+    add_script(s) {
 
         //if (!s.src.conf) s.src.conf = {}
         let script = self.scriptLib.iScripts[s.type]
@@ -268,7 +266,7 @@ class ScriptEngine {
 
     init_map() {
         for (var id in this.map) {
-            this.exec(this.map[id])
+            this.add_script(this.map[id])
         }
     }
 
@@ -400,33 +398,18 @@ class ScriptEngine {
         return self.paneStruct.map(x => ({
             id: x.id,
             uuid: x.uuid,
-            overlays: x.overlays
+            overlays: x.overlays || []
         }))
     }
 
     format_update() {
-        let res = []
-        for (var id in this.map) {
-            let x = this.map[id]
-            if (x.output === false) {
-                res.push({id: id, data: null})
-                continue
-            }
-            res.push({
-                id: id,
-                data: x.env.data[x.env.data.length - 1]
-            })
-            for (var side of ['onchart', 'offchart']) {
-                for (var id in x.env[side]) {
-                    let y = x.env[side][id]
-                    res.push({
-                        id: `${side}.${id}`,
-                        data: y.data[y.data.length - 1]
-                    })
-                }
-            }
-        }
-        return res
+        return self.paneStruct.map(x => ({
+            id: x.id,
+            uuid: x.uuid,
+            overlays: (x.overlays || []).map(x => ({
+                data: x.data[x.data.length - 1]
+            }))
+        }))
     }
 
     restarted() {

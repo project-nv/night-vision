@@ -43,6 +43,7 @@ self.onmessage = async e => {
             se.exec_all()
             break
         case 'update-data':
+            console.log('UPDATE', e.data.data)
             DatasetWW.update_all(se, e.data.data)
             if (e.data.data.ohlcv) {
                 se.update(e.data.data.ohlcv)

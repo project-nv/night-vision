@@ -4,7 +4,7 @@
 [INDICATOR name=RSI, version=1.0.0]
 
 prop('length', { type: 'integer', def: 14 })
-prop('color', { type: 'color', def: '#39f' })
+prop('color', { type: 'color', def: '#3399ff' })
 prop('prec', { type: 'integer', def: 2 })
 //legendName('Range', 'RSI, $length')
 [UPDATE]

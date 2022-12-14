@@ -18,10 +18,13 @@ class SeClient {
         switch (e.data.type) {
             case 'overlay-data':
                 this.onOverlayData(e.data.data)
+            case 'engine-state':
+                this.onEngineState(e.data.data)
             break
         }
     }
 
+    // Upload initial data
     async uploadData(range, tf) {
         await this.ww.exec('upload-data', {
             meta: {
@@ -29,8 +32,18 @@ class SeClient {
                 tf: tf,
             },
             dss: {
+                // TODO: 'cv' data key for [close, vol] chart
                 ohlcv: this.hub.mainOv.data
             }
+        })
+    }
+
+    // Update data (when new live data arrives)
+    async updateData() {
+        let ohlcv = this.hub.mainOv.data
+        await this.ww.exec('update-data', {
+            // Send the last two candles
+            ohlcv: ohlcv.slice(-2)
         })
     }
 
@@ -55,6 +68,10 @@ class SeClient {
             }
         }
         this.chart.update()
+    }
+
+    onEngineState(data) {
+        this.state = Object.assign(this.state || {}, data)
     }
 }
 
