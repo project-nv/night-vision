@@ -37,6 +37,8 @@ class ScriptEngine {
         if (Object.keys(this.map).length) {
             await this.run()
             this.drain_queues()
+        } else {
+            this.send('overlay-data', this.format_data())
         }
         this.send_state()
 

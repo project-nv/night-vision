@@ -6,7 +6,8 @@
 prop('length', { type: 'integer', def: 14 })
 prop('color', { type: 'color', def: '#3399ff' })
 prop('prec', { type: 'integer', def: 2 })
-//legendName('Range', 'RSI, $length')
+prop('zIndex', { type: 'integer', def: 0 })
+
 [UPDATE]
 
 Range(rsi(close, $props.length), {
@@ -15,7 +16,8 @@ Range(rsi(close, $props.length), {
         color: $props.color
     },
     settings: {
-        precision: $props.prec
+        precision: $props.prec,
+        zIndex: $props.zIndex
     }
 })
 
