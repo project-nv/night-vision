@@ -23,6 +23,11 @@ export default {
                ]
              }
         ],
+        algolia: {
+            appId: '1NTH8LZXRR',
+            apiKey: 'b1e5ca1e1763cd54b928f10badc27f90',
+            indexName: 'nightvision'
+        },
         sidebar: [
             {
                 text: 'Introduction',
