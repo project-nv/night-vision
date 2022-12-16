@@ -26,6 +26,9 @@ import realTime from '../tests/real-time/realTime.js'
 import timeBased from '../tests/tfs-test/allTimeBased.js'
 import indexBased from '../tests/tfs-test/allIndexBased.js'
 
+// More tests
+import indicators from '../tests/indicators/indicators.js'
+
 
 /*
 TODO: data-api interface:
@@ -43,7 +46,7 @@ let chart = null
 
 onMount(() => {
     chart = new NightVision('chart-container', {
-        data: data,
+        data: data2,
         //autoResize: true,
         //indexBased: true
     })
@@ -71,6 +74,10 @@ onMount(() => {
 
     timeBased(stack, chart)
     indexBased(stack, chart)
+
+    stack.setGroup('ind-test')
+
+    indicators(stack, chart)
 
     //  Type in the console: stack.execAll()
     //  or: stack.exec('<group>')

@@ -81,7 +81,7 @@ class DataHub {
     }
 
     // Load indicator scripts
-    async loadScripts(range, tf) {
+    async loadScripts(range, tf, exec = false) {
         for (var pane of this.data.panes || []) {
             var scriptId = 0
             pane.scripts = pane.scripts || []
@@ -91,8 +91,10 @@ class DataHub {
                 s.uuid = s.uuid || Utils.uuid3()
             }
         }
-        await this.se.uploadData(range, tf)
-        await this.se.execScripts()
+        if (exec) {
+            await this.se.uploadData(range, tf)
+            await this.se.execScripts()
+        }
     }
 
     // Detect the main chart, define offcharts

@@ -45,6 +45,7 @@ class NightVision {
             resizeTracker(this)
         }
 
+        this.se.setRefs(this.hub, this.scan)
     }
 
     // *** PROPS ***

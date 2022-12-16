@@ -13,6 +13,11 @@ class SeClient {
 
     }
 
+    setRefs(hub, scan) {
+        this.hub = hub
+        this.scan = scan
+    }
+
     // Listen to the events from web-worker
     onEvent(e) {
         switch (e.data.type) {
@@ -66,6 +71,11 @@ class SeClient {
             scripts: x.scripts
         }))
         await this.ww.exec('exec-all-scripts', list)
+    }
+
+    async uploadAndExec() {
+        await this.uploadData(chart.range, this.scan.tf)
+        await this.execScripts()
     }
 
     // Event handlers

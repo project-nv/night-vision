@@ -20,22 +20,3 @@ Range(rsi(close, $props.length), {
         zIndex: $props.zIndex
     }
 })
-
-/*
-
-range([t, rsi(close, length)], {
-    settings: {
-        zIndex: 1
-    },
-    props: {
-        color: '#fff'
-    }
-})
-
-pane.self.Range(rsi(close, length)[0])
-
-*/
-
-[POST]
-
-// Post-updates

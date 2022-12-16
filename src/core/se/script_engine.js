@@ -220,7 +220,7 @@ class ScriptEngine {
         this.iter = 0
         this.t = 0
         this.skip = false // skip the step
-        this.running = true
+        this.running = false
         this.task = task
 
         return true
@@ -283,6 +283,8 @@ class ScriptEngine {
         this.pre_run_mods(sel)
         let mfs1 = this.make_mods_hooks('pre_step')
         let mfs2 = this.make_mods_hooks('post_step')
+
+        this.running = true
 
         try {
 

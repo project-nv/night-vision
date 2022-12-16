@@ -10,14 +10,6 @@ for (var file in FILES) {
     TFS[tf] = FILES[file].default
 }
 
-/* FIX:
-    - 12 H (fix month offset )
-    - 1 D (fix month offset )
-    - 1 M (fix year offset )
-    - 1 s (More divisions)
-    - 5 m (Daily offset fix again ???)
-*/
-
 export default function test(stack, chart) {
 
     stack.startTest('All timeframes, index-based')
