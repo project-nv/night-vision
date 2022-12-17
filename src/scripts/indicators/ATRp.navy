@@ -1,15 +1,14 @@
-
 // Navy ~ 0.1-lite
 
-[INDICATOR name=ATR, version=1.0.0]
+[INDICATOR name=ATRp, version=1.0.0]
 
 prop('length', { type: 'integer', def: 15 })
-prop('color', { type: 'color', def: '#e52468' })
+prop('color', { type: 'color', def: '#f44336' })
 prop('prec', { type: 'integer', def: autoPrec() })
 prop('zIndex', { type: 'integer', def: 0 })
 
 this.specs = {
-    name: 'ATR ' + $props.length,
+    name: 'ATR% ' + $props.length,
     props: {
         color: $props.color
     },
@@ -21,4 +20,5 @@ this.specs = {
 
 [UPDATE]
 
-Spline(atr($props.length), this.specs)
+let k = 100 / close[0]
+Spline(atr($props.length)[0] * k, this.specs)

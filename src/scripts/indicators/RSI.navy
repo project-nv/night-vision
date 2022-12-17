@@ -8,9 +8,7 @@ prop('color', { type: 'color', def: '#3399ff' })
 prop('prec', { type: 'integer', def: 2 })
 prop('zIndex', { type: 'integer', def: 0 })
 
-[UPDATE]
-
-Range(rsi(close, $props.length), {
+this.specs = {
     name: 'RSI ' + $props.length,
     props: {
         color: $props.color
@@ -19,4 +17,8 @@ Range(rsi(close, $props.length), {
         precision: $props.prec,
         zIndex: $props.zIndex
     }
-})
+}
+
+[UPDATE]
+
+Range(rsi(close, $props.length), this.specs)

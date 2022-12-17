@@ -10,14 +10,10 @@ prop('color', { type: 'color', def: '#559de0' })
 prop('prec', { type: 'integer', def: autoPrec() })
 prop('zIndex', { type: 'integer', def: 0 })
 
-[UPDATE]
+let $ = $props
 
-let length = $props.length
-let offset = $props.offset
-let sigma = $props.sigma
-
-Spline(alma(close, length, offset, sigma), {
-    name: `ALMA ${length} ${offset} ${sigma}`,
+this.specs = {
+    name: `ALMA ${$.length} ${$.offset} ${$.sigma}`,
     props: {
         color: $props.color,
     },
@@ -25,4 +21,12 @@ Spline(alma(close, length, offset, sigma), {
         precision: $props.prec,
         zIndex: $props.zIndex
     }
-})
+}
+
+[UPDATE]
+
+let length = $props.length
+let offset = $props.offset
+let sigma = $props.sigma
+
+Spline(alma(close, length, offset, sigma), this.specs)
