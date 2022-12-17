@@ -8,7 +8,7 @@ for (var file in FILES) {
     let [fn, ext] = file.split('.json')
     IND[fn] = FILES[file].default
 }
-
+console.log(IND)
 export default function test(stack, chart) {
 
     stack.startTest('All indicators')

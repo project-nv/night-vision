@@ -3,6 +3,7 @@
 
 import se from './script_engine.js'
 import linreg from '../../stuff/linreg.js'
+import Utils from '../../stuff/utils.js'
 import * as u from './script_utils.js'
 import Sampler from './sampler.js'
 import { Sym, ARR, TSS, NUM } from './symbol.js'
@@ -44,6 +45,7 @@ export default class ScriptStd {
                 case 'sym':
                 case 'view':
                 case 'prop':
+                case 'autoPrec':
                     continue
 
             }
@@ -63,6 +65,26 @@ export default class ScriptStd {
         if (!(name in props)) {
             props[name] = descr.def
         }
+    }
+
+    /**
+     * Get precision of ohlc dataset
+     * @return {number} - Ohlc preciosion
+     */
+    autoPrec() {
+        if (!se.data.ohlcv) return undefined
+        let data = se.data.ohlcv.data
+        let len = data.length
+        let i0 = Math.max(0, len - 100)
+        let max = 0
+        for (var i = i0; i < len; i++) {
+            let p = data[i]
+            for (var k = 1; k < 5; k++) {
+                let r = Utils.numberLR(p[k])[1]
+                if (r > max) max = r
+            }
+        }
+        return max
     }
 
     // Add index tracking to the function

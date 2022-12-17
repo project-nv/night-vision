@@ -1,0 +1,28 @@
+
+// Navy ~ 0.1-lite
+
+[INDICATOR name=ALMA, version=1.0.0]
+
+prop('length', { type: 'integer', def: 10 })
+prop('offset', { type: 'number', def: 0.9 })
+prop('sigma', { type: 'number', def: 5 })
+prop('color', { type: 'color', def: '#559de0' })
+prop('prec', { type: 'integer', def: autoPrec() })
+prop('zIndex', { type: 'integer', def: 0 })
+
+[UPDATE]
+
+let length = $props.length
+let offset = $props.offset
+let sigma = $props.sigma
+
+Spline(alma(close, length, offset, sigma), {
+    name: `ALMA ${length} ${offset} ${sigma}`,
+    props: {
+        color: $props.color,
+    },
+    settings: {
+        precision: $props.prec,
+        zIndex: $props.zIndex
+    }
+})

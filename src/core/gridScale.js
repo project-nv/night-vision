@@ -41,7 +41,7 @@ export default function Scale(id, src, specs) {
             // Find max precision over all overlays on
             // this scale
             for (var ov of ovs) {
-                if ('precision' in ov.settings) {
+                if (ov.settings.precision !== undefined) {
                     var prec = ov.settings.precision
                 } else {
                     var prec = calcPrecision(ov)
@@ -151,24 +151,10 @@ export default function Scale(id, src, specs) {
         }
 
         sample.forEach(x => {
-
-            // Fix undefined bug
-            var str = x != null ? x.toString() : ''
-            if (x < 0.000001) {
-                // Parsing the exponential form. Gosh this
-                // smells trickily
-                var [ls, rs] = str.split('e-')
-                var [l, r] = ls.split('.')
-                if (!r) r = ''
-                r = { length: r.length + parseInt(rs) || 0 }
-            } else {
-                var [l, r] = str.split('.')
-            }
-            if (r && r.length > maxR) {
-                maxR = r.length
-            }
-
+            let right = Utils.numberLR(x)[1]
+            if (right > maxR) maxR = right
         })
+
         // Update stored auto-precision
         let aprec = meta.getAutoPrec(gridId, ov.id)
         if (aprec === undefined || maxR > aprec) {

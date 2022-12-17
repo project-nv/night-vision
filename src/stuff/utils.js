@@ -479,6 +479,23 @@ export default {
         return data[data.length - 1][0] - data[0][0]
     },
 
+    // Get sizes left and right parts of a number
+    // (11.22 -> ['11', '22'])
+    numberLR(x) {
+        var str = x != null ? x.toString() : ''
+        if (x < 0.000001) {
+            // Parsing the exponential form. Gosh this
+            // smells trickily
+            var [ls, rs] = str.split('e-')
+            var [l, r] = ls.split('.')
+            if (!r) r = ''
+            r = { length: r.length + parseInt(rs) || 0 }
+        } else {
+            var [l, r] = str.split('.')
+        }
+        return [l.length, r ? r.length : 0]
+    },
+
     // WTF with modern web development
     isMobile: (w => 'onorientationchange' in w &&
        (!!navigator.maxTouchPoints ||

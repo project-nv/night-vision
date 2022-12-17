@@ -1,0 +1,22 @@
+
+// Navy ~ 0.1-lite
+
+[INDICATOR name=ATR, version=1.0.0]
+
+prop('length', { type: 'integer', def: 15 })
+prop('color', { type: 'color', def: '#e52468' })
+prop('prec', { type: 'integer', def: autoPrec() })
+prop('zIndex', { type: 'integer', def: 0 })
+
+[UPDATE]
+
+Spline(atr($props.length)[0], {
+    name: 'ATR ' + $props.length,
+    props: {
+        color: $props.color
+    },
+    settings: {
+        precision: $props.prec,
+        zIndex: $props.zIndex
+    }
+})

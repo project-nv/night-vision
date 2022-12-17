@@ -11,7 +11,7 @@ prop('zIndex', { type: 'integer', def: 0 })
 [UPDATE]
 
 Range(rsi(close, $props.length), {
-    name: 'RSI, ' + $props.length,
+    name: 'RSI ' + $props.length,
     props: {
         color: $props.color
     },
