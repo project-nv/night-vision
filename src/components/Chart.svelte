@@ -133,13 +133,14 @@ function quantizeCursor() {
 
 function update(emit = true) {
     // Emit a global event (hook)
-    if (emit) events.emit('$chart-update')
+    if (emit) events.emit('$chart-pre-update')
     //Utils.callsPerSecond()
     if (scan.panesChanged()) return fullUpdate()
     cursor = cursor // Trigger Svelte update
     layout = new Layout(chartProps, hub, meta)
     events.emit('update-pane', layout) // Update all panes
     events.emitSpec('botbar', 'update-bb', layout)
+    if (emit) events.emit('$chart-update')
 }
 
 // Full update when the dataset changed completely
