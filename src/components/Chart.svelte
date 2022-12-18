@@ -140,7 +140,7 @@ function update(emit = true) {
     layout = new Layout(chartProps, hub, meta)
     events.emit('update-pane', layout) // Update all panes
     events.emitSpec('botbar', 'update-bb', layout)
-    if (emit) events.emit('$chart-post-update')
+    if (emit) events.emit('$chart-update')
 }
 
 // Full update when the dataset changed completely
