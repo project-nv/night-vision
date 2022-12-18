@@ -1,0 +1,26 @@
+
+// Navy ~ 0.1-lite
+// <ds>Momentum</ds>
+
+[INDICATOR name=MOM, version=1.0.0]
+
+prop('length', { type: 'integer', def: 11 })
+prop('color', { type: 'color', def: '#bcc427ee' })
+prop('prec', { type: 'integer', def: autoPrec() })
+prop('zIndex', { type: 'integer', def: 0 })
+
+this.specs = {
+    name: `MOM ${$props.length}`,
+    props: {
+        color: $props.color
+    },
+    settings: {
+        precision: $props.prec,
+        zIndex: $props.zIndex
+    }
+}
+
+[UPDATE]
+
+let length = $props.length
+Spline(mom(close, length), this.specs)

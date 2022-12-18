@@ -1204,7 +1204,7 @@ export default class ScriptStd {
         let pos = this.ts(undefined, id+'2', _tf)
         let maxMin = this.ts(undefined, id+'3', _tf)
         let acc = this.ts(undefined, id+'4', _tf)
-        let n = _tf ? out.__len__ - 1 : se.iter
+        let n = _tf ? out.__len__ - 1 : this.se.iter
         let prev
         let outSet = false
 

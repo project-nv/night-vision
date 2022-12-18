@@ -1,0 +1,30 @@
+
+// Navy ~ 0.1-lite
+// <ds>Parabolic SAR</ds>
+
+[INDICATOR name=SAR, version=1.0.0]
+
+prop('start', { type: 'number', def: 0.02 })
+prop('inc', { type: 'number', def: 0.02 })
+prop('max', { type: 'number', def: 0.2 })
+prop('color', { type: 'color', def: '#35a9c6' })
+prop('prec', { type: 'integer', def: autoPrec() })
+prop('zIndex', { type: 'integer', def: 0 })
+
+let $ = $props
+this.specs = {
+    name: `SAR ${$.start} ${$.inc} ${$.max}`,
+    props: {
+        color: $props.color,
+        shape: 'cross'
+    },
+    settings: {
+        precision: $props.prec,
+        zIndex: $props.zIndex
+    }
+}
+
+[UPDATE]
+
+let $ = $props
+Sparse(sar($.start, $.inc, $.max), this.specs)

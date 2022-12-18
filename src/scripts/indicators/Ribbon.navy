@@ -1,0 +1,34 @@
+
+// Navy ~ 0.1-lite
+// <ds>Exponential Moving Average Ribbon</ds>
+
+[INDICATOR name=Ribbon, version=1.0.0]
+
+prop('start', { type: 'integer', def: 10 })
+prop('number', { type: 'integer', def: 5 })
+prop('step', { type: 'integer', def: 10 })
+prop('colors', { type: 'array', def: ["#3aaaf4ee"] })
+prop('prec', { type: 'integer', def: autoPrec() })
+prop('zIndex', { type: 'integer', def: 0 })
+
+this.specs = {
+    name: `EMA x ${$props.number}`,
+    props: {
+        colors: $props.colors,
+    },
+    settings: {
+        precision: $props.prec,
+        zIndex: $props.zIndex
+    }
+}
+
+[UPDATE]
+
+let $ = $props
+let arr = []
+for (var i = 0; i < $.number; i++) {
+    let l = $.start + i * $.step
+    arr.push(ema(close, l)[0])
+}
+
+Splines(arr, this.specs)

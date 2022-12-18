@@ -1,0 +1,34 @@
+
+// Navy ~ 0.1-lite
+// <ds>Money Flow Index	</ds>
+
+[INDICATOR name=MFI, version=1.0.0]
+
+prop('length', { type: 'integer', def: 14 })
+prop('upperBand', { type: 'number', def: 80 })
+prop('lowerBand', { type: 'number', def: 20 })
+prop('color', { type: 'color', def: '#85c427ee' })
+prop('backColor', { type: 'color', def: '#85c42711' })
+prop('bandColor', { type: 'color', def: '#999999' })
+prop('prec', { type: 'integer', def: 2 })
+prop('zIndex', { type: 'integer', def: 0 })
+
+this.specs = {
+    name: 'MFI ' + $props.length,
+    props: {
+        color: $props.color,
+        backColor: $props.backColor,
+        bandColor: $props.bandColor,
+        upperBand: $props.upperBand,
+        lowerBand: $props.lowerBand,
+    },
+    settings: {
+        precision: $props.prec,
+        zIndex: $props.zIndex
+    }
+}
+
+[UPDATE]
+
+let hlc3 = ts((high[0] + low[0] + close[0]) / 3)
+Range(mfi(hlc3, $props.length), this.specs)

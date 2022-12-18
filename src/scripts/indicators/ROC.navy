@@ -1,0 +1,26 @@
+
+// Navy ~ 0.1-lite
+// <ds>Rate of Change</ds>
+
+[INDICATOR name=ROC, version=1.0.0]
+
+prop('length', { type: 'integer', def: 9 })
+prop('color', { type: 'color', def: '#279fc4' })
+prop('prec', { type: 'integer', def: autoPrec() })
+prop('zIndex', { type: 'integer', def: 0 })
+
+this.specs = {
+    name: `ROC ${$props.length}`,
+    props: {
+        color: $props.color
+    },
+    settings: {
+        precision: $props.prec,
+        zIndex: $props.zIndex
+    }
+}
+
+[UPDATE]
+
+let length = $props.length
+Spline(roc(close, length), this.specs)

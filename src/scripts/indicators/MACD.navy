@@ -1,0 +1,41 @@
+
+// Navy ~ 0.1-lite
+// <ds>Moving Average Convergence/Divergence</ds>
+
+[INDICATOR name=MACD, version=1.0.0]
+
+prop('fast', { type: 'integer', def: 12 })
+prop('slow', { type: 'integer', def: 26 })
+prop('smooth', { type: 'integer', def: 9 })
+prop('colorMacd', { type: 'color', def: '#3782f2' })
+prop('colorSignal', { type: 'color', def: '#f48709' })
+prop('colorUp', { type: 'Color', def: '#35a776' })
+prop('colorDw', { type: 'Color', def: '#e54150' })
+prop('colorSemiUp', { type: 'Color', def: '#79e0b3' })
+prop('colorSemiDw', { type: 'Color', def: '#ea969e' })
+prop('prec', { type: 'integer', def: autoPrec() })
+prop('zIndex', { type: 'integer', def: 0 })
+
+let $ = $props
+this.specs = {
+    name: `MACD ${$.fast} ${$.slow} ${$.smooth}`,
+    props: {
+        colorValue: $.colorMacd,
+        colorSignal: $.colorSignal,
+        colorUp: $.colorUp,
+        colorDw: $.colorDw,
+        colorSemiUp: $.colorSemiUp,
+        colorSemiDw: $.colorSemiDw
+    },
+    settings: {
+        precision: $props.prec,
+        zIndex: $props.zIndex
+    }
+}
+
+[UPDATE]
+
+let $ = $props
+let [m, s, h] = macd(close, $.fast, $.slow, $.smooth)
+
+Histogram([h[0], m[0], s[0]], this.specs)
