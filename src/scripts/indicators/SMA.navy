@@ -1,0 +1,25 @@
+
+// Navy ~ 0.1-lite
+// <ds>Simple Moving Average</ds>
+
+[INDICATOR name=SMA, version=1.0.0]
+
+prop('length', { type: 'integer', def: 12 })
+prop('color', { type: 'color', def: '#d1385c' })
+prop('prec', { type: 'integer', def: autoPrec() })
+prop('zIndex', { type: 'integer', def: 0 })
+
+this.specs = {
+    name: `SMA ${$props.length}`,
+    props: {
+        color: $props.color,
+    },
+    settings: {
+        precision: $props.prec,
+        zIndex: $props.zIndex
+    }
+}
+
+[UPDATE]
+
+Spline(sma(close, $props.length), this.specs)

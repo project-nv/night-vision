@@ -1,0 +1,24 @@
+
+// Navy ~ 0.1-lite
+// <ds>Symmetrically Weighted Moving Average</ds>
+
+[INDICATOR name=SWMA, version=1.0.0]
+
+prop('color', { type: 'color', def: '#e57440' })
+prop('prec', { type: 'integer', def: autoPrec() })
+prop('zIndex', { type: 'integer', def: 0 })
+
+this.specs = {
+    name: `SWMA`,
+    props: {
+        color: $props.color,
+    },
+    settings: {
+        precision: $props.prec,
+        zIndex: $props.zIndex
+    }
+}
+
+[UPDATE]
+
+Spline(swma(close), this.specs)

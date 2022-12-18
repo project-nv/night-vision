@@ -1,0 +1,32 @@
+
+// Navy ~ 0.1-lite
+// <ds>True Strength Index</ds>
+
+[INDICATOR name=TSI, version=1.0.0]
+
+prop('long', { type: 'integer', def: 25 })
+prop('short', { type: 'integer', def: 13 })
+prop('signal', { type: 'integer', def: 13 })
+prop('color1', { type: 'color', def: '#3bb3e4' })
+prop('color2', { type: 'color', def: '#f7046d' })
+prop('prec', { type: 'integer', def: autoPrec() })
+prop('zIndex', { type: 'integer', def: 0 })
+
+let $ = $props
+this.specs = {
+    name: `TSI ${$.long} ${$.short} ${$.signal}`,
+    props: {
+        colors: [$.color1, $.color2]
+    },
+    settings: {
+        precision: $props.prec,
+        zIndex: $props.zIndex
+    }
+}
+
+[UPDATE]
+
+let $ = $props
+let val = tsi(close, $.short, $.long)
+let sig = ema(val, $.signal)
+Splines([val[0] * 100, sig[0] * 100], this.specs)

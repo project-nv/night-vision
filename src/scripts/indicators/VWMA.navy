@@ -1,0 +1,25 @@
+
+// Navy ~ 0.1-lite
+// <ds>Volume Weighted Moving Average</ds>
+
+[INDICATOR name=VWMA, version=1.0.0]
+
+prop('length', { type: 'integer', def: 20 })
+prop('color', { type: 'color', def: '#db0670' })
+prop('prec', { type: 'integer', def: autoPrec() })
+prop('zIndex', { type: 'integer', def: 0 })
+
+this.specs = {
+    name: `VWMA ${$props.length}`,
+    props: {
+        color: $props.color,
+    },
+    settings: {
+        precision: $props.prec,
+        zIndex: $props.zIndex
+    }
+}
+
+[UPDATE]
+
+Spline(vwma(close, $props.length), this.specs)
