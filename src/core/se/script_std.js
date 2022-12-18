@@ -1033,7 +1033,7 @@ export default class ScriptStd {
             return src
         }
         let id = this._tsid(_id, `offset(${num})`)
-        let out = ts(src, id)
+        let out = this.ts(src, id)
         out.__offset__ = num
         return out
     }

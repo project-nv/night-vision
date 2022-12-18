@@ -1,26 +1,66 @@
 
 // Navy ~ 0.1-lite
 // <ds>Ichimoku Cloud</ds>
-/*
+
 [INDICATOR name=Ichimoku, version=1.0.0]
 
-prop('length', { type: 'integer', def: 12 })
-prop('color', { type: 'color', def: '#f7890c' })
+prop('convLength', { type: 'integer', def: 9 })
+prop('baseLength', { type: 'integer', def: 26 })
+prop('laggingLength', { type: 'integer', def: 52 })
+prop('displacement', { type: 'integer', def: 26 })
+prop('cloudUpColor', { type: 'color', def: '#79ffde18' })
+prop('cloudDwColor', { type: 'color', def: '#ff246c18' })
+prop('convColor', { type: 'color', def: '#4eb6d8' })
+prop('baseColor', { type: 'color', def: '#d626a1' })
+prop('laggingColor', { type: 'color', def: '#66cc66' })
 prop('prec', { type: 'integer', def: autoPrec() })
 prop('zIndex', { type: 'integer', def: 0 })
 
-this.specs = {
-    name: `EMA ${$props.length}`,
-    props: {
-        color: $props.color,
-    },
+this.specs = ({name, props}) => ({
+    name: name,
+    props: props,
     settings: {
         precision: $props.prec,
         zIndex: $props.zIndex
     }
-}
+})
 
 [UPDATE]
 
-Spline(ema(close, $props.length), this.specs)
-*/
+let $ = $props
+let donchian = (len, id) => ts(
+    avg(lowest(low, len)[0], highest(high, len)[0]), id
+)
+let conversionLine = donchian($.convLength, 1)
+let baseLine = donchian($.baseLength, 2)
+let leadLine1 = ts(avg(conversionLine[0], baseLine[0]))
+let leadLine2 = donchian($.laggingLength, 3)
+let lagging = ts(close[0])
+offset(leadLine1, $.displacement - 1)
+offset(leadLine2, $.displacement - 1)
+offset(lagging, -$.displacement + 1)
+
+Cloud([leadLine1, leadLine2], this.specs({
+    name: `Cloud`,
+    props: {
+        back1: $props.cloudUpColor,
+        back2: $props.cloudDwColor
+    }
+}))
+
+Splines([conversionLine, baseLine], this.specs({
+    name: `Base Lines ${$.convLength} ${$.baseLength}`,
+    props: {
+        colors: [
+            $props.convColor,
+            $props.baseColor
+        ]
+    }
+}))
+
+Spline(lagging, this.specs({
+    name: `Lagging Span ${$.laggingLength}`,
+    props: {
+        color: $props.laggingColor
+    }
+}))

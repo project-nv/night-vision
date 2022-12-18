@@ -1,0 +1,62 @@
+// Navy ~ 0.1-lite
+
+// <ds>Cloud</ds>, format [<timestamp>, <line1>, <line2>]
+[OVERLAY name=Cloud, ctx=Canvas, verion=0.1.0]
+
+// Overlay props
+prop('color1', { type: 'color', def: '#55d7b0aa' })
+prop('color2', { type: 'color', def: '#d94d64aa' })
+prop('back1', { type: 'color', def: '#79ffde22' })
+prop('back2', { type: 'color', def: '#ff246c22' })
+prop('drawLines', { type: 'boolean', def: false })
+
+// Draw call
+// TODO: speed-up (draw segment with the same color together)
+draw(ctx) {
+
+    const layout = $core.layout
+    const data = $core.data
+    const view = $core.view
+
+    ctx.lineWidth = 1
+
+    for (var i = view.i1, n = view.i2; i <= n; i++) {
+        let p1 = map(layout, data[i], i)
+        let p2 = map(layout, data[i+1], i+1)
+
+        if (!p2) continue
+        if (p1.y1 !== p1.y1) continue // Fix NaN
+
+         // Background
+        ctx.beginPath()
+        ctx.fillStyle =  p1.y1 < p1.y2 ? $props.back1 : $props.back2
+        ctx.moveTo(p1.x, p1.y1)
+        ctx.lineTo(p2.x + 0.1, p2.y1)
+        ctx.lineTo(p2.x + 0.1, p2.y2)
+        ctx.lineTo(p1.x, p1.y2)
+        ctx.fill()
+        // Lines
+        if (!$props.drawLines) continue
+        ctx.beginPath()
+        ctx.strokeStyle = $props.color1
+        ctx.moveTo(p1.x, p1.y1)
+        ctx.lineTo(p2.x, p2.y1)
+        ctx.stroke()
+        ctx.beginPath()
+        ctx.strokeStyle = $props.color2
+        ctx.moveTo(p1.x, p1.y2)
+        ctx.lineTo(p2.x, p2.y2)
+        ctx.stroke()
+    }
+}
+
+map(layout, p, i) {
+    return p && {
+        x:  layout.ti2x(p[0], i),
+        y1: layout.value2y(p[1]),
+        y2: layout.value2y(p[2])
+    }
+}
+
+// Legend, defined as pairs [value, color]
+legend(x) => [[x[1], $props.color1], [x[2], $props.color2]]

@@ -5,6 +5,8 @@
 // and macros to make code easier & more compact
 // TODO: prevent trackpad events from scrolling the
 // browser page back
+// TODO: combining (& linking) several overlays. Will allow to
+// collapse several lines into one. Need to add 'group' field
 
 import { onMount, onDestroy } from 'svelte'
 import LegendControls from './LegendControls.svelte'
