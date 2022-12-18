@@ -7,7 +7,7 @@
 // <?label> :: trade label (null for no label)
 // <?big> :: true/false, make an arrow big
 
-[OVERLAY name=ArrowTrades, ctx=Canvas, author=ChartMaster, version=1.0.0]
+[OVERLAY name=ArrowTrades, ctx=Canvas, version=1.0.0]
 
 prop('buyColor', {  type: 'color', def: '#08c65e' })
 prop('sellColor', {  type: 'color', def: '#e42633' })

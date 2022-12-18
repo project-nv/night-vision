@@ -1,16 +1,16 @@
 
 // Navy ~ 0.1-lite
-// <ds>Average True Range</ds>
+// <ds>Chande Momentum Oscillator</ds>
 
-[INDICATOR name=ATR, version=1.0.0]
+[INDICATOR name=CMO, version=1.0.0]
 
-prop('length', { type: 'integer', def: 15 })
-prop('color', { type: 'color', def: '#e52468' })
+prop('length', { type: 'integer', def: 10 })
+prop('color', { type: 'color', def: '#559de0' })
 prop('prec', { type: 'integer', def: autoPrec() })
 prop('zIndex', { type: 'integer', def: 0 })
 
 this.specs = {
-    name: 'ATR ' + $props.length,
+    name: `CMO ${$props.length}`,
     props: {
         color: $props.color
     },
@@ -22,4 +22,5 @@ this.specs = {
 
 [UPDATE]
 
-Spline(atr($props.length), this.specs)
+let length = $props.length
+Spline(cmo(close, length), this.specs)

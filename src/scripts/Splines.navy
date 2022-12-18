@@ -4,7 +4,7 @@
 // <ds>Multiple splines</ds> 
 // Format: [<timestamp>, <line1>, <line2>, ...]
 
-[OVERLAY name=Splines, ctx=Canvas, author=ChartMaster, version=1.0.0]
+[OVERLAY name=Splines, ctx=Canvas, version=1.0.0]
 
 prop('lineWidth', { type: 'number', def: 1 })
 prop('widths', { type: 'Array', def: [] })

@@ -12,7 +12,7 @@
 //   ?offset, px, offest from the pin
 // }
 
-[OVERLAY name=PriceLabels, ctx=Canvas, author=ChartMaster, verion=1.0.0]
+[OVERLAY name=PriceLabels, ctx=Canvas, verion=1.0.0]
 
 // Overlay props
 prop('color', { type: 'Color', def: $core.colors.text })

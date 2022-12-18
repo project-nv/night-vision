@@ -3,7 +3,7 @@
 // <ds>Bands indicator, e.g. BollingerBands</ds> 
 // format: [<timestamp>, <high>, <mid>, <low>]
 
-[OVERLAY name=Band, ctx=Canvas, author=ChartMaster, verion=1.0.0]
+[OVERLAY name=Band, ctx=Canvas, verion=1.0.0]
 
 // Overlay props
 prop('color', { type: 'Color', def: '#b41d70' })

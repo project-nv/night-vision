@@ -12,7 +12,7 @@
 --- <low2> ---
 */
 
-[OVERLAY name=SuperBands, ctx=Canvas, author=ChartMaster, verion=1.0.0]
+[OVERLAY name=SuperBands, ctx=Canvas, verion=1.0.0]
 
 // Overlay props
 prop('color1', { type: 'color', def: '#d80d3848' })

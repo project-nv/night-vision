@@ -1,5 +1,6 @@
 
 // Navy ~ 0.1-lite
+// <ds>Relative Strength Index</ds>
 
 [INDICATOR name=RSI, version=1.0.0]
 

@@ -4,7 +4,7 @@
 // <ds>Standart japanese candles</ds>, format:
 // [<timestamp>, <open>, <high>, <low>, <close>, <?volume>]
 
-[OVERLAY name=Candles, ctx=Canvas, author=ChartMaster, version=1.0.0]
+[OVERLAY name=Candles, ctx=Canvas, version=1.0.0]
 
 // Define the props
 prop('colorBodyUp', { type: 'color', def: $core.colors.candleUp })

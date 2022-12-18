@@ -1,4 +1,6 @@
+
 // Navy ~ 0.1-lite
+// <ds>Average True Range, percentage</ds>
 
 [INDICATOR name=ATRp, version=1.0.0]
 

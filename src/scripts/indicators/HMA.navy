@@ -1,0 +1,25 @@
+
+// Navy ~ 0.1-lite
+// <ds>Hull Moving Average</ds>
+
+[INDICATOR name=HMA, version=1.0.0]
+
+prop('length', { type: 'integer', def: 10 })
+prop('color', { type: 'color', def: '#3af475' })
+prop('prec', { type: 'integer', def: autoPrec() })
+prop('zIndex', { type: 'integer', def: 0 })
+
+this.specs = {
+    name: `HMA ${$props.length}`,
+    props: {
+        color: $props.color,
+    },
+    settings: {
+        precision: $props.prec,
+        zIndex: $props.zIndex
+    }
+}
+
+[UPDATE]
+
+Spline(hma(close, $props.length), this.specs)

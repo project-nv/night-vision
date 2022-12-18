@@ -3,7 +3,7 @@
 // <ds>Volume bars with delta ( = buyVol - sellVol)</ds>
 // Format: [<timestamp>, <buyVol>, <sellVol>, <total>, <delta>]
 
-[OVERLAY name=VolumeDelta, ctx=Canvas, author=ChartMaster, verion=1.0.0]
+[OVERLAY name=VolumeDelta, ctx=Canvas, verion=1.0.0]
 
 // Overlay props
 prop('colorVolUp', { type: 'color', def: '#41a37682' })

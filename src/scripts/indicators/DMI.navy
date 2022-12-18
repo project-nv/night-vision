@@ -1,0 +1,29 @@
+
+// Navy ~ 0.1-lite
+// <ds>Directional Movement Index</ds>
+
+[INDICATOR name=DMI, version=1.0.0]
+
+prop('length', { type: 'integer', def: 15 })
+prop('smooth', { type: 'integer', def: 15 })
+prop('color1', { type: 'color', def: "#ef1360" })
+prop('color2', { type: 'color', def: "#3782f2" })
+prop('color3', { type: 'color', def: "#f48709" })
+prop('prec', { type: 'integer', def: 2 })
+prop('zIndex', { type: 'integer', def: 0 })
+
+this.specs = {
+    name: `DMI ${$props.length} ${$props.smooth}`,
+    props: {
+        colors: [$props.color1, $props.color2, $props.color3]
+    },
+    settings: {
+        precision: $props.prec,
+        zIndex: $props.zIndex
+    }
+}
+
+[UPDATE]
+
+let [adx, dp, dn] = dmi($props.length, $props.smooth)
+Splines([adx[0], dp[0], dn[0]], this.specs)

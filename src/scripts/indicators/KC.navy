@@ -1,0 +1,31 @@
+
+// Navy ~ 0.1-lite
+// <ds>Keltner Channels</ds>
+
+[INDICATOR name=KC, version=1.0.0]
+
+prop('length', { type: 'integer', def: 20 })
+prop('mult', { type: 'number', def: 1 })
+prop('trueRange', { type: 'boolean', def: true })
+prop('color', { type: 'color', def: '#4c8dffab' })
+prop('backColor', { type: 'color', def: '#4c8dff0a' })
+prop('prec', { type: 'integer', def: autoPrec() })
+prop('zIndex', { type: 'integer', def: 0 })
+
+this.specs = {
+    name: `KC ${$props.length} ${$props.mult}`,
+    props: {
+        color: $props.color,
+        backColor: $props.backColor,
+    },
+    settings: {
+        precision: $props.prec,
+        zIndex: $props.zIndex
+    }
+}
+
+[UPDATE]
+
+let $ = $props
+let [m, h, l] = kc(close, $.length, $.mult, $.trueRange)
+Band([h[0], m[0], l[0]], this.specs)

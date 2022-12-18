@@ -1,0 +1,26 @@
+
+// Navy ~ 0.1-lite
+// <ds>Ichimoku Cloud</ds>
+/*
+[INDICATOR name=Ichimoku, version=1.0.0]
+
+prop('length', { type: 'integer', def: 12 })
+prop('color', { type: 'color', def: '#f7890c' })
+prop('prec', { type: 'integer', def: autoPrec() })
+prop('zIndex', { type: 'integer', def: 0 })
+
+this.specs = {
+    name: `EMA ${$props.length}`,
+    props: {
+        color: $props.color,
+    },
+    settings: {
+        precision: $props.prec,
+        zIndex: $props.zIndex
+    }
+}
+
+[UPDATE]
+
+Spline(ema(close, $props.length), this.specs)
+*/

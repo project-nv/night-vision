@@ -5,7 +5,7 @@
 // Format: [<timestamp>, <open>, <high>, <low>, <close>, <?volume>, <?color>]
 // <?color> :: Candle body color
 
-[OVERLAY name=CandlesPlus, ctx=Canvas, author=ChartMaster, version=1.0.0]
+[OVERLAY name=CandlesPlus, ctx=Canvas, version=1.0.0]
 
 // Define the props
 prop('colorBodyUp', { type: 'color', def: $core.colors.candleUp })

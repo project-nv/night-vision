@@ -1,0 +1,33 @@
+
+// Navy ~ 0.1-lite
+// <ds>Commodity Channel Index</ds>
+
+[INDICATOR name=CCI, version=1.0.0]
+
+prop('length', { type: 'integer', def: 21 })
+prop('upperBand', { type: 'number', def: 100 })
+prop('lowerBand', { type: 'number', def: -100 })
+prop('color', { type: 'color', def: '#e28a3dee' })
+prop('backColor', { type: 'color', def: '#e28a3d11' })
+prop('bandColor', { type: 'color', def: '#999999' })
+prop('prec', { type: 'integer', def: 2 })
+prop('zIndex', { type: 'integer', def: 0 })
+
+this.specs = {
+    name: 'CCI ' + $props.length,
+    props: {
+        color: $props.color,
+        backColor: $props.backColor,
+        bandColor: $props.bandColor,
+        upperBand: $props.upperBand,
+        lowerBand: $props.lowerBand,
+    },
+    settings: {
+        precision: $props.prec,
+        zIndex: $props.zIndex
+    }
+}
+
+[UPDATE]
+
+Range(cci(close, $props.length), this.specs)

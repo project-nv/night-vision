@@ -1,18 +1,17 @@
 
 // Navy ~ 0.1-lite
-// <ds>Bollinger Bands</ds>
+// <ds>Bollinger Bands Width</ds>
 
-[INDICATOR name=BB, version=1.0.0]
+[INDICATOR name=BBW, version=1.0.0]
 
 prop('length', { type: 'integer', def: 21 })
 prop('stddev', { type: 'number', def: 2 })
 prop('color', { type: 'color', def: '#2cc6c9ab' })
-prop('backColor', { type: 'color', def: '#2cc6c90a' })
 prop('prec', { type: 'integer', def: autoPrec() })
 prop('zIndex', { type: 'integer', def: 0 })
 
 this.specs = {
-    name: `BB ${$props.length} ${$props.stddev}`,
+    name: `BBW ${$props.length} ${$props.stddev}`,
     props: {
         color: $props.color,
         backColor: $props.backColor,
@@ -27,5 +26,4 @@ this.specs = {
 
 let length = $props.length
 let stddev = $props.stddev
-let [m, h, l] = bb(close, length, stddev)
-Band([h[0], m[0], l[0]], this.specs)
+Spline(bbw(close, length, stddev), this.specs)

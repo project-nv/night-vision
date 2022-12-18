@@ -3,7 +3,7 @@
 // <ds>Regular volume</ds> 
 // Format: [<timestamp>, <volume>, <direction>]
 
-[OVERLAY name=Volume, ctx=Canvas, author=ChartMaster, verion=1.0.0]
+[OVERLAY name=Volume, ctx=Canvas, verion=1.0.0]
 
 // Overlay props
 prop('colorVolUp', { type: 'color', def: '#41a37682' })
