@@ -13,8 +13,7 @@ export default function test(stack, chart) {
         // Load the first piece of the data
         dl.load((data) => {
             chart.data = data;
-            chart.fullReset()
-            //el("loading").hidden = true;
+            chart.se.uploadAndExec()
         });
 
         function loadMore() {
@@ -28,7 +27,8 @@ export default function test(stack, chart) {
                     // Yo need to update "range"
                     // when the data range is changed
                     chart.update("range");
-                       //el("loading").hidden = true;
+                    chart.se.uploadAndExec()
+                    //el("loading").hidden = true;
                 });
             }
         }
