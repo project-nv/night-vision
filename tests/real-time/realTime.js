@@ -38,6 +38,22 @@ export default function test(stack, chart) {
 
         // Plus check for updates every second
         setInterval(loadMore, 500)
+
+        // Setup a trade data stream
+        /*wsx.init(["APE-PERP"]);
+        wsx.ontrades = (d) => {
+            if (!chart.hub.mainOv) return;
+            let data = chart.hub.mainOv.data;
+            let trade = {
+                price: d.price,
+                volume: d.price * d.size
+            };
+            if (sampler(data, trade)) {
+                chart.update("range"); // New candle
+            } else {
+                chart.update(); // Candle update
+            }
+        };*/
     })
 
     stack.endTest()

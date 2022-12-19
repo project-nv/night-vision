@@ -6,7 +6,7 @@
 // <?value> :: value of the first line (e.g. MACD value)
 // <?signal> :: value of the second line (e.g. MACD signal)
 
-[OVERLAY name=Histogram, ctx=Canvas, verion=1.0.0]
+[OVERLAY name=Histogram, ctx=Canvas, verion=1.0.1]
 // "#35a776", "#79e0b3", "#e54150", "#ea969e"
 // Overlay props
 prop('barWidth', { type: 'number', def: 4 })
@@ -58,6 +58,7 @@ draw(ctx) {
 }
 
 detectBarWidth(view, layout, data) {
+    if (!data[view.i2 - 1]) return 0
     let p1 = layout.ti2x(data[view.i2 - 1][0], view.i2 - 1)
     let p2 = layout.ti2x(data[view.i2][0], view.i2)
     if ((p2 - p1) < 1) {

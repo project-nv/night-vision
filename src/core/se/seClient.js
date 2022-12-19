@@ -105,18 +105,22 @@ class SeClient {
                     if (dst && src) {
                         dst.name = src.name
                         dst.data = src.data
-                        dst.props = src.props
-                        dst.settings = src.settings
+                        dst.uuid = src.uuid
+                        // TODO: what if user changed a prop manually?
+                        //dst.props = src.props
+                        //dst.settings = src.settings
                     }
                 }
             }
         }
-        this.chart.update('data')
+        // Updating only data, preventing full update
+        this.chart.update('data', {updateHash: true})
     }
 
     // Event handlers
 
     onOverlayData(data) {
+
         let h1 = Utils.ovDispositionHash(this.hub.panes())
         let h2 = Utils.ovDispositionHash(data)
 

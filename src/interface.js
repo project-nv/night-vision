@@ -181,7 +181,6 @@ class NightVision {
             case 'layout':
                 ev.emitSpec('chart', 'update-layout', opt)
             break
-            case 'range': // TODO: Will be depracated
             case 'data':
                 // TODO: update cursor if it's ahead of the last candle
                 // (needs to track the new last)

@@ -131,10 +131,13 @@ function quantizeCursor() {
     update()
 }
 
-function update(emit = true) {
+function update(opt = {}, emit = true) {
     // Emit a global event (hook)
     if (emit) events.emit('$chart-pre-update')
     //Utils.callsPerSecond()
+    // If we changed UUIDs of but don't want to trigger
+    // the full update, we need to set updateHash:true 
+    if (opt.updateHash) scan.updatePanesHash()
     if (scan.panesChanged()) return fullUpdate()
     cursor = cursor // Trigger Svelte update
     layout = new Layout(chartProps, hub, meta)
