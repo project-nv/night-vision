@@ -134,7 +134,7 @@ class ScriptEngine {
         }
 
         if (this.running) {
-            this.update_queue.push(candles)
+            this.update_queue.push([candles, e])
             return
         }
 
@@ -188,8 +188,8 @@ class ScriptEngine {
             this.send_update(e.data.id)
             this.send_state()
 
-        } catch(e) {
-            console.log(e)
+        } catch(err) {
+            console.log(err)
         }
     }
 
@@ -328,8 +328,8 @@ class ScriptEngine {
                 this.map[id].env.output.post()
             }
 
-        } catch(e) {
-            console.log(e)
+        } catch(err) {
+            console.log(err)
         }
 
         this.post_run_mods(sel)
@@ -393,8 +393,8 @@ class ScriptEngine {
         }
         else {
             while (this.update_queue.length) {
-                let c = this.update_queue.shift()
-                this.update(c)
+                let upd = this.update_queue.shift()
+                this.update(...upd)
             }
         }
     }

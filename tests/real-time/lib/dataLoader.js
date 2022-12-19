@@ -1,7 +1,7 @@
 class DataLoader {
     constructor() {
         this.URL = "https://api1.binance.com/api/v3/klines";
-        this.SYM = "APEUSDT";
+        this.SYM = "BTCUSDT";
         this.TF = "1m"; // See binance api definitions
 
         this.loading = false;
@@ -14,7 +14,7 @@ class DataLoader {
         callback({
             panes: [{
                 overlays: [{
-                    name: "APE Tether US Binance",
+                    name: "BTC Tether US Binance",
                     type: "Candles",
                     data: data.map((x) => this.format(x))
                 }],

@@ -18,16 +18,16 @@ self.onmessage = async e => {
     //console.log('Worker got:', e.data.type)
     switch (e.data.type) {
         case 'upload-scripts':
-            console.log('SCRIPTS', e.data.data)
+            //console.log('SCRIPTS', e.data.data)
             self.scriptLib = e.data.data
             break
         case 'send-meta-info':
-            console.log('META', e.data.data)
+            //console.log('META', e.data.data)
             se.tf = u.tf_from_str(e.data.data.tf)
             se.range = e.data.data.range
             break
         case 'upload-data':
-            console.log('DATA', e.data.data)
+            //console.log('DATA', e.data.data)
             se.tf = u.tf_from_str(e.data.data.meta.tf)
             se.range = e.data.data.meta.range
             for (var id in e.data.data.dss) {
@@ -38,12 +38,12 @@ self.onmessage = async e => {
             se.send('data-uploaded', {}, e.data.id)
             break
         case 'exec-all-scripts':
-            console.log('EXEC', e.data.data)
+            //console.log('EXEC', e.data.data)
             self.paneStruct = e.data.data
             se.exec_all()
             break
         case 'update-data':
-            console.log('UPDATE', e.data.data)
+            //console.log('UPDATE', e.data.data)
             DatasetWW.update_all(se, e.data.data)
             if (e.data.data.ohlcv) {
                 se.update(e.data.data.ohlcv, e)

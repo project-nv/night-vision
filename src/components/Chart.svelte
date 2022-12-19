@@ -136,7 +136,7 @@ function update(opt = {}, emit = true) {
     if (emit) events.emit('$chart-pre-update')
     //Utils.callsPerSecond()
     // If we changed UUIDs of but don't want to trigger
-    // the full update, we need to set updateHash:true 
+    // the full update, we need to set updateHash:true
     if (opt.updateHash) scan.updatePanesHash()
     if (scan.panesChanged()) return fullUpdate()
     cursor = cursor // Trigger Svelte update

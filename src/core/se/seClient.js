@@ -58,8 +58,10 @@ class SeClient {
                 let nw = data[ov.uuid]
                 if (!last || nw[0] > last[0]) {
                     ov.data.push(nw)
+                    this.chart.update('data')
                 } else if (nw[0] === last[0]) {
                     ov.data[ov.data.length - 1] = nw
+                    this.chart.update()
                 }
             }
         }

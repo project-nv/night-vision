@@ -1,6 +1,8 @@
 // Real-time data test
 
 import { DataLoader } from './lib/dataLoader.js'
+import wsx from './lib/wsx.js'
+import sampler from './lib/ohlcvSampler.js'
 
 export default function test(stack, chart) {
 
@@ -24,13 +26,25 @@ export default function test(stack, chart) {
                 dl.loadMore(t0 - 1, (chunk) => {
                     // Add a new chunk at the beginning
                     data.unshift(...chunk);
-                    // Yo need to update "range"
+                    // Yo need to update "data"
                     // when the data range is changed
-                    chart.update("range");
+                    chart.update("data");
                     chart.se.uploadAndExec()
                     //el("loading").hidden = true;
                 });
             }
+        }
+
+        // Send an update to the script engine
+        async function update() {
+            await chart.se.updateData()
+            var delay // Floating update rate
+            if (chart.hub.mainOv.dataSubset.length < 1000) {
+                delay = 10
+            } else {
+                delay = 1000
+            }
+            setTimeout(update, delay)
         }
 
         // Load new data when user scrolls left
@@ -39,8 +53,11 @@ export default function test(stack, chart) {
         // Plus check for updates every second
         setInterval(loadMore, 500)
 
+        // TA + chart update loop
+        setTimeout(update, 0)
+
         // Setup a trade data stream
-        /*wsx.init(["APE-PERP"]);
+        wsx.init([dl.SYM]);
         wsx.ontrades = (d) => {
             if (!chart.hub.mainOv) return;
             let data = chart.hub.mainOv.data;
@@ -49,13 +66,12 @@ export default function test(stack, chart) {
                 volume: d.price * d.size
             };
             if (sampler(data, trade)) {
-                chart.update("range"); // New candle
-            } else {
-                chart.update(); // Candle update
+                chart.update("data"); // New candle
             }
-        };*/
+        };
     })
 
+    stack.stop()
     stack.endTest()
 
 }
