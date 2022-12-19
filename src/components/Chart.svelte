@@ -162,10 +162,9 @@ function fullUpdate(opt = {}) {
     hub.detectMain()
     // TODO: exec only if scripts changed
     hub.loadScripts(range, scan.tf)
-    meta.store()
     meta.init(props)
+    meta.restore()
     scan.updatePanesHash()
-
     update()
     events.emit('remake-grid')
 }

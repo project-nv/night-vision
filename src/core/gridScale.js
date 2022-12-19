@@ -158,7 +158,7 @@ export default function Scale(id, src, specs) {
         // Update stored auto-precision
         let aprec = meta.getAutoPrec(gridId, ov.id)
         if (aprec === undefined || maxR > aprec) {
-            meta.storeAutoPrec(gridId, ov.id, maxR)
+            meta.setAutoPrec(gridId, ov.id, maxR)
             return maxR
         }
         return aprec

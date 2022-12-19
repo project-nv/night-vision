@@ -100,7 +100,7 @@ class MetaHub {
     }
 
     // Store auto precision for a specific overlay
-    storeAutoPrec(gridId, ovId, prec) {
+    setAutoPrec(gridId, ovId, prec) {
         let aps = this.autoPrecisions[gridId] || []
         aps[ovId] = prec
         this.autoPrecisions[gridId] = aps
@@ -114,7 +114,7 @@ class MetaHub {
         this.panes++
         if (this.panes < this.hub.panes().length) return
         this.autoPrecisions = [] // wait for preSamplers
-        this.restore()
+        //this.restore()
         this.calcOhlcMap()
         setTimeout(() => {
             this.events.emitSpec('chart', 'update-layout')
@@ -122,23 +122,21 @@ class MetaHub {
         })
     }
 
-    // TODO: doesn't work, need to check again
     // Store some meta info such as ytransform by
-    // (pane.uuid + overlay.uuid) hash
+    // (pane.uuid + scaleId) hash
     store() {
         this.storage = {}
         let yts = this.yTransforms || []
         for (var paneId in yts) {
-            for (var ovId in yts[paneId] || []) {
-                if (!yts[paneId][ovId]) continue
-                let pane = this.hub.panes()[paneId]
-                if (!pane) continue
-                let ov = pane.overlays[ovId]
-                if (!ov) continue
-                let hash = `${pane.uuid}:${ov.uuid}`
-                this.storage[hash] = yts[paneId][ovId]
+            let paneYts = yts[paneId]
+            let pane = this.hub.panes()[paneId]
+            if (!pane) continue
+            for (var scaleId in paneYts) {
+                let hash = `yts:${pane.uuid}:${scaleId}`
+                this.storage[hash] = paneYts[scaleId]
             }
         }
+
     }
 
     // Restore that info after an update in the
@@ -146,15 +144,17 @@ class MetaHub {
     restore() {
         let yts = this.yTransforms
         for (var hash in this.storage) {
-            let [uuid1, uuid2] = hash.split(':')
+            let [type, uuid1, uuid2] = hash.split(':')
             let pane = this.hub.panes().find(x => x.uuid === uuid1)
             if (!pane) continue
-            let ov = pane.overlays.find(x => x.uuid === uuid2)
-            if (!ov) continue
-            yts[pane.id] = []
-            yts[pane.id][ov.id] = this.storage[hash]
+            switch(type) {
+                case 'yts': // Y-transforms
+                    if (!yts[pane.id]) yts[pane.id] = []
+                    yts[pane.id][uuid2] =  this.storage[hash]
+                break
+            }
         }
-        this.storage = {}
+        this.store() // Store new state
     }
 
     // [API] Get y-transform of a specific scale
@@ -195,6 +195,7 @@ class MetaHub {
         if (event.updateLayout) {
             this.events.emitSpec('chart', 'update-layout')
         }
+        this.store()
     }
 
     // User tapped legend & selected the overlay
