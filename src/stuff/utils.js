@@ -496,6 +496,20 @@ export default {
         return [l.length, r ? r.length : 0]
     },
 
+    // Get a hash of current overlay disposition:
+    // pane1.uuid+ov1.type+ov2.type+...+pane2.uuid+...
+    ovDispositionHash(panes) {
+        let h = ''
+        for (var pane of panes) {
+            h += pane.uuid
+            for (var ov of pane.overlays) {
+                if (ov.main) continue
+                h += ov.type
+            }
+        }
+        return h
+    },
+
     // WTF with modern web development
     isMobile: (w => 'onorientationchange' in w &&
        (!!navigator.maxTouchPoints ||

@@ -2,6 +2,7 @@
 // Client-side api for Script Engine. Emits/listens to se events
 
 import DataHub from '../dataHub.js'
+import Utils from '../../stuff/utils.js'
 
 class SeClient {
 
@@ -78,9 +79,8 @@ class SeClient {
         await this.execScripts()
     }
 
-    // Event handlers
-
-    onOverlayData(data) {
+    // Remove all overlays produced by scripts & add new
+    replaceOverlays(data) {
         for (var pane of this.hub.panes()) {
             // Filter old produced overlays
             pane.overlays = pane.overlays.filter(x => !x.prod)
@@ -90,6 +90,41 @@ class SeClient {
             }
         }
         this.chart.update()
+    }
+
+    // Opdate data of overlays produced by scripts
+    updateOverlays(data) {
+        for (var pane of this.hub.panes()) {
+            let p = data.find(x => x.uuid === pane.uuid)
+            if (p && p.overlays) {
+                // Updating only produced overlays
+                let ovs = pane.overlays.filter(x => x.prod)
+                for (var i = 0; i < ovs.length; i++) {
+                    let dst = ovs[i]
+                    let src = p.overlays[i]
+                    if (dst && src) {
+                        dst.name = src.name
+                        dst.data = src.data
+                        dst.props = src.props
+                        dst.settings = src.settings
+                    }
+                }
+            }
+        }
+        this.chart.update('data')
+    }
+
+    // Event handlers
+
+    onOverlayData(data) {
+        let h1 = Utils.ovDispositionHash(this.hub.panes())
+        let h2 = Utils.ovDispositionHash(data)
+
+        if (h1 === h2) {
+            this.updateOverlays(data)
+        } else {
+            this.replaceOverlays(data)
+        }
     }
 
     onEngineState(data) {
