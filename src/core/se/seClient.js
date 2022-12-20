@@ -52,18 +52,23 @@ class SeClient {
             // Send the last two candles
             ohlcv: ohlcv.slice(-2)
         })
+        let unshift = false
         for (var ov of this.hub.allOverlays()) {
             if (data[ov.uuid]) {
                 let last = ov.data[ov.data.length - 1]
                 let nw = data[ov.uuid]
                 if (!last || nw[0] > last[0]) {
                     ov.data.push(nw)
-                    this.chart.update('data')
+                    unshift = true
                 } else if (nw[0] === last[0]) {
                     ov.data[ov.data.length - 1] = nw
-                    this.chart.update()
                 }
             }
+        }
+        if (unshift) {
+            this.chart.update('data')
+        } else {
+            this.chart.update()
         }
     }
 

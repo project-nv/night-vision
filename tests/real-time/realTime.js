@@ -67,6 +67,7 @@ export default function test(stack, chart) {
             };
             if (sampler(data, trade)) {
                 chart.update("data"); // New candle
+                chart.scroll(); // Scroll forward
             }
         };
     })

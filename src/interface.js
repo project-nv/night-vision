@@ -216,6 +216,27 @@ class NightVision {
         this.update('full', {resetRange: true})
     }
 
+    // Go to time/index
+    goto(ti) {
+        let range = this.range
+        let dti = range[1] - range[0]
+        this.range = [ti - dti, ti]
+    }
+
+    // Scroll on interval forward
+    // TODO: keep legend updated, when the cursor is outside
+    scroll() {
+        if (this.cursor.locked) return
+        let main = this.hub.mainOv.data
+        let last = main[main.length - 1]
+        let ib = this.hub.indexBased
+        if (!last) return
+        let tl = ib ? main.length - 1 : last[0]
+        let d = this.range[1] - tl
+        let int = this.scan.interval
+        if (d > 0) this.goto(this.range[1] + int)
+    }
+
 }
 
 export {
