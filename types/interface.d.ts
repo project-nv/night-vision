@@ -1,15 +1,19 @@
+import { DataHub } from "./core/dataHub";
+import { DataScanner } from "./core/dataScanner";
 import { Events } from "./core/events";
+import { MetaHub } from "./core/metaHub";
+import { Scripts } from "./core/scripts";
 import { ColorsObj, ChartConfig, Data, NightVisionProps } from "./types";
 
 export class NightVision {
   constructor(target: string, props?: NightVisionProps);
   private _data: Data;
   private _scripts: string[];
-  hub: any;
-  meta: any;
-  scan: any;
+  hub: DataHub;
+  meta: MetaHub;
+  scan: DataScanner;
   events: Events; // TODO: improve method param types
-  scriptHub: any;
+  scriptHub: Scripts;
   root: HTMLElement;
   comp: any;
 
