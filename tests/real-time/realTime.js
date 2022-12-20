@@ -70,9 +70,13 @@ export default function test(stack, chart) {
                 chart.scroll(); // Scroll forward
             }
         };
+        window.wsx = wsx
     })
 
     stack.stop()
+    stack.add("Stop the stream", () => {
+
+    })
     stack.endTest()
 
 }

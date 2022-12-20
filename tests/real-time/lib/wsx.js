@@ -10,6 +10,7 @@ var _onrefine = () => {}
 var reconnecting = false
 var ready = false
 var symbols = []
+var terminated = false
 
 function now() {
     return new Date().getTime();
@@ -74,7 +75,7 @@ function start_hf() {
                 console.log("WebSocket: closed");
             break;
         }
-        reconnect();
+        //reconnect();
     };
     ws.onerror = function (e) {
         console.log("WS", e);
@@ -99,8 +100,7 @@ function reconnect() {
     reconnecting = true
     console.log('Reconnecting...')
     try {
-        ws.terminate()
-        ws.removeAllListeners()
+        ws.close()
         setTimeout(() => start_hf(symbols) , 1000)
     } catch(e) {
         console.log(e.toString())
@@ -122,6 +122,7 @@ function print(data) {
 }
 
 function heartbeat() {
+    if (terminated) return
     if (now() - last_event > 60000) {
         console.log('No events for 60 seconds')
         if (!reconnecting) reconnect()
@@ -131,10 +132,16 @@ function heartbeat() {
     }
 }
 
+function terminate() {
+    ws.close()
+    terminated = true
+}
+
 export default {
     init,
     add_symbol,
     reconnect,
+    terminate,
     set ontrades(val) {
         _ontrades = val
     },
