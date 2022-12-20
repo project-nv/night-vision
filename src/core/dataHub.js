@@ -81,7 +81,7 @@ class DataHub {
     }
 
     // Load indicator scripts
-    async loadScripts(range, tf, exec = false) {
+    async loadScripts(exec = false) {
         for (var pane of this.data.panes || []) {
             var scriptId = 0
             pane.scripts = pane.scripts || []
