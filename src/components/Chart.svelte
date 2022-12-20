@@ -164,7 +164,7 @@ function fullUpdate(opt = {}) {
     hub.init(hub.data)
     hub.detectMain()
     // TODO: exec only if scripts changed
-    hub.loadScripts(range, scan.tf)
+    hub.loadScripts()
     meta.init(props)
     meta.restore()
     scan.updatePanesHash()

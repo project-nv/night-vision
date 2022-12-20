@@ -92,8 +92,7 @@ class DataHub {
             }
         }
         if (exec) {
-            await this.se.uploadData(range, tf)
-            await this.se.execScripts()
+            await this.se.uploadAndExec()
         }
     }
 
@@ -119,7 +118,6 @@ class DataHub {
         )
 
         this.mainOv = mainOv
-
         this.mainPaneId = this.panes().indexOf(this.chart)
 
         // Remove all 'main' overlays except the first

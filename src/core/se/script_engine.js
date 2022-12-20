@@ -128,9 +128,8 @@ class ScriptEngine {
 
     // Live update
     update(candles, e) {
-
         if (!this.data.ohlcv || !this.data.ohlcv.data.length) {
-            return
+            return this.send_update(e.data.id)
         }
 
         if (this.running) {

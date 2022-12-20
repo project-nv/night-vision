@@ -31,11 +31,12 @@ class SeClient {
     }
 
     // Upload initial data
-    async uploadData(range, tf) {
+    async uploadData() {
+        if (!this.hub.mainOv) return
         await this.ww.exec('upload-data', {
             meta: {
-                range: range,
-                tf: tf,
+                range: this.chart.range,
+                tf: this.scan.tf
             },
             dss: {
                 // TODO: 'cv' data key for [close, vol] chart
@@ -82,7 +83,7 @@ class SeClient {
     }
 
     async uploadAndExec() {
-        await this.uploadData(chart.range, this.scan.tf)
+        await this.uploadData()
         await this.execScripts()
     }
 
