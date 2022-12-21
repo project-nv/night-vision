@@ -86,6 +86,7 @@ class DataHub {
             var scriptId = 0
             pane.scripts = pane.scripts || []
             for (var s of pane.scripts) {
+                s.id = scriptId++
                 s.settings = s.settings || {}
                 s.props = s.props || {}
                 s.uuid = s.uuid || Utils.uuid3()
