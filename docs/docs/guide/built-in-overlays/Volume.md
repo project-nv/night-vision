@@ -6,6 +6,7 @@ Regular volume
 
 ```js
 [<timestamp>, <volume>, <direction>]
+ <direction> :: 1 for green volume, - 1 for red volume
 ```
 
 ## Volume.colorVolUp
@@ -35,4 +36,3 @@ Regular volume
 ## Volume.colorAvgVol
 - **Type:** `color`
 - **Default:** `'#17e2bb99'`
-

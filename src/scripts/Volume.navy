@@ -2,6 +2,7 @@
 
 // <ds>Regular volume</ds> 
 // Format: [<timestamp>, <volume>, <direction>]
+// <direction> :: 1 for green volume, - 1 for red volume
 
 [OVERLAY name=Volume, ctx=Canvas, verion=1.0.0]
 

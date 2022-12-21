@@ -140,63 +140,182 @@ export default {
                 items: [
                     {
                         "text": "Area",
-                        "link": "/guide/built-in/Area"
+                        "link": "/guide/built-in-overlays/Area"
                     },
                     {
                         "text": "ArrowTrades",
-                        "link": "/guide/built-in/ArrowTrades"
+                        "link": "/guide/built-in-overlays/ArrowTrades"
                     },
                     {
                         "text": "Band",
-                        "link": "/guide/built-in/Band"
+                        "link": "/guide/built-in-overlays/Band"
                     },
                     {
                         "text": "Candles",
-                        "link": "/guide/built-in/Candles"
+                        "link": "/guide/built-in-overlays/Candles"
                     },
                     {
                         "text": "CandlesPlus",
-                        "link": "/guide/built-in/CandlesPlus"
+                        "link": "/guide/built-in-overlays/CandlesPlus"
+                    },
+                    {
+                        "text": "Cloud",
+                        "link": "/guide/built-in-overlays/Cloud"
                     },
                     {
                         "text": "Histogram",
-                        "link": "/guide/built-in/Histogram"
+                        "link": "/guide/built-in-overlays/Histogram"
                     },
                     {
                         "text": "PriceLabels",
-                        "link": "/guide/built-in/PriceLabels"
+                        "link": "/guide/built-in-overlays/PriceLabels"
                     },
                     {
                         "text": "Range",
-                        "link": "/guide/built-in/Range"
+                        "link": "/guide/built-in-overlays/Range"
                     },
                     {
                         "text": "Sparse",
-                        "link": "/guide/built-in/Sparse"
+                        "link": "/guide/built-in-overlays/Sparse"
                     },
                     {
                         "text": "Spline",
-                        "link": "/guide/built-in/Spline"
+                        "link": "/guide/built-in-overlays/Spline"
                     },
                     {
                         "text": "Splines",
-                        "link": "/guide/built-in/Splines"
+                        "link": "/guide/built-in-overlays/Splines"
                     },
                     {
                         "text": "SuperBands",
-                        "link": "/guide/built-in/SuperBands"
+                        "link": "/guide/built-in-overlays/SuperBands"
                     },
                     {
                         "text": "Trades",
-                        "link": "/guide/built-in/Trades"
+                        "link": "/guide/built-in-overlays/Trades"
                     },
                     {
                         "text": "Volume",
-                        "link": "/guide/built-in/Volume"
+                        "link": "/guide/built-in-overlays/Volume"
                     },
                     {
                         "text": "VolumeDelta",
-                        "link": "/guide/built-in/VolumeDelta"
+                        "link": "/guide/built-in-overlays/VolumeDelta"
+                    }
+                ]
+            },
+            {
+                text: 'Built-in Indicators',
+                collapsible: true,
+                collapsed: true,
+                items: [
+                    {
+                        "text": "ALMA",
+                        "link": "/guide/built-in-indicators/ALMA"
+                    },
+                    {
+                        "text": "ATR",
+                        "link": "/guide/built-in-indicators/ATR"
+                    },
+                    {
+                        "text": "ATRp",
+                        "link": "/guide/built-in-indicators/ATRp"
+                    },
+                    {
+                        "text": "BB",
+                        "link": "/guide/built-in-indicators/BB"
+                    },
+                    {
+                        "text": "BBW",
+                        "link": "/guide/built-in-indicators/BBW"
+                    },
+                    {
+                        "text": "CCI",
+                        "link": "/guide/built-in-indicators/CCI"
+                    },
+                    {
+                        "text": "CMO",
+                        "link": "/guide/built-in-indicators/CMO"
+                    },
+                    {
+                        "text": "COG",
+                        "link": "/guide/built-in-indicators/COG"
+                    },
+                    {
+                        "text": "DMI",
+                        "link": "/guide/built-in-indicators/DMI"
+                    },
+                    {
+                        "text": "EMA",
+                        "link": "/guide/built-in-indicators/EMA"
+                    },
+                    {
+                        "text": "HMA",
+                        "link": "/guide/built-in-indicators/HMA"
+                    },
+                    {
+                        "text": "Ichimoku",
+                        "link": "/guide/built-in-indicators/Ichimoku"
+                    },
+                    {
+                        "text": "KC",
+                        "link": "/guide/built-in-indicators/KC"
+                    },
+                    {
+                        "text": "KCW",
+                        "link": "/guide/built-in-indicators/KCW"
+                    },
+                    {
+                        "text": "MACD",
+                        "link": "/guide/built-in-indicators/MACD"
+                    },
+                    {
+                        "text": "MFI",
+                        "link": "/guide/built-in-indicators/MFI"
+                    },
+                    {
+                        "text": "MOM",
+                        "link": "/guide/built-in-indicators/MOM"
+                    },
+                    {
+                        "text": "ROC",
+                        "link": "/guide/built-in-indicators/ROC"
+                    },
+                    {
+                        "text": "RSI",
+                        "link": "/guide/built-in-indicators/RSI"
+                    },
+                    {
+                        "text": "Ribbon",
+                        "link": "/guide/built-in-indicators/Ribbon"
+                    },
+                    {
+                        "text": "SAR",
+                        "link": "/guide/built-in-indicators/SAR"
+                    },
+                    {
+                        "text": "SMA",
+                        "link": "/guide/built-in-indicators/SMA"
+                    },
+                    {
+                        "text": "SWMA",
+                        "link": "/guide/built-in-indicators/SWMA"
+                    },
+                    {
+                        "text": "Stoch",
+                        "link": "/guide/built-in-indicators/Stoch"
+                    },
+                    {
+                        "text": "TSI",
+                        "link": "/guide/built-in-indicators/TSI"
+                    },
+                    {
+                        "text": "VWMA",
+                        "link": "/guide/built-in-indicators/VWMA"
+                    },
+                    {
+                        "text": "WilliamsR",
+                        "link": "/guide/built-in-indicators/WilliamsR"
                     }
                 ]
             },
