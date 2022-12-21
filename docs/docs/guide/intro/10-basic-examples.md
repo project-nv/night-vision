@@ -84,7 +84,7 @@ Now, it does look much better, doesn't it? And all we did was change the overlay
 }
 ```
 
-In this example we used `Area`, which is a part of the [Built-in overlay collection](/guide/built-in/Candles) (here you'll find all props and their descriptions)
+In this example we used `Area`, which is a part of the [Built-in overlay collection](/guide/built-in-overlays/Candles) (here you'll find all props and their descriptions)
 
 ## 3. Candlestick chart with TA
 
