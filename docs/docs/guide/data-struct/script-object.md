@@ -1,7 +1,7 @@
 
 # Script Object
 
-**Script Object** represents an instance of indicator script. **Script id** is determined by its position in the `script` array:
+**Script Object** represents an instance of indicator script. **Script id** is determined by its position in the `scripts` array:
 
 ```js
 // Pane Object
@@ -15,7 +15,7 @@
 }
 ```
 
-Scripts are executed in web-worker ([script engine]()). Each script can produce several overlays, automatically placed on a specific pane.  
+Scripts are executed in web-worker ([script engine]()). Each script can create multiple overlays that are automatically placed on specific panes.  
 
 ## script.id <img src="/robot.png" class="rh-tag" title="robot" />
 
@@ -33,7 +33,7 @@ Unique id that stays the same even if the script changes its position. Generated
 
 - **Type:** `string`
 
-Script type (name) defines the script that will be used for execution. The library performs a lookup over *iScripts* in the `Scripts` component to find a matching script. If not found, the script wont be executed.    
+Script type (name) defines a script that will be used for execution. The library performs a lookup over *iScripts* in the `Scripts` component to find a matching script. If not found, the script wont be executed.    
 
 ## script.props <img src="/robot.png" class="rh-tag" title="robot" /> <img src="/human.png" class="rh-tag" title="human" />
 
@@ -74,4 +74,4 @@ Various script settings.
 - **Type:** `number`
 - **Default** `1`
 
-An order in which scripts are executed. This number represents a position of this script in the execution list.
+An order in which scripts are executed. This number represents a position in the execution list.

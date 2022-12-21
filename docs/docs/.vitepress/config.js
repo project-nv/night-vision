@@ -101,6 +101,10 @@ export default {
                     {
                         text: 'Overlay Object',
                         link: '/guide/data-struct/overlay-object'
+                    },
+                    {
+                        text: 'Script Object',
+                        link: '/guide/data-struct/script-object'
                     }
                 ]
             },
