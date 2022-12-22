@@ -17,9 +17,9 @@ export default {
             { text: 'Examples', link: '/guide/intro/10-basic-examples' },
             { text: 'Roadmap', link: 'https://github.com/project-nv/night-vision#roadmap' },
             {
-               text: '0.3.1',
+               text: '0.3.2',
                items: [
-                 { text: '0.3.1', link: 'https://www.npmjs.com/package/night-vision' },
+                 { text: '0.3.2', link: 'https://www.npmjs.com/package/night-vision' },
                ]
              }
         ],
