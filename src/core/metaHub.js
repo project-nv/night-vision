@@ -88,6 +88,7 @@ class MetaHub {
     }
 
     // Maps timestamp => ohlc, index
+    // TODO: should add support for indexBased? 
     calcOhlcMap() {
         this.ohlcMap = {}
         let data = this.hub.mainOv.data

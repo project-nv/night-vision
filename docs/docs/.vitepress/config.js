@@ -17,9 +17,9 @@ export default {
             { text: 'Examples', link: '/guide/intro/10-basic-examples' },
             { text: 'Roadmap', link: 'https://github.com/project-nv/night-vision#roadmap' },
             {
-               text: '0.3.0',
+               text: '0.3.1',
                items: [
-                 { text: '0.3.0', link: 'https://www.npmjs.com/package/night-vision' },
+                 { text: '0.3.1', link: 'https://www.npmjs.com/package/night-vision' },
                ]
              }
         ],
@@ -109,6 +109,27 @@ export default {
                 ]
             },
             {
+                text: 'NavyJS',
+                items: [
+                    {
+                        text: 'Scripts Intro',
+                        link: '/guide/navy-js/scripts-intro'
+                    },
+                    {
+                        text: 'Overlay Scripts',
+                        link: '/guide/navy-js/overlay-scripts'
+                    },
+                    {
+                        text: 'Indicator Scripts',
+                        link: '/guide/navy-js/indicator-scripts'
+                    },
+                    {
+                        text: 'Advanced Stuff',
+                        link: '/guide/navy-js/advanced-stuff'
+                    }
+                ]
+            },
+            {
                 text: 'API',
                 items: [
                     {
@@ -126,6 +147,18 @@ export default {
                     {
                         text: 'DataHub API',
                         link: '/guide/api/datahub-api'
+                    },
+                    {
+                        text: 'SE Client API',
+                        link: '/guide/api/se-client-api'
+                    },
+                    {
+                        text: 'Navy JS API',
+                        link: '/guide/api/navy-api'
+                    },
+                    {
+                        text: 'SE STD Library',
+                        link: '/guide/api/se-std-lib'
                     },
                     {
                         text: 'Chart Config',
@@ -322,11 +355,7 @@ export default {
                         "link": "/guide/built-in-indicators/WilliamsR"
                     }
                 ]
-            },
-            {
-                text: 'NavyJS',
-                items: []
-            },
+            }
         ],
         footer: {
             message: 'Released under the MIT License.',

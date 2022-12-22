@@ -104,7 +104,7 @@ meta() {
 The library provides you with everything you need to build custom overlays. A context stuffed with the core elements and props is called **Overlay Environment**. The most important objects there are:
 
 - **`$core`** Collection of all core elements and even more stuff
-- **`$props`** Overlay props (`props` field in `overlay.settings`)
+- **`$props`** Overlay props (`props` field in `overlay` object)
 - **`$events`** Events component
 - **`$lib`** Primitives & helper functions
 

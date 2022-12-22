@@ -441,6 +441,10 @@ You should get the same result as in the [Getting Started example](/guide/intro/
 
 ## 10. Full real-time chart of Bitcoin
 
+::: warning
+Due to the limitations of CodeSandBox, there are no updates via the websocket here. See [this](https://github.com/project-nv/night-vision/blob/main/tests/real-time/realTime.js) as a fully working example.  
+:::
+
 Are you ready for the full **NightVision** experience?
 
 <iframe src="https://codesandbox.io/embed/playing-around-10-0zh0jh?fontsize=14&hidenavigation=1&module=%2Fmain.js&theme=dark"

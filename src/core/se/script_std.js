@@ -1003,7 +1003,7 @@ export default class ScriptStd {
         u.update(this.env.chart[view].data, v)
     }
 
-    /** Returns true when the candle(<tf>) is being closed
+    /** Returns true when the candle(tf) is being closed
      * (create a new overlay in DataCube)
      * @param {(number|string)} tf - Timeframe in ms or as a string
      * @return {boolean}
@@ -1413,17 +1413,17 @@ export default class ScriptStd {
      * @param {*} y - Something, depends on arg variation
      * @return {Sym}
      * Argument variations:
-     * <data>(Array), [<params>(Object)]
-     * <ts>(TS), [<params>(Object)]
-     * <point>(Number), [<params>(Object)]
-     * <tf>(String) 1m, 5m, 1H, etc. (uses main OHLCV)
+     * data(Array), [params(Object)]
+     * ts(TS), [params(Object)]
+     * point(Number), [params(Object)]
+     * tf(String) 1m, 5m, 1H, etc. (uses main OHLCV)
      * Params object: {
-     *  id: <String>,
-     *  tf: <String|Number>,
-     *  aggtype: <String> (TODO: Type of aggregation)
-     *  format: <String> (Data format, e.g. "time:price:vol")
-     *  window: <String|Number> (Aggregation window)
-     *  main <true|false> (Use as the main chart)
+     *  id: String,
+     *  tf: String|Number,
+     *  aggtype: String (TODO: Type of aggregation)
+     *  format: String (Data format, e.g. "time:price:vol")
+     *  window: String|Number (Aggregation window)
+     *  main true|false (Use as the main chart)
      * }
      */
     sym(x, y = {}, _id) {

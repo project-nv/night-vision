@@ -15,7 +15,7 @@
 }
 ```
 
-Scripts are executed in web-worker ([script engine]()). Each script can create multiple overlays that are automatically placed on specific panes.  
+Scripts are executed in web-worker ([script engine](/guide/navy-js/indicator-scripts.html)). Each script can create multiple overlays that are automatically placed on specific panes.  
 
 ## script.id <img src="/robot.png" class="rh-tag" title="robot" />
 
