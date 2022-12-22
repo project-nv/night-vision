@@ -39,6 +39,13 @@ A Unique id that stays the same even if the pane changes its position. Generated
 
 Array of overlays displayed on this pane. See [Overlay Object](/guide/data-struct/overlay-object.html) for more details.
 
+## pane.scripts <img src="/human.png" class="rh-tag" title="human" />
+
+- **Type:** `Array`
+- **Related:** [Script Object](/guide/data-struct/script-object.html)
+
+Array of scripts executed on this pane. See [Script Object](/guide/data-struct/script-object.html) and [Scripts Intro](/guide/navy-js/scripts-intro.html) for more details.
+
 ## pane.settings <img src="/human.png" class="rh-tag" title="human" />
 
 - **Type:** `Object`
