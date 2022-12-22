@@ -93,6 +93,7 @@ class DataHub {
             }
         }
         if (exec) {
+            await Utils.pause(0) // Wait for init
             await this.se.uploadAndExec()
         }
     }
