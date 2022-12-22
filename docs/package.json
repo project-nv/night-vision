@@ -11,7 +11,7 @@
   "author": "ChartMaster",
   "license": "ISC",
   "dependencies": {
-    "vitepress": "^1.0.0-alpha.22",
+    "vitepress": "^1.0.0-alpha.33",
     "vue": "^3.2.41"
   },
   "devDependencies": {

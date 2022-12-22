@@ -1,10 +1,22 @@
 /* .vitepress/theme/custom.css */
-:root {
-  //--vp-c-bg: #19191a;
-  //--vp-c-bg: #171718;
-  //--vp-c-bg: #13141b;
+:root.dark {
+  --vp-c-bg: #0e0e0f;
+  --vp-c-bg-alpha-with-backdrop: #0e0e0fcc;
+  --vp-c-bg-soft: #111113;
+  --vp-c-bg-alt: #111113;
+  --vp-code-block-bg: #111113;
+  --vp-button-alt-border: #777777;
+  --vp-button-alt-bg: #3333;
+  --vp-custom-block-info-bg: #32383c3b;
   --vp-home-hero-name-color: transparent;
-   --vp-home-hero-name-background: -webkit-linear-gradient(120deg, #5ae27b, #42d392);
+  --vp-home-hero-name-background: -webkit-linear-gradient(120deg, #5ae27b, #42d392);
+  --docsearch-container-background: #1c1d20cc;
+  --vp-c-bg-mute: #111113;
+  --docsearch-highlight-color: #111113 !important;
+}
+
+.DocSearch-Button {
+    border-color: #41404055;
 }
 
 .modal-back {
