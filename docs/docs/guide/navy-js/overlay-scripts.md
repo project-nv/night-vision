@@ -120,7 +120,7 @@ draw() {
 
 ### $props
 
-Overlay props (`props` field of [OverlayObject](/guide/data-struct/overlay-object.html)). Props defined with `prop()` function can be immediately access through `$props` variable:
+Overlay props (`props` field of [OverlayObject](/guide/data-struct/overlay-object.html)). Props defined with `prop()` function can be immediately accessed through `$props` variable:
 
 ```js
 prop('color', { type: 'color', def: '#2d7b2f33' })

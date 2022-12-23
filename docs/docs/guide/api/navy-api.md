@@ -39,7 +39,7 @@ destroy() {
 Main drawing call handler. Provides a context of the overlay's renderer. This function will be called every time a chart data or view is updated.
 
 ::: tip
-This handler should be optimized if you want to get a great chart performance. Keep in mind, that in a real charting app it will called at least 200-300 times per second. There are some tips how to make it faster:
+This handler should be optimized if you want to get a great chart performance. Keep in mind, that in a real charting app it will be called at least 200-300 times per second. There are some tips how to make it faster:
 - Use `for (var i = 0; ...)` loop instead of `for (var x of ...)` or `arr.forEach(...)` when iterating through big arrays.
 - Limit number of `ctx.beginPath()` calls by combining several primitives into one path
 - Draw primitives with the same color **together**. This tip alone increased performance of **Candles** overlay 2X.
@@ -148,7 +148,7 @@ for (var i = view.i1, n = view.i2; i <= n; i++) {
 ## legend(x, prec)
 
 - **Arguments:**
-    - `x`: `object` A selected by cursor data point, e.g. `[<timestamp>, <x1>, <x2>]`
+    - `x`: `object` Data point selected by cursor, e.g. `[<timestamp>, <x1>, <x2>]`
     - `prec`: `number` Pre-calculated data precision
 - **Returns** `array`
     Array of `[value, color]` pairs.
@@ -158,7 +158,7 @@ Defines legend as `[value, color]` pairs. [More Info](/guide/navy-js/overlay-scr
 ## legendHtml(x, prec, formatter)
 
 - **Arguments:**
-    - `x`: `object` A selected by cursor data point, e.g. `[<timestamp>, <x1>, <x2>]`
+    - `x`: `object` Data point selected by cursor, e.g. `[<timestamp>, <x1>, <x2>]`
     - `prec`: `number` Pre-calculated data precision
     - `formatter`: `function` Default number formatter
 - **Returns** `string`
@@ -179,11 +179,11 @@ Sets price label + price line parameters.
 ```js
 // Code from Candles.navy
 valueTracker(x) => {
-    show: $props.showValueTracker, // Show tracker, boolean
+    show: $props.showValueTracker, // Show the tracker, boolean
     symbol: $props.scaleSymbol, // Symbol label [Not implemented]
     line: $props.priceLine, // Show price line, boolean
     color: $lib.candleColor($props, $core.data[$core.data.length - 1]),
-    value: x[4] // close
+    value: x[4] // Tracker value (candle close)
 }
 ```
 
