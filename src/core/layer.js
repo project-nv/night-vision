@@ -8,7 +8,7 @@ export default class Layer {
     constructor(id, name, nvId) {
 
         // Layer id (relative to others on the pane)
-        this.id = 0
+        this.id = id
 
         // Chart instance id
         this.nvId = nvId
