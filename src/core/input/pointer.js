@@ -178,7 +178,7 @@ export default class Input {
             visible: true,
             gridId: this.gridId,
             x: event.layerX,
-            y: event.layerY //+ this.layout.offset
+            y: event.layerY - 1 // Align with the crosshair
         })
         this.calcOffset()
         this.propagate('mousemove', event)

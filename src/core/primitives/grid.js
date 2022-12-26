@@ -2,6 +2,9 @@
 // TODO: can be replaced by overlay script
 
 import Layer from '../layer.js'
+import Const from '../../stuff/constants.js'
+
+const HPX = Const.HPX
 
 export default class Grid extends Layer {
 
@@ -33,15 +36,15 @@ export default class Grid extends Layer {
         const ymax = layout.height
         for (var [x, p] of layout.xs) {
 
-            ctx.moveTo(x - 0.5, 0)
-            ctx.lineTo(x - 0.5, ymax)
+            ctx.moveTo(x + HPX, 0)
+            ctx.lineTo(x + HPX, ymax)
 
         }
 
         for (var [y, y$] of layout.ys) {
 
-            ctx.moveTo(0, y - 0.5)
-            ctx.lineTo(layout.width, y - 0.5)
+            ctx.moveTo(0, y + HPX)
+            ctx.lineTo(layout.width, y + HPX)
 
         }
 

@@ -1,7 +1,10 @@
 // Layout functional interface
 
 import Utils from '../stuff/utils.js'
+import Const from '../stuff/constants.js'
 import math from '../stuff/math.js'
+
+const HPX = Const.HPX
 
 // If `overlay` provided, that means this is an
 // overlay-specific layout-api
@@ -25,16 +28,16 @@ export default function(self, range, overlay = null) {
         // Time-or-index to screen x-coordinate
         ti2x: (t, i) => {
             let src = self.indexBased ? (i + offset) : t
-            return Math.floor((src - range[0]) * r) - 0.5
+            return Math.floor((src - range[0]) * r) + HPX
         },
         // Time to screen x-coordinates
         time2x: t => {
-            return Math.floor((t - range[0]) * r) - 0.5
+            return Math.floor((t - range[0]) * r) + HPX
         },
         // Price/value to screen y-coordinates
         value2y: y => {
             if (ls) y = math.log(y)
-            return Math.floor(y * self.A + self.B) - 0.5
+            return Math.floor(y * self.A + self.B) + HPX
         },
         // Time-axis nearest step
         tMagnet: t => {
@@ -44,7 +47,7 @@ export default function(self, range, overlay = null) {
             const arr = cn.map(x => x.raw[0])
             const i = Utils.nearestA(t, arr)[0]
             if (!cn[i]) return
-            return Math.floor(cn[i].x) - 0.5*/
+            return Math.floor(cn[i].x) + HPX */
         },
         // Screen-Y to dollar value (or whatever)
         y2value: y => {

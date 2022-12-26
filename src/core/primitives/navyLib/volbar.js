@@ -1,6 +1,10 @@
 
 // Old implementation of volume bar
 
+import Const from '../../../stuff/constants.js'
+
+const HPX = Const.HPX
+
 export default class VolbarExt {
 
     constructor(core, props, ctx, data) {
@@ -21,7 +25,7 @@ export default class VolbarExt {
 
         this.ctx.fillRect(
             Math.floor(data.x1),
-            Math.floor(y0 - h - 0.5),
+            Math.floor(y0 - h + HPX),
             Math.floor(w),
             Math.floor(h + 1)
         )

@@ -1,6 +1,10 @@
 
 // Drawing sidebar with CanvasJS
 
+import Const from '../../stuff/constants.js'
+
+const HPX = Const.HPX
+
 function body(props, layout, scale, side, ctx) {
 
     var points = scale.ys
@@ -15,11 +19,11 @@ function body(props, layout, scale, side, ctx) {
 
         if (p[0] > layout.height) continue
 
-        var x1 = side === 'left' ? w - 0.5 : x - 0.5
+        var x1 = side === 'left' ? w + HPX : x + HPX
         var x2 = side === 'left' ? x1 - 4.5 : x1 + 4.5
 
-        ctx.moveTo(x1, p[0] - 0.5)
-        ctx.lineTo(x2, p[0] - 0.5)
+        ctx.moveTo(x1, p[0] + HPX)
+        ctx.lineTo(x2, p[0] + HPX)
 
         var offst = side === 'left' ? -10 : 10
         ctx.textAlign = side === 'left' ? 'end' : 'start'
@@ -47,8 +51,8 @@ function border(props, layout, side, ctx) {
             ctx.strokeStyle = props.colors.scale
 
             ctx.beginPath()
-            ctx.moveTo(x - 0.5 + w, 0)
-            ctx.lineTo(x - 0.5 + w, h)
+            ctx.moveTo(x + HPX + w, 0)
+            ctx.lineTo(x + HPX + w, h)
             ctx.stroke()
 
             break
@@ -63,8 +67,8 @@ function border(props, layout, side, ctx) {
             ctx.strokeStyle = props.colors.scale
 
             ctx.beginPath()
-            ctx.moveTo(x + 0.5, 0)
-            ctx.lineTo(x + 0.5, h)
+            ctx.moveTo(x - HPX, 0)
+            ctx.lineTo(x - HPX, h)
             ctx.stroke()
             break
     }
@@ -81,7 +85,7 @@ function panel(props, layout, scale, side, ctx) {
     var S = side === 'right' ? 1 : 0
     let panWidth = layout.sbMax[S] - 5
     let x = S ? 1 : 4
-    let y = props.cursor.y - panHeight * 0.5 - 0.5
+    let y = props.cursor.y - panHeight * 0.5 + HPX
     let a = S ? 7 : panWidth - 3
     roundRect(ctx, x , y, panWidth, panHeight, 3, S)
     ctx.fillStyle = props.colors.textHL
@@ -98,7 +102,7 @@ function tracker(props, layout, scale, side, ctx, tracker) {
     var S = side === 'right' ? 1 : 0
     let panWidth = layout.sbMax[S] - 5
     let x = S ? 1 : 4
-    let y = tracker.y - panHeight * 0.5 - 0.5
+    let y = tracker.y - panHeight * 0.5 + HPX
     let a = S ? 7 : panWidth - 3
     roundRect(ctx, x , y, panWidth, panHeight, 3, S)
     ctx.fillStyle = props.colors.back

@@ -127,6 +127,9 @@ const MAP_UNIT = {
   "1y": YEAR
 }
 
+// Half-pixel adjustment to the canvas
+const HPX = - 0.5
+
 export default {
     SECOND: SECOND,
     MINUTE: MINUTE,
@@ -145,5 +148,6 @@ export default {
     ChartConfig: ChartConfig,
     MAP_UNIT: MAP_UNIT,
     IB_TF_WARN,
-    COLORS
+    COLORS,
+    HPX
 }

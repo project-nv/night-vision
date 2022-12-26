@@ -1,6 +1,10 @@
 
 // Candle object for Candles overlay
 
+import Const from '../../../stuff/constants.js'
+
+const HPX = Const.HPX
+
 export default class Candle {
 
     constructor(core, props, ctx, data) {
@@ -24,7 +28,7 @@ export default class Candle {
         //let hw = Math.max(Math.floor(w * 0.5), 1)
         //let h = Math.abs(data.o - data.c)
         //let max_h = data.c === data.o ? 1 : 2
-        let x05 = data.x - 1 // Math.floor(data.x) - 0.5
+        let x05 = data.x - 1 // Math.floor(data.x) + HPX
 
         this.ctx.lineWidth = 1
         this.ctx.strokeStyle = wickColor

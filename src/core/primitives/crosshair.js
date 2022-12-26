@@ -2,6 +2,9 @@
 // TODO: can be replaced by overlay script
 
 import Layer from '../layer.js'
+import Const from '../../stuff/constants.js'
+
+const HPX = Const.HPX
 
 export default class Crosshair extends Layer {
 
@@ -39,8 +42,8 @@ export default class Crosshair extends Layer {
 
         // H
         if (cursor.gridId === this.layout.id) {
-            ctx.moveTo(0, cursor.y - 0.5)
-            ctx.lineTo(this.layout.width - 0.5, cursor.y - 0.5)
+            ctx.moveTo(0, cursor.y + HPX)
+            ctx.lineTo(this.layout.width + HPX, cursor.y + HPX)
         }
 
         // V

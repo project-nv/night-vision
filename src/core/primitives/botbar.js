@@ -6,7 +6,7 @@ import Utils from '../../stuff/utils.js'
 const {
     MINUTE15, MINUTE, HOUR,
     DAY, WEEK, MONTH, YEAR,
-    MONTHMAP
+    MONTHMAP, HPX
 } = Const
 
 function body(props, layout, ctx) {
@@ -36,8 +36,8 @@ function body(props, layout, ctx) {
         let x = p[0] + sb0
         //if (p[0] - sb0 > width - sb1) continue
 
-        ctx.moveTo(x - 0.5, 0)
-        ctx.lineTo(x - 0.5, 4.5)
+        ctx.moveTo(x + HPX, 0)
+        ctx.lineTo(x + HPX, 4.5)
 
         if (!lblHighlight(props, p[1][0])) {
             ctx.globalAlpha = 0.85

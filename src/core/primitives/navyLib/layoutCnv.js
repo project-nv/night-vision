@@ -1,7 +1,10 @@
 // Calculations for candles & volume overlays
 // DEPRECATED
 
-import Utils from '../../stuff/utils.js'
+import Utils from '../../../stuff/utils.js'
+import Const from '../../../stuff/constants.js'
+
+const HPX = Const.HPX
 
 // Calulate positions & sizes for candles (if $c),
 // volume bars (if $v), or both by default
@@ -55,7 +58,7 @@ export default function layoutCnv(core, $c = true, $v = true) {
 
         if ($v) {
             x1 = prev || Math.floor(mid - pxStep * 0.5)
-            x2 = Math.floor(mid + pxStep * 0.5) - 0.5
+            x2 = Math.floor(mid + pxStep * 0.5) + HPX
             volume.push({
                 x1: x1,
                 x2: x2,
