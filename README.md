@@ -10,7 +10,7 @@
 
 # <center> Night Vision Charts™ </center>
 
-**NightVision** is a highly customizable charting library, created for professional traders. It is a continuation of [TradingVueJS](https://github.com/tvjsx/trading-vue-js) project, borrowing its core ideas, but applying better design decisions and improving performance.   
+**NightVision** is a highly customizable charting library, created for professional traders. It is a continuation of [TradingVueJS](https://github.com/tvjsx/trading-vue-js) project, borrowing its core ideas, but applying better design decisions and improving performance. Built with Svelte.   
 
 Start your charting journey with our interactive [**[DOCS]**](https://nightvision.dev/guide/intro/night-vision-charts.html).
 

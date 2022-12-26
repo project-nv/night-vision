@@ -39,8 +39,8 @@ export default class Crosshair extends Layer {
 
         // H
         if (cursor.gridId === this.layout.id) {
-            ctx.moveTo(0, cursor.y)
-            ctx.lineTo(this.layout.width - 0.5, cursor.y)
+            ctx.moveTo(0, cursor.y - 0.5)
+            ctx.lineTo(this.layout.width - 0.5, cursor.y - 0.5)
         }
 
         // V
