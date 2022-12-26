@@ -10,28 +10,27 @@ export default function test(stack, chart) {
 
     stack.add('Load the data', () => {
 
-        let dl = new DataLoader();
+        let dl = new DataLoader()
 
         // Load the first piece of the data
         dl.load((data) => {
-            chart.data = data;
-            chart.se.uploadAndExec()
-        });
+            chart.data = data // Set the initial data
+            chart.fullReset() // Reset tre time-range
+            chart.se.uploadAndExec() // Upload & exec scripts
+        })
 
         function loadMore() {
-            let data = chart.hub.mainOv.data;
-            let t0 = data[0][0];
+            let data = chart.hub.mainOv.data
+            let t0 = data[0][0]
             if (chart.range[0] < t0) {
-                //el("loading").hidden = false;
                 dl.loadMore(t0 - 1, (chunk) => {
                     // Add a new chunk at the beginning
-                    data.unshift(...chunk);
+                    data.unshift(...chunk)
                     // Yo need to update "data"
                     // when the data range is changed
-                    chart.update("data");
+                    chart.update("data")
                     chart.se.uploadAndExec()
-                    //el("loading").hidden = true;
-                });
+                })
             }
         }
 
@@ -57,19 +56,19 @@ export default function test(stack, chart) {
         setTimeout(update, 0)
 
         // Setup a trade data stream
-        wsx.init([dl.SYM]);
+        wsx.init([dl.SYM])
         wsx.ontrades = (d) => {
-            if (!chart.hub.mainOv) return;
-            let data = chart.hub.mainOv.data;
+            if (!chart.hub.mainOv) return
+            let data = chart.hub.mainOv.data
             let trade = {
                 price: d.price,
                 volume: d.price * d.size
-            };
-            if (sampler(data, trade)) {
-                chart.update("data"); // New candle
-                chart.scroll(); // Scroll forward
             }
-        };
+            if (sampler(data, trade)) {
+                chart.update("data") // New candle
+                chart.scroll() // Scroll forward
+            }
+        }
         window.wsx = wsx
     })
 

@@ -3,7 +3,7 @@
 import.meta.hot
 import { NightVision } from './index.js'
 import { onMount } from 'svelte'
-import data from '../data/data-scales.json?id=main'
+import data from '../data/data-ohlcv-rsi.json?id=main'
 import data2 from '../data/data-area.json?id=main-2'
 import TestStack from '../tests/testStack.js'
 
@@ -46,7 +46,7 @@ let chart = null
 
 onMount(() => {
     chart = new NightVision('chart-container', {
-        data: data,
+        data: data2,
         //autoResize: true,
         //indexBased: true
     })
