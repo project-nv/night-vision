@@ -111,6 +111,10 @@ export default class Cursor {
             this.ti = v[0]
         }
 
+        if (!layout.indexBased) {
+            this.time = this.ti
+        }
+
     }
 
     // Copy of the same function from layoutFn.js

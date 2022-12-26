@@ -107,9 +107,7 @@ function formatCursorX(props) {
     let t = props.cursor.time
     if (t === undefined) return `Out of range`
     // TODO: IMPLEMENT TI
-    //t = grid_0.tiMap.i2t(t)
     let tf = props.timeFrame
-    //let ti = props.layout.grids[0].tiMap.tf
     // Enable timezones only for tf < 1D
     let k = tf < DAY ? 1 : 0
 

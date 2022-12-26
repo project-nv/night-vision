@@ -44,6 +44,8 @@ TODO: data-api interface:
 let stack = new TestStack()
 let chart = null
 
+//data.indexBased = true
+
 onMount(() => {
     chart = new NightVision('chart-container', {
         data: data2,
