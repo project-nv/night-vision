@@ -19,8 +19,8 @@ export type Overlay = {
   type: string;
   main?: boolean;
   data?: OverlayData;
-  readonly dataSubset: OverlayDataSubset;
-  readonly dataView: { [key: string]: any }; //TODO: more accurate typing
+  readonly dataSubset?: OverlayDataSubset;
+  readonly dataView?: { [key: string]: any }; //TODO: more accurate typing
   props?: Object;
   settings?: OverlaySettings;
 };
