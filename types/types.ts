@@ -13,8 +13,8 @@ export type OverlayData = any[][]; //TODO: fix any, if possible
 export type OverlayDataSubset = any[][]; // BSOUP: Are these 2 always identical ?
 
 export type Overlay = {
-  readonly id: number;
-  readonly uuid: string;
+  readonly id?: number;
+  readonly uuid?: string;
   name: string;
   type: string;
   main?: boolean;
@@ -40,8 +40,8 @@ type PaneSettings = {
 };
 
 export type Pane = {
-  readonly id: number; // These are read-only for sure
-  readonly uuid: string;
+  readonly id?: number; // These are read-only for sure
+  readonly uuid?: string;
   overlays: Overlay[];
   settings?: PaneSettings;
 };
