@@ -12,18 +12,41 @@ type OverlaySettings = {
 export type OverlayData = any[][]; //TODO: fix any, if possible
 export type OverlayDataSubset = any[][]; // BSOUP: Are these 2 always identical ?
 
+export type CandleData = [timeMs: number, open: number, high: number, low: number, close: number, volume: number];
+export type SplineData = [timeMs: number, value: number];
+
+export type BuiltInCandleOverlay = {
+  name: string;
+  type: "Candles";
+  main?: boolean;
+  data?: CandleData[];
+  props?: Object;
+  settings?: OverlaySettings;
+};
+
+export type BuiltInSplineOverlay = {
+  name: string;
+  type: "Spline";
+  main?: boolean;
+  data?: SplineData[];
+  props?: Object;
+  settings?: OverlaySettings;
+};
+
+export type BuiltInOverlay = BuiltInCandleOverlay | BuiltInSplineOverlay;
+
 export type Overlay = {
   readonly id?: number;
   readonly uuid?: string;
   name: string;
-  type: "Spline" | "Candles" | string;
+  type: string;
   main?: boolean;
   data?: OverlayData;
   readonly dataSubset?: OverlayDataSubset;
   readonly dataView?: { [key: string]: any }; //TODO: more accurate typing
   props?: Object;
   settings?: OverlaySettings;
-};
+} | BuiltInOverlay;
 
 // PANE OBJECT
 
