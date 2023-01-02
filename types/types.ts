@@ -16,7 +16,7 @@ export type Overlay = {
   readonly id?: number;
   readonly uuid?: string;
   name: string;
-  type: string;
+  type: "Spline" | "Candles" | string;
   main?: boolean;
   data?: OverlayData;
   readonly dataSubset?: OverlayDataSubset;
