@@ -504,7 +504,7 @@ function loadMore() {
       data.unshift(...chunk);
       // You need to update "range"
       // when the data range is changed
-      chart.update("range");
+      chart.update("data");
       el("loading").hidden = true;
     });
   }
@@ -526,7 +526,7 @@ wsx.ontrades = (d) => {
     volume: d.price * d.size
   };
   if (sampler(data, trade)) {
-    chart.update("range"); // New candle
+    chart.update("data"); // New candle
   } else {
     chart.update(); // Candle update
   }
