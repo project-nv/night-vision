@@ -6,8 +6,6 @@
 // Output: internal events
 
 import FrameAnimation from '../../stuff/frame.js'
-import Hammer from 'hammerjs'
-import Hamster from 'hamsterjs'
 import Utils from '../../stuff/utils.js'
 import math from '../../stuff/math.js'
 import Events from '../events.js'
@@ -16,7 +14,7 @@ import MetaHub from '../metaHub.js'
 
 export default class Input {
 
-    setup(comp) {
+    async setup(comp) {
 
         this.MIN_ZOOM = comp.props.config.MIN_ZOOM
         this.MAX_ZOOM = comp.props.config.MAX_ZOOM
@@ -43,7 +41,7 @@ export default class Input {
         this.meta = MetaHub.instance(this.props.id)
         this.events = Events.instance(this.props.id)
 
-        this.listeners()
+        await this.listeners()
         this.mouseEvents('addEventListener')
     }
 
@@ -58,7 +56,10 @@ export default class Input {
         })
     }
 
-    listeners() {
+    async listeners() {
+        const Hamster = await import('hamsterjs');
+        const Hammer = await import('hammerjs');
+
         this.hm = Hamster(this.canvas)
         this.hm.wheel((event, delta) => this.mousezoom(-delta * 50, event))
 

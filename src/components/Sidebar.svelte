@@ -16,7 +16,6 @@
 import { onMount, onDestroy } from 'svelte'
 import { fade } from 'svelte/transition'
 import ScaleSelector from './ScaleSelector.svelte'
-import Hammer from 'hammerjs'
 import Events from '../core/events.js'
 import Utils from '../stuff/utils.js'
 import math from '../stuff/math.js'
@@ -68,22 +67,23 @@ $:width = layout.width
 $:height = layout.height
 $:resizeWatch(width, height)
 
-onMount(() => { setup() })
+onMount(async () => { await setup() })
 onDestroy(() => {
     events.off(`${sbUpdId}`)
     if (mc) mc.destroy()
 })
 
-function setup() {
+async function setup() {
     [canvas, ctx] = dpr.setup(
         canvasId, layout.sbMax[S], layout.height)
 
     update()
-    if (scale) listeners()
+    if (scale) await listeners()
 }
 
 // TODO: add mouse wheel/touchpad zoom
-function listeners() {
+async function listeners() {
+    const Hammer = await import('hammerjs');
     mc = new Hammer.Manager(canvas)
         mc.add(new Hammer.Pan({
             direction: Hammer.DIRECTION_VERTICAL,
