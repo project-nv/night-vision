@@ -60,7 +60,7 @@ export default class Input {
         const Hamster = await import('hamsterjs');
         const Hammer = await import('hammerjs');
 
-        this.hm = Hamster(this.canvas)
+        this.hm = Hamster.default(this.canvas)
         this.hm.wheel((event, delta) => this.mousezoom(-delta * 50, event))
 
         let mc = this.mc = new Hammer.Manager(this.canvas)
