@@ -48,7 +48,7 @@ export default class Trackers extends Layer {
             let tracker = vt(last)
             tracker.ovId = i
 
-            if (!tracker.show) continue
+            if (!tracker.show || tracker.value === undefined) continue
 
             tracker.y = this.layout.value2y(tracker.value)
             tracker.color = tracker.color || this.props.colors.scale
