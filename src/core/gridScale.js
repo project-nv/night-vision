@@ -145,6 +145,10 @@ export default function Scale(id, src, specs) {
         for (var i = 0; i < SAMPLE; i++) {
             // Random element n
             let n = Math.floor(Math.random() * ov.dataSubset.length)
+
+            if (ov.dataSubset.length === 0)
+              continue;
+
             let x = f(ov.dataSubset[n])
             if (typeof x === 'number') sample.push(x)
             else sample = sample.concat(x)
