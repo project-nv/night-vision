@@ -23,7 +23,7 @@
 
 - **Type:** `number`
 
-Sequential overlay id, heavily used in the library, calculated by [DataHub](/guide/main-comp/data-hub). Usually you need to specify it to access stuff.  
+Sequential overlay id, heavily used in the library, calculated by [DataHub](/guide/main-comp/data-hub). Usually you need to specify it to access stuff.
 
 ## overlay.uuid <img src="/robot.png" class="rh-tag" title="robot" />
 
@@ -41,14 +41,14 @@ Human-readable name that will be shown in the legend. Example: `APE / Tether US`
 
 - **Type:** `string`
 
-Overlay type (name) that will be used for rendering the data. The library performs a lookup over *prefabs* in the `Scripts` component to find a matching script. If not found, the overlay wont be rendered.    
+Overlay type (name) that will be used for rendering the data. The library performs a lookup over *prefabs* in the `Scripts` component to find a matching script. If not found, the overlay wont be rendered.
 
 ## overlay.main <img src="/robot.png" class="rh-tag" title="robot" /> <img src="/human.png" class="rh-tag" title="human" />
 
 - **Type:** `boolean`
 - **Default** `false`
 
-Marks the **main overlay** of the chart. This overlay's data will be used to calculate the grid x-positions and align other overlays. If not provided by user, will be automatically activated on the first overlay of the chart (with `paneId == 0, ovId == 0`). Other overlay's flags will be set to `false`.    
+Marks the **main overlay** of the chart. This overlay's data will be used to calculate the grid x-positions and align other overlays. If not provided by user, will be automatically activated on the first overlay of the chart (with `paneId == 0, ovId == 0`). Other overlay's flags will be set to `false`.
 
 ## overlay.data <img src="/human.png" class="rh-tag" title="human" />
 
@@ -88,14 +88,14 @@ To produce the data subset the library creates a data view first. *DataView* is 
     length: 52, // length of the section
     src: […] // Reference to `overlay.data`
 }
-```  
+```
 
 ## overlay.props <img src="/robot.png" class="rh-tag" title="robot" /> <img src="/human.png" class="rh-tag" title="human" />
 
 - **Type:** `Object`
 - **Default:** `{}`
 
-**Props** contains an information specific for this overlay. Examples: `lineWidth`, `color`, `showVolume`. The default values of the props are defined in the overlay script (see [this example](/guide/intro/10-basic-examples.html#_7-custom-overlays)).         
+**Props** contains an information specific for this overlay. Examples: `lineWidth`, `color`, `showVolume`. The default values of the props are defined in the overlay script (see [this example](/guide/intro/10-basic-examples.html#_7-custom-overlays)).
 
 ## overlay.settings <img src="/human.png" class="rh-tag" title="human" />
 
@@ -104,12 +104,12 @@ To produce the data subset the library creates a data view first. *DataView* is 
 
 Overlay settings. Specifies how this overlay should be rendered.
 
-## overlay.settings.display <img src="/robot.png" class="rh-tag" title="robot" /> <img src="/human.png" class="rh-tag" title="human" />     
+## overlay.settings.display <img src="/robot.png" class="rh-tag" title="robot" /> <img src="/human.png" class="rh-tag" title="human" />
 
 - **Type:** `boolean`
 - **Default:** `true`
 
-Flag that shows should the lib render the overlay or not. This includes calculation of a common y-range (max among all overlays on the pane).     
+Flag that shows should the lib render the overlay or not. This includes calculation of a common y-range (max among all overlays on the pane).
 
 ## overlay.settings.scale
 
@@ -122,17 +122,51 @@ Assigns a new or existing scale to the overlay. Scale definitions are in [pane.s
 
 - **Type:** `number`
 
-Set the precision of this overlay. It will not affect other overlays on the pane / scale. The pane precision is calculated as a max of all overlay's precisions, auto-detected or set up by this property. [pane.settings.precision](/guide/data-struct/pane-object.html#scale-precision) overwrites all these precisions.     
+Set the precision of this overlay. It will not affect other overlays on the pane / scale. The pane precision is calculated as a max of all overlay's precisions, auto-detected or set up by this property. [pane.settings.precision](/guide/data-struct/pane-object.html#scale-precision) overwrites all these precisions.
 
 ## overlay.settings.zIndex
 
 - **Type:** `number`
 - **Default** `-1` for regular overlay, `0` for the main overlay
 
-**zIndex** (z-index) determines an order in which overlays are rendered. The bigger the number is, the higher the overlay's layer is placed. For example, `Grid` layer has zIndex of `-1000000`, `Crosshair` instead, has value of `1000000`.       
+**zIndex** (z-index) determines an order in which overlays are rendered. The bigger the number is, the higher the overlay's layer is placed. For example, `Grid` layer has zIndex of `-1000000`, `Crosshair` instead, has value of `1000000`.
 
-## overlay.settings.timeframe
+## overlay.settings.legendSettings
 
-- **Type:** `string` | `number` String e.g., '1h, 15m, 1d' or number of milliseconds.
+- **Type:** `array`
+- **Default** `[]`
 
-Forced time-frame of the chart (if specified for the main overlay). Overwrites the auto-detected time-frame. 
+**legendSettings** You can send an array of objects to each overlay to add custom icons.The object should be like this:
+
+```js
+// Example of `overlay.settings.legendSettings`
+[
+  {
+    id: "close",
+    // icon must be base64 string of icon
+    icon: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAEDUlEQVRoQ+2Zi3HUQAyGkwqACjgqIFSAqQCoAFMBUAGmAqACQgVABZgKCBXgVABUAPpgNaPI+74HczPRjObs9UqrX9JqZd/pyZHT6ZHbf3IN4H9HcJcROBMwD4UH4ZvC3Fu6kJufwnPgL7sAvy0ADH0mPApvGg1aZP5H4VcBWKP4v+m9ANTw58HbXYsHIaLyRvhtD5AeAI9kodcRj/8KHiVF8K4ydhIdGODIwzccaoA8DTqqHdIK4KVonpx2cpkxDG+hIcjdd0LoIq2qqBYAnsPro9F6Ge5bDfeGAYQUumsenMv1C2GikqVaAO+c8e/lnvwvLlAyIDzHQYB44kCQUlsDmEQDqaNEeBnbBzWvVYoAm+3DgYzXZTyIx/KAchulHADC+l2YX4i0Gffh9ojOcxnTdCJN7whH0zUHwHrimygYEkpYCHA9lJLFabOwbuxk2qYAeO8/CAq9kbq58VhxwznhkiwO+xxkklFIAaAi0CJA1HmUeRplACOUWkD4qgZ45D3NMqDnBCc1le8KpQCQ+5swM+V9HrNoa+mLlWScEaNBBjUKi1yzF4oArBDtgW7ixBpNIFqM1/VIH207Vs6MRWASAa37tZWnJhI9xvsorzZzDMAsUpp32RrsQpID0Ws8S9izaLUfYwC+itBZMC6X/7GUioFg3mgm10ZVRWxKX8jgPbtwDMBvM4FNs6SSPzHuQdhprcYjizNxqtIVm0sASq1GClsMRI/xqt869SAAfM5jCKBaD7utAfSkUMx4NaQHRHMKsVG0B2ndxLFqg/Gth51NTbuJ6cm0wPydUyqjqSM+lvu5Uun3REskRllMW5ZPck1Zje/oMDrJb+tBVlPne0FYOV4z6dOyAGzOcYzfirnbjNUYr9N7QPwQYW1nOANI8SwAHi7Ct8Os3D5oMb4HxCBC2sxdyvXGOzNV520azSIECE+jDNh2uqXO+0ik9hrGAwJa9UEMpgAQMqKQ7AKDUjWkxXgfiZSs9T5dMd5fvVbmTlobBcCQf7H3UiIBkB5KyeJA2geMTno/FwGeoYQNo3uBLwN0p4cgvoRouST3KSzNL/UYaltZ7qOvdTtGNIk+LeOo7v6sonbxHspnRSXqMPV4H4ThAFBa1X2/aG23eS6Cth0gnagc0bB2ICNdqWj2lK0qDLUAWADPWxBLiARgtqEhGL8xSjCeyBcdVAtAdft0YnwO4OhTWgjDSRl+LUXrfUpxKwD0EGaiodVJdeMtogGgRZjarcc+VYQzZRMMRoe2ByrP/DHoqHZEDwCUszjRgP0/LdWLh4kYjkPgYsp45b0AVI8CwXM+IiUg1HciNvUYrsq3BWCNJE1IDX5JFfuPC/N4GcHDs+ESyOLzXQIoLraPCdcA9uHVFp1HH4E/ffX2MfTubGgAAAAASUVORK5CYII=",
+  },
+  {
+    id: "settings",
+    icon: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAEj0lEQVRoQ+2ZjXETQQyFkwqgA0wFQAUcFRAqwFQAVICpAKiAo4JABRwVABVgOoAKgj5YZZ432p+zbwDPRDM7zu2PpPe0q9VdTk+OXE6P3P+TawD/OoJLR+C9AXrYAPXBxs+WAr40gM/m2N2Gc19s/N7/CuCi07HFiFtMUWKeCCCfrA0ZmMme76c+IkAkDpYlAeDwx+TRO/tdZ96N9vw49T2wXwAdLD0AbpqVHx2WNjbnRZr30n55VmmNRyaatnsAwCqKXluD2UgG63xlzQ/wE/t7zCau7flt6mP71PQRqWeJOKJVlBYA0t25rN6KYaKCwzgOAJVoizDHt5jPBchza5M1SHLHV6Lskf1Neg6lBeCbrVJlrgTnUboOtH61PoBvszH0jNb8IOsw/awBRC7oub0PgI0t8j39Mzl0p6CIcbYErXVecBLg6L9R0AcJAPZxooTuK1KKAEZg3xnxQzlYH3tTb9sS4yXSvB/dRFEjwi2No1MC6ARCClG4Qk4JAEqeJkvf7Ze9rothByDIJlLc8l7GnVl+t9IPQJ49Cm/E5uW0CADOwb5LlFFm+HfQ1LWt9syFIqKgIMNymkwxiFmYBv0cgT22BpFDyDbczq3zkdtgF+jen+x5J61GEQA1i/SAsVeJRI8D7FtA5xmFtejlPLWEtTB/JhNJFPiGL5dSOgOrNFGzzjaBgIWSYBQjNRmTntKcwQa4e5QAoodefNiR1j2gh9kXllLaxiZ41mAuh9/ZgslbYjkqNRgmclyMKqW5v+e0ADAH46M131KRQtjStEvJAWMq6PBirpQWlQQIwDbnpyg9AFg8WfN8HV3tGPKSA8OrgsWt9XskWnrYNkPNecb2AUAWAJCKMhfm6zRZt2QUSRz2eukagDI8ZwuxTbhwItHi8K9tIfY36dHTWukQ47gf9NH+5t5Q0RRLTl9Zy+8V3YqMARLyitI6A6Q0UptKbxoFkKZRHHaZk0YBVbz8ahcZWcVLAQyTXdYNRkYb91RZYi1KsTp3sAf06L1BKiUakLIjpVIC5vUmpMzF+Z5SAsaIWl7r+zsD4y3BNiC0bMc20af/UiIAk41qjV58mah4gQODNY8gDKK3hwBVm9/MV1JrBGBlGo66nIYBvXC29syHKGUPkJS6ME2E5jLrLLOe7cp6LkBs6ZiWJ90vNChAMcry+mdIjpNaXdgepMxqzSLz/U+2F6lVEwVZC0cnaxtr+k6+SkB3VNXSqCqAIQCpsdyn0TpId8yrCY7g2LoyCTKY54lk9ku968YZTWfeT0aBrShlllIeDuWp2fWRWolq9JWiVhw2izmU6octlHE+YJuoEBGe8289UcE32Dwv1NxxvmgQCUDDNn+TeZS0gz5sYWhKyt1xN66/AN1Y8zc4zgQgVXDOX9BxvKbPgUASwIvSKiVYCDM9WQYAfuiiUqE1HjnZtN0DoEZAHgXfblG5QET8zERbrNfOzrwlAXAejvofHDBz0UnjYsQtpig5TjYpfQB2bBzg2n3SycGfaUsD4G7QCjJyhspWb/JZDueTlwZwkDP7LL4GsA9rS645+gj8AlPgFECNj2uZAAAAAElFTkSuQmCC",
+  },
+]
+
+```
+
+To access the event of each icon, we use the "app:select-overlay" event:
+
+```js
+chart.events.on("app:select-overlay", (event) => {
+      switch (event.index[2]) { // event.index[2] is the icon id
+        case "settings":
+          ....
+          break;
+        case "close":
+         ...
+          break;
+        default:
+          console.log("click other area of legend controller");
+      }
+    });
+```
