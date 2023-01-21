@@ -131,6 +131,12 @@ Set the precision of this overlay. It will not affect other overlays on the pane
 
 **zIndex** (z-index) determines an order in which overlays are rendered. The bigger the number is, the higher the overlay's layer is placed. For example, `Grid` layer has zIndex of `-1000000`, `Crosshair` instead, has value of `1000000`.
 
+## overlay.settings.timeframe
+
+- **Type:** `string` | `number` String e.g., '1h, 15m, 1d' or number of milliseconds.
+
+Forced time-frame of the chart (if specified for the main overlay). Overwrites the auto-detected time-frame.
+
 ## overlay.settings.legendSettings
 
 - **Type:** `array`
