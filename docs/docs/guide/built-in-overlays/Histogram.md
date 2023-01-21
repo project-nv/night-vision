@@ -15,7 +15,11 @@ Colored histogram, can be used for MACD
 - **Type:** `number`
 - **Default:** `4`
 
-## Histogram.lineWidth
+## Histogram.lineWidthValue
+- **Type:** `number`
+- **Default:** `1`
+
+## Histogram.lineWidthSignal
 - **Type:** `number`
 - **Default:** `1`
 
