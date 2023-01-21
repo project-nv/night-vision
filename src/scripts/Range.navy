@@ -10,6 +10,7 @@ prop('color', { type: 'Color', def: '#ec206e' })
 prop('backColor', { type: 'Color', def: '#381e9c16' })
 prop('bandColor', { type: 'Color', def: '#535559' })
 prop('lineWidth', { type: 'number', def: 1 })
+prop('lineWidthBand', { type: 'number', def: 1 })
 prop('upperBand', { type: 'number', def: 70 })
 prop('lowerBand', { type: 'number', def: 30 })
 
@@ -32,6 +33,7 @@ draw(ctx) {
         ctx.lineTo(x, y)
     }
     ctx.stroke()
+    ctx.lineWidth = $props.lineWidthBand
     ctx.strokeStyle = $props.bandColor
     ctx.setLineDash([5]) // Will be removed after draw()
     ctx.beginPath()

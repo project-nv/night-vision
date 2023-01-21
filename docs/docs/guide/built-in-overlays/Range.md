@@ -24,6 +24,10 @@ Ranging indicator, e.g. RSI
 - **Type:** `number`
 - **Default:** `1`
 
+## Range.lineWidthBand
+- **Type:** `number`
+- **Default:** `1`
+
 ## Range.upperBand
 - **Type:** `number`
 - **Default:** `70`
