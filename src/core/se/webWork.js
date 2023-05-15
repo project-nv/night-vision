@@ -2,7 +2,7 @@
 // Webworker interface
 
 import Utils from '../../stuff/utils.js'
-import WebWorker from './worker.js?worker'
+//import WebWorker from './worker.js?worker'
 
 class WebWork {
 
@@ -15,7 +15,10 @@ class WebWork {
 
     start() {
         if (this.worker) this.worker.terminate()
-        this.worker = new WebWorker()
+        //this.worker = new WebWorker()
+        this.worker = new Worker(new URL('./worker.js', import.meta.url), {
+            type: 'module',
+        })
         this.worker.onmessage = e => this.onmessage(e)
     }
 

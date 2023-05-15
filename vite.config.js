@@ -33,7 +33,11 @@ export default defineConfig({
       name: "NightVision",
       fileName: "night-vision",
     },
-    rollupOptions: {},
+    rollupOptions: {
+      output: {
+        manualChunks: undefined,
+      }
+    },
     minify: false,
   },
 });

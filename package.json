@@ -27,14 +27,14 @@
     "arrayslicer": "^1.2.3",
     "hammerjs": "^2.0.8",
     "hamsterjs": "^1.1.3",
-    "lz-string": "^1.4.4",
+    "lz-string": "^1.5.0",
     "moment": "^2.29.4",
-    "svelte": "^3.50.1"
+    "svelte": "^3.59.1"
   },
   "devDependencies": {
-    "@sveltejs/vite-plugin-svelte": "^1.0.9",
-    "vite": "^3.1.8",
-    "vite-plugin-banner": "^0.5.0",
-    "ws": "^8.11.0"
+    "@sveltejs/vite-plugin-svelte": "^2.2.0",
+    "vite": "^4.3.5",
+    "vite-plugin-banner": "^0.7.0",
+    "ws": "^8.13.0"
   }
 }
