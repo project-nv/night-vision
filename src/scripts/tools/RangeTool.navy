@@ -1,0 +1,152 @@
+// Navy ~ 0.1-lite
+// <ds>Time & value measurment tool [Shift+Click]</ds>
+
+[OVERLAY name=RangeTool, ctx=Canvas, verion=1.0.1, author=GPT4]
+
+let pin1 = null 
+let pin2 = null 
+let shift = false
+let state = 'idle'
+
+draw(ctx) {
+    const layout = $core.layout 
+
+    if (pin1 && pin2) {
+        const x1 = layout.time2x(pin1.t) // time to x coordinate
+        const x2 = layout.time2x(pin2.t) // time to x coordinate
+        const y1 = layout.value2y(pin1.v) // value to y coordinate
+        const y2 = layout.value2y(pin2.v) // value to y coordinate
+
+         // change fill color based on percentage
+        let color = percent() >= 0 ? '#3355ff' : '#ff3333';
+        ctx.fillStyle = color + '33';
+        ctx.fillRect(x1, y1, x2 - x1, y2 - y1)
+
+        // draw arrows in the middle of rectangle
+        let midX = (x1 + x2) / 2;
+        let midY = (y1 + y2) / 2;
+        $lib.drawArrow(ctx, midX, y1, midX, y2, color, Math.abs(y2 - y1) > 42); 
+        $lib.drawArrow(ctx, x1, midY, x2, midY, color, Math.abs(x2 - x1) > 42);  
+
+        // draw rounded rectangle with text
+        const text1 = `${deltaValue().toFixed(2)} (${percent().toFixed(2)}%)`;
+        const text2 = `${bars()} bars, ${timeText()}`;
+        const text = `${text1}\n${text2}`;
+        const textWidth = ctx.measureText(text).width;
+        
+        const padding = 10;
+        const mainRectCenterX = (x1 + x2) / 2; // calculate center of the main rectangle
+        const roundRectX = mainRectCenterX - textWidth / 2 - padding; // center the text rectangle relative to the main rectangle
+        const roundRectWidth = textWidth + 2 * padding;
+        const roundRectHeight = 50;  // adjust as needed
+        const roundRectY = percent() > 0 ? Math.min(y1, y2) - roundRectHeight - padding : Math.max(y1, y2) + padding;
+        const roundRectRadius = 5;   // adjust as needed
+        ctx.fillStyle = color + 'cc';
+        $lib.roundRect(ctx, roundRectX, roundRectY, roundRectWidth, roundRectHeight, roundRectRadius);
+
+        // draw text
+        ctx.fillStyle = '#ffffffcc' // color;
+        ctx.font = $lib.rescaleFont($core.props.config.FONT, 14);
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.fillText(text1, roundRectX + roundRectWidth / 2, roundRectY + roundRectHeight / 4);
+        ctx.fillText(text2, roundRectX + roundRectWidth / 2, roundRectY + 3 * roundRectHeight / 4);
+      
+    }
+}
+
+// Calculate the percentage of the are between pins v-values
+// assuming that pin2 is above pin1 equals positive value
+// and negative otherwise
+percent() {
+    if (pin1 && pin2) {
+        let delta = 100 * (pin2.v - pin1.v)
+        if (delta > 0) {
+            return delta / pin1.v
+        } else {
+            return delta / pin2.v
+        }
+    }
+    return 0
+}
+
+// Calculate delta time between pins t-values
+// assuming that pin2 on the right of pin1 equals positive value
+// and negative otherwise
+deltaTime() {
+    if (pin1 && pin2) {
+        return pin2.t - pin1.t
+    }
+    return 0
+}
+
+// Calculate delta value between pins v-values
+// assuming that pin2 is above pin1 equals positive value
+// and negative otherwise
+deltaValue() {
+    if (pin1 && pin2) {
+        return pin2.v - pin1.v
+    }
+    return 0
+}
+
+// Delta time in bars
+bars() {
+    return 0
+}
+
+// Delta time in text format
+timeText() {
+    return 'Unk'
+}
+
+
+keydown(event) {
+    if (event.key === 'Shift') {
+        shift = true
+    }
+}
+
+keyup(event) {
+    if (event.key === 'Shift') {
+        shift = false
+    }
+}
+
+mousedown(event) {
+    const layout = $core.layout 
+    if (state === 'idle' && shift) {
+        // Create the first pin 
+        pin1 = {
+            t: layout.x2time(event.layerX),
+            v: layout.y2value(event.layerY)
+        }
+        pin2 = { ...pin1 }
+        state = 'drawing'
+    } else if (state === 'drawing') {
+        state = 'finished'
+    } else if (state === 'finished') {
+        state = 'idle'
+        pin1 = null 
+        pin2 = null 
+    }
+    $events.emitSpec('chart', 'update-layout')
+}
+
+mousemove(event) {
+    if (state === 'drawing') {
+        const layout = $core.layout 
+        // Create the second pin 
+        pin2 = {
+            t: layout.x2time(event.layerX),
+            v: layout.y2value(event.layerY)
+        }
+    }
+}
+
+legend() => null
+
+
+someOtherStuff() {
+    
+}

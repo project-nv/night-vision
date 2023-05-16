@@ -42,3 +42,9 @@ export function candleColor(props, candle = []) {
 }
 
 // TODO: work with colors & opacity
+
+
+export function rescaleFont(fontString, newSize) {
+    let pair = fontString.split('px')
+    return newSize + 'px' + pair[1]
+}

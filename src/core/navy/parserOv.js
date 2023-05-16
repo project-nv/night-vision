@@ -137,7 +137,8 @@ export default class ParserOV {
 
                 copy += code.slice(i, m.index)
                 copy += `var ${fname} = (${fargs}) => `
-                this.parseFlags(fname, fargs, '')
+                let block = code.slice(arrow).split('\n')[0].trim()
+                this.parseFlags(fname, fargs, block)
 
                 i = arrow + 1
 
@@ -151,6 +152,10 @@ export default class ParserOV {
         if (name === 'yRange') {
             let x = !!fargs.trim().length
             this.flags += `yRangePreCalc: ${x},\n`
+        } else if (name === 'legend') {
+            if (block === 'null' || block === 'undefined') {
+                this.flags += `noLegend: true,\n`
+            }
         }
     }
 

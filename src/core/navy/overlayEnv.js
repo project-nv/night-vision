@@ -17,8 +17,10 @@ import volumeBar from '../primitives/navyLib/volumeBar.js'
 import Volbar from '../primitives/navyLib/volbar.js'
 import layoutCnv from '../primitives/navyLib/layoutCnvFast.js'
 import avgVolume from '../primitives/navyLib/avgVolume.js'
+import roundRect from '../primitives/navyLib/roundRect.js'
+import drawArrow from '../primitives/navyLib/arrow.js'
 import {
-    fastSma, candleColor
+    fastSma, candleColor, rescaleFont
 } from '../primitives/navyLib/helperFns.js'
 
 const formatCash = Utils.formatCash
@@ -46,7 +48,8 @@ export default class OverlayEnv {
         this.lib = {
             Candle, Volbar, layoutCnv, formatCash,
             candleBody, candleWick, volumeBar,
-            fastSma, avgVolume, candleColor
+            fastSma, avgVolume, candleColor, 
+            roundRect, rescaleFont, drawArrow
         }
 
     }

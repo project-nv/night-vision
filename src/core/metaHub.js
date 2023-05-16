@@ -67,7 +67,8 @@ class MetaHub {
         var lfs = this.legendFns[gridId] || []
         lfs[id] = {
             legend: overlay.legend,
-            legendHtml: overlay.legendHtml
+            legendHtml: overlay.legendHtml,
+            noLegend: overlay.noLegend ?? false
         }
 
         // Value trackers

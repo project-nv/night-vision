@@ -219,10 +219,12 @@ function updateBoundaries() {
     filter: none;
 }*/
 </style>
+{#if !legendFns.noLegend}
 <div class="nvjs-legend-line" {style}
     on:mousemove={onMouseMove}
     on:mouseleave={onMouseLeave}
     on:click={onClick}
+    on:keypress={null}
     bind:this={ref}>
     {#if ov.main && props.showLogo}
     <div class="nvjs-logo" style={logoStyle}></div>
@@ -270,3 +272,4 @@ function updateBoundaries() {
             height={boundary.height}/>
     {/if}
 </div>
+{/if}

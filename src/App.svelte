@@ -28,6 +28,7 @@ import indexBased from '../tests/tfs-test/allIndexBased.js'
 
 // More tests
 import indicators from '../tests/indicators/indicators.js'
+import rangeTool from '../tests/tools/rangeTool.js'
 
 
 /*
@@ -80,6 +81,10 @@ onMount(() => {
     stack.setGroup('ind-test')
 
     indicators(stack, chart)
+
+    stack.setGroup('tools-test')
+
+    rangeTool(stack, chart)
 
     //  Type in the console: stack.execAll()
     //  or: stack.exec('<group>')

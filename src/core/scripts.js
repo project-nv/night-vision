@@ -9,6 +9,9 @@ import WebWork from '../core/se/webWork.js'
 const Overlays = import.meta.glob(
     '../scripts/*.navy', { eager: true })
 
+const Tools = import.meta.glob(
+    '../scripts/tools/*.navy', { eager: true })
+
 const Indicators = import.meta.glob(
     '../scripts/indicators/*.navy', { eager: true })
 
@@ -21,6 +24,7 @@ class Scripts {
     async init(srcs) {
 
         this.srcLib = Object.values(Overlays).map(x => x.default)
+        this.srcLib.push(...Object.values(Tools).map(x => x.default))
         this.srcLib.push(...Object.values(Indicators).map(x => x.default))
         this.srcLib.push(...srcs)
         this.prefabs = {} // Overlay prefabs

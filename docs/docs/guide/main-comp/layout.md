@@ -89,7 +89,7 @@ There are several functions, working in different directions (e.g. from `time` t
 layout.time2x(t) // time -> x
 layout.value2y($) // price -> y
 layout.y2value(y) // y -> price
-layout.time2x(x) // x -> time
+layout.x2time(x) // x -> time
 // ...
 ```  
 
