@@ -53,6 +53,12 @@ legendHtml(x, prec, f) => `
 `
 ```
 
+You can disable legend line by returning `null` from `legend()` function:
+
+```js
+legend() => null
+```
+
 
 ## Y-Transforms
 

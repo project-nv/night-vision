@@ -92,13 +92,44 @@ deltaValue() {
 
 // Delta time in bars
 bars() {
+    let data = $core.hub.mainOv.dataSubset
+    if (pin1 && pin2) {
+        const layout = $core.layout
+        const bars = data.filter(bar => {
+            return bar[0] >= Math.min(pin1.t, pin2.t) && bar[0] <= Math.max(pin1.t, pin2.t)
+        });
+        let count = bars.length - 1; // reduce the count by 1
+        return pin2.t < pin1.t ? -count : count; // make it negative if pin2.t < pin1.t
+    }
     return 0
 }
 
 // Delta time in text format
 timeText() {
-    return 'Unk'
+    let deltaTimeMs = deltaTime();  // returns delta time in milliseconds
+    let timeFrameMs = $core.props.timeFrame;  // returns current chart timeframe in milliseconds
+
+    let negative = deltaTimeMs < 0;
+    deltaTimeMs = Math.abs(deltaTimeMs);
+
+    let minutes = Math.floor((deltaTimeMs / (1000 * 60)) % 60);
+    let hours = Math.floor((deltaTimeMs / (1000 * 60 * 60)) % 24);
+    let days = Math.floor(deltaTimeMs / (1000 * 60 * 60 * 24));
+
+    let result = "";
+    if (days > 0) {
+        result += days + "d ";
+    }
+    if ((hours > 0 || days > 0) && hours !== 0) {
+        result += hours + "h ";
+    }
+    if (minutes > 0 && timeFrameMs < 60 * 60 * 1000 && minutes !== 0) {
+        result += minutes + "m";
+    }
+
+    return (negative ? '-' : '') + result.trim();
 }
+
 
 
 keydown(event) {
@@ -118,7 +149,7 @@ mousedown(event) {
     if (state === 'idle' && shift) {
         // Create the first pin 
         pin1 = {
-            t: layout.x2time(event.layerX),
+            t: $core.cursor.time,
             v: layout.y2value(event.layerY)
         }
         pin2 = { ...pin1 }
@@ -138,15 +169,11 @@ mousemove(event) {
         const layout = $core.layout 
         // Create the second pin 
         pin2 = {
-            t: layout.x2time(event.layerX),
+            t: $core.cursor.time,
             v: layout.y2value(event.layerY)
         }
     }
 }
 
+// Disable legend by returning null
 legend() => null
-
-
-someOtherStuff() {
-    
-}

@@ -154,6 +154,7 @@ for (var i = view.i1, n = view.i2; i <= n; i++) {
     Array of `[value, color]` pairs.
 
 Defines legend as `[value, color]` pairs. [More Info](/guide/navy-js/overlay-scripts.html#custom-legend).
+To hide the legend line return `null`. 
 
 ## legendHtml(x, prec, formatter)
 
