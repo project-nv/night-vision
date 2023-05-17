@@ -50,7 +50,7 @@ scan.init(props)
 let interval = scan.detectInterval()
 let timeFrame = scan.getTimeframe()
 let range = scan.defaultRange()
-let cursor = new Cursor()
+let cursor = new Cursor(meta)
 let storage = {} // Storage for helper variables
 let ctx = new Context(props) // For measuring text
 let chartRR = 0

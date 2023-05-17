@@ -8,7 +8,9 @@ import math from '../stuff/math.js'
 
 export default class Cursor {
 
-    constructor() {}
+    constructor(meta) {
+        this.meta = meta
+    }
 
     xSync(hub, layout, props, update) {
 
@@ -26,7 +28,7 @@ export default class Cursor {
         this.yValues(layout)
 
         // If cursor is locked, we get x-coord from stored time
-        if (this.locked) {
+        if (this.locked && !this.meta.scrollLock) {
             this.x = layout.main.time2x(prevT)  // + 1
             return this
         }
@@ -46,7 +48,7 @@ export default class Cursor {
 
         // Cursor time
         // TODO: refine cursor t
-        if (!this.locked) {
+        if (!this.locked || this.meta.scrollLock) {
             this.ti = layout.main.x2ti(this.x)
         }
 

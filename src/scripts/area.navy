@@ -13,7 +13,7 @@ prop('back2', { type: 'color', def: $props.color + '01' })
 prop('dataIndex', { type: 'integer', def: 1 })
 
 draw(ctx) {
-
+   
     const layout = $core.layout
     const data = $core.data // Full dataset
     const view = $core.view // Visible view

@@ -18,6 +18,7 @@ class MetaHub {
         events.on('meta:sidebar-transform', this.onYTransform.bind(this))
         events.on('meta:select-overlay', this.onOverlaySelect.bind(this))
         events.on('meta:grid-mousedown', this.onGridMousedown.bind(this))
+        events.on('meta:scroll-lock', this.onScrollLock.bind(this))
 
         // Persistent meta storage
         this.storage = {}
@@ -44,6 +45,7 @@ class MetaHub {
         }*/
         this.ohlcMap = [] // time => OHLC map of the main ov
         this.ohlcFn = undefined // OHLC mapper function
+        this.scrollLock = false // Scroll lock state
 
     }
 
@@ -216,6 +218,11 @@ class MetaHub {
             index: undefined,
             ov: undefined
         })
+    }
+
+    // Overlay/user set lock on scrolling
+    onScrollLock(event) {
+        this.scrollLock = event
     }
 }
 

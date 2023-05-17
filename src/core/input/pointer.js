@@ -268,6 +268,8 @@ export default class Input {
 
    mousezoom(delta, event) {
 
+        if (this.meta.scrollLock) return
+
         // TODO: for mobile
         if (this.wmode !== 'pass') {
             if (this.wmode === 'click' && !this.oldMeta.activated) {
@@ -333,6 +335,8 @@ export default class Input {
 
     mousedrag(x, y) {
 
+        if (this.meta.scrollLock) return
+
         let dt = this.drug.t * (this.drug.x - x) / this.layout.width
         let d$ = this.layout.$hi - this.layout.$lo
         d$ *= (this.drug.y - y) / this.layout.height
@@ -372,6 +376,8 @@ export default class Input {
 
     pinchZoom(scale) {
 
+        if (this.meta.scrollLock) return
+
         let data = this.hub.mainOv.dataSubset
 
         if (scale > 1 && data.length <= this.MIN_ZOOM) return
@@ -388,6 +394,8 @@ export default class Input {
     }
 
     trackpadScroll(event) {
+
+        if (this.meta.scrollLock) return
 
         let dt = this.range[1] - this.range[0]
 
