@@ -11,11 +11,11 @@
   "author": "ChartMaster",
   "license": "ISC",
   "dependencies": {
-    "vitepress": "^1.0.0-alpha.33",
-    "vue": "^3.2.41"
+    "vitepress": "^1.0.0-alpha.75",
+    "vue": "^3.3.2"
   },
   "devDependencies": {
     "markdown-it": "^13.0.1",
-    "vitepress-plugin-search": "^1.0.4-alpha.11"
+    "vitepress-plugin-search": "^1.0.4-alpha.20"
   }
 }
