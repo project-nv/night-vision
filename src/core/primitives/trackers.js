@@ -27,7 +27,8 @@ export default class Trackers extends Layer {
         }
 
         this.env = {
-            update: this.envEpdate.bind(this)
+            update: this.envEpdate.bind(this),
+            destroy: () => {}
         }
 
     }

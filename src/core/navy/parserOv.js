@@ -166,6 +166,7 @@ export default class ParserOV {
             // Setup the environment
             let { $core, $props, $events } = env
             let prop = (...args) => env.prop(...args)
+            let watchProp = (...args) => env.watchProp(...args)
 
             // Add primitives
             let $lib = env.lib

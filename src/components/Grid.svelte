@@ -96,6 +96,7 @@ function detachInputs() {
 function destroyLayers() {
     for (var layer of layers) {
         layer.overlay.destroy()
+        layer.env.destroy()
     }
 }
 

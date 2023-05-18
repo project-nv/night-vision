@@ -1,0 +1,25 @@
+// Navy ~ 0.1-lite
+
+[OVERLAY name=WatchOverlay, ctx=Canvas, verion=0.1.0]
+
+// Overlay props
+prop('color', { type: 'color', def: '#2d7b2f33' })
+prop('value', { type: 'number', def: Math.random() })
+
+// Draw call
+draw(ctx) {
+    const layout = $core.layout 
+    ctx.fillStyle = $props.color
+    ctx.fillRect(0, 0, layout.width, layout.height)
+}
+
+watchProp('color', (nw, ol) => {
+    console.log('Color changed from', ol, 'to', nw)
+})
+
+watchProp('value', (nw, ol) => {
+    console.log('Value changed from', ol, 'to', nw)
+})
+
+// Legend, defined as pairs [value, color]
+legend(x) => [[Math.random(), $props.color]]
