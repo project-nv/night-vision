@@ -1,6 +1,6 @@
 {
   "name": "night-vision",
-  "version": "0.3.2",
+  "version": "0.3.3",
   "description": "Highly customizable charting library, created for professional traders",
   "homepage": "https://github.com/project-nv/night-vision",
   "type": "module",
