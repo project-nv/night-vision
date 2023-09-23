@@ -59,7 +59,6 @@ function update($layout) {
 
 </script>
 <style>
-.nvjs-pane {}
 </style>
 {#if layout}
 <div class="nvjs-pane" {style}>

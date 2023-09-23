@@ -23,7 +23,7 @@ import Canvas from '../components/renderers/Canvas.svelte'
 
 export let id // Pane/grid id
 export let props // General props
-//export let main // Is this the main grid?
+export let main // Is this the main grid?
 export let layout // Grid layout (scales, etc...)
 
 export function getLayers() { return layers }

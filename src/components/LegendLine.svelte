@@ -238,7 +238,9 @@ function updateBoundaries() {
     </span>
     {#if display && !hover}
     <span class="nvjs-ll-data" style={dataStyle}>
-        {#if !legend && !legendHtml}
+        {#if ov.settings.legendHtml}
+            {@html ov.settings.legendHtml}
+        {:else if !legend && !legendHtml}
             {#each data as v, i}
             {#if i > 0} <!-- filter out time -->
                 {#if v != null}
