@@ -230,7 +230,7 @@ function updateBoundaries() {
     <div class="nvjs-logo" style={logoStyle}></div>
     {/if}
     <span class="nvjs-ll-name" bind:this={nRef}>
-        {name}
+        {@html name}
         {#if ov.main}
         <span class="king-icon" style={kingStyle}>
         </span>
