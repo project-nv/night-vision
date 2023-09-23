@@ -218,7 +218,7 @@ function updateBoundaries() {
     filter: none;
 }*/
 </style>
-{#if !legendFns.noLegend}
+{#if !legendFns.noLegend && ov.settings.showLegend !== false}
 <!-- svelte-ignore a11y-no-static-element-interactions -->
 <div class="nvjs-legend-line" {style}
     on:mousemove={onMouseMove}

@@ -28,6 +28,7 @@ export default defineConfig({
   build: {
     target: "es2018",
     outDir: "../dist",
+    emptyOutDir: true,
     lib: {
       entry: resolve(__dirname, "src/index.js"),
       name: "NightVision",

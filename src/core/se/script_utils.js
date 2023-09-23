@@ -206,3 +206,21 @@ export function update(data, val) {
 export function now() {
     return (new Date()).getTime()
 }
+
+// Override overlay fields by another overlay  
+export function overrideOverlay(ov1, ov2) {
+    for (const [key, value] of Object.entries(ov2)) {
+        // If the value is an object and not an array, merge it
+        if (typeof value === 'object' && value !== null 
+            && !Array.isArray(value)) {
+            if (!ov1[key]) {
+                ov1[key] = {};
+            }
+            Object.assign(ov1[key], value);
+        } else {
+            // Otherwise, replace the value
+            ov1[key] = value;
+        }
+    }
+    return ov1;
+}
