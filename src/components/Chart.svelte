@@ -180,7 +180,6 @@ function rangeUpdate($range) {
 
 </script>
 <style>
-.nvjs-chart {}
 </style>
 {#key chartRR} <!-- Full chart re-render -->
 <div class="nvjs-chart" >

@@ -98,7 +98,6 @@ onMount(() => {
 
 </script>
 <style>
-.app {}
 #chart-container {
     position: absolute;
     width: 100%;

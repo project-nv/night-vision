@@ -188,7 +188,6 @@ function updateBoundaries() {
     margin-right: 2px;
     opacity: 0.85;
 }
-.nvjs-ll-name {}
 .nvjs-ll-data {
     font-variant-numeric: tabular-nums;
 }
@@ -220,6 +219,7 @@ function updateBoundaries() {
 }*/
 </style>
 {#if !legendFns.noLegend}
+<!-- svelte-ignore a11y-no-static-element-interactions -->
 <div class="nvjs-legend-line" {style}
     on:mousemove={onMouseMove}
     on:mouseleave={onMouseLeave}
