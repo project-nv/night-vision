@@ -27,6 +27,7 @@ class MetaHub {
     init(props) {
 
         this.panes = 0 // Panes processed
+        this.ready = false
         // [API] read-only
         this.legendFns = [] // Legend formatters
         this.yTransforms = [] // yTransforms of sidebars
@@ -120,6 +121,7 @@ class MetaHub {
         this.autoPrecisions = [] // wait for preSamplers
         //this.restore()
         this.calcOhlcMap()
+        this.ready = true
         setTimeout(() => {
             this.events.emitSpec('chart', 'update-layout')
             this.events.emit('update-legend')

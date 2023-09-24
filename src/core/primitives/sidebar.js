@@ -155,6 +155,7 @@ function error(props, layout, side, ctx) {
 
 export default {
     body,
+    border,
     panel,
     upperBorder,
     error,

@@ -180,6 +180,10 @@ function update($layout = layout) {
         l.env.update(l.ovSrc, layout, props)
         l.update()
     }
+    // Prevent drawing before meta data extracted
+    // from the scripts
+    if (!meta.ready) return
+    // Now draw
     for (var rr of renderers) {
         events.emitSpec(`rr-${id}-${rr.id}`,
             'update-rr', layout)

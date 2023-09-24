@@ -62,6 +62,9 @@ export default function Scale(id, src, specs) {
         self.sb = Math.max(Math.floor(self.sb), props.config.SBMIN)
         self.sb = Math.min(self.sb, props.config.SBMAX)
 
+        // Prevent sb calculation before meta data
+        // extracted  from the scripts
+        if (!meta.ready) self.sb = props.config.SBMIN
     }
 
     // Calc vertical value range
