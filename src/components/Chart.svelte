@@ -91,7 +91,6 @@ onDestroy(() => {
 
 function onCursorChanged($cursor, emit = true) {
     // Emit a global event (hook)
-    if (emit) events.emit('$cursor-update', $cursor)
     if ($cursor.mode) cursor.mode = $cursor.mode
     if (cursor.mode !== 'explore') {
         cursor.xSync(hub, layout, chartProps, $cursor)
@@ -100,6 +99,9 @@ function onCursorChanged($cursor, emit = true) {
             setTimeout(() => update())
         }
     }
+    if (emit) events.emit('$cursor-update', 
+        Utils.makeCursorEvent($cursor, cursor, layout)
+    )
     //if (cursor.locked) return // filter double updates (*)
     update()
 }

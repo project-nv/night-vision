@@ -510,6 +510,22 @@ export default {
         return h
     },
 
+    // Format cursor event for the '$cursor-update' hook
+    // TODO: doesn't work for renko
+    makeCursorEvent($cursor, cursor, layout) {
+        $cursor.values = cursor.values
+        $cursor.ti = cursor.ti
+        $cursor.time = cursor.time
+        $cursor.ohlcCoord = () => {
+            let ohlc = layout.main.ohlc(cursor.time)
+            return ohlc ? {
+                x: layout.main.time2x(cursor.ti),
+                ys: ohlc.map(x => layout.main.value2y(x))
+            } : null;
+        }
+        return $cursor
+    },
+
     // WTF with modern web development
     isMobile: (w => 'onorientationchange' in w &&
        (!!navigator.maxTouchPoints ||
