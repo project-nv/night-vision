@@ -11,6 +11,7 @@ import logScale from './logScale.js'
 import MetaHub from '../core/metaHub.js'
 
 const { $SCALES } = Const
+const MAX_INT = Number.MAX_SAFE_INTEGER
 
 export default function Scale(id, src, specs) {
 
@@ -258,9 +259,7 @@ export default function Scale(id, src, specs) {
         self.$_mult = dollarMult()
         self.ys = []
 
-        if (!data.length) return
-
-        let v = Math.abs(data[data.length - 1][1] || 1)
+        let v = (self.$hi + self.$lo) / 2 // Use mid point
         let y1 = searchStartPos(v)
         let y2 = searchStartNeg(-v)
         let yp = -Infinity // Previous y value
@@ -349,7 +348,7 @@ export default function Scale(id, src, specs) {
     calcSidebar()
     calcTransform()
 
-    /*;ls ? gridYLog() :*/ gridY()
+    ;ls ? gridYLog() : gridY()
 
     // Indices of the overlays using this scale (ovIdxs).
     // Needed when the final layout is built

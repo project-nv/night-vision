@@ -245,6 +245,7 @@ function calcRange(diff1 = 1, diff2 = 1) {
     return range
 }
 
+// TODO: log scale work with distortions when auto is disabled
 function rezoomRange(delta, diff1, diff2) {
 
     let yTransform = getYtransform()
