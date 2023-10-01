@@ -13,9 +13,10 @@ export default function test(stack, chart) {
             scales: {
                 A: {
                     log: true,
-                },
+                }
             }
         }
+        chart.se.uploadAndExec()
     })
 
     stack.endTest()

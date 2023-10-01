@@ -2,6 +2,7 @@
 
 import Utils from '../../../stuff/utils.js'
 import Const from '../../../stuff/constants.js'
+import math from '../../../stuff/math.js'
 
 const HPX = Const.HPX
 
@@ -16,6 +17,7 @@ export default function layoutCnv(
     let ti2x = core.layout.ti2x
     let layout = core.layout
     let view = core.view
+    let ls = layout.scaleSpecs.log
 
     let upBodies = []
     let dwBodies = []
@@ -50,9 +52,17 @@ export default function layoutCnv(
             prev = null
         }
 
-        // TODO: add log scale support
         if ($c) {
-            let candle = {
+            let candle = ls ? {
+                x: mid,
+                w: w,
+                o: Math.floor(math.log(p[1]) * A + B),
+                h: Math.floor(math.log(p[2]) * A + B),
+                l: Math.floor(math.log(p[3]) * A + B),
+                c: Math.floor(math.log(p[4]) * A + B),
+                green: green,
+                src: p
+            } : {
                 x: mid,
                 w: w,
                 o: Math.floor(p[1] * A + B),

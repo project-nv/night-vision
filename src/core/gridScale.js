@@ -349,7 +349,7 @@ export default function Scale(id, src, specs) {
     calcSidebar()
     calcTransform()
 
-    ;ls ? gridYLog() : gridY()
+    /*;ls ? gridYLog() :*/ gridY()
 
     // Indices of the overlays using this scale (ovIdxs).
     // Needed when the final layout is built
