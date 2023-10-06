@@ -140,6 +140,8 @@ class ScriptEngine {
             return
         }
 
+        if (!this.shared) return // Not initialized yet
+
         let mfs1 = this.make_mods_hooks('pre_step')
         let mfs2 = this.make_mods_hooks('post_step')
 
