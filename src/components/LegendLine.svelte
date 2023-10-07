@@ -166,6 +166,7 @@ function findOverlayScale(scales) {
 }
 
 function updateBoundaries() {
+    if (!ref) return
     boundary = ref.getBoundingClientRect()
 }
 
