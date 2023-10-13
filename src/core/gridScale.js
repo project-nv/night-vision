@@ -98,7 +98,7 @@ export default function Scale(id, src, specs) {
                 // should not affect the range at all
                 var yfnResult = yfn.exec(h, l)
                 if (yfnResult) {
-                    var [h, l, exp] = yfn.exec(h, l)
+                    var [h, l, exp] = yfnResult
                 } else {
                     var [h, l] = [hi, lo]
                 }
