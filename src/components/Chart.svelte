@@ -140,7 +140,7 @@ function update(opt = {}, emit = true) {
     // If we changed UUIDs of but don't want to trigger
     // the full update, we need to set updateHash:true
     if (opt.updateHash) scan.updatePanesHash()
-    if (scan.panesChanged()) return fullUpdate()
+    if (scan.panesChanged()) return fullUpdate(opt)
     cursor = cursor // Trigger Svelte update
     layout = new Layout(chartProps, hub, meta)
     events.emit('update-pane', layout) // Update all panes
