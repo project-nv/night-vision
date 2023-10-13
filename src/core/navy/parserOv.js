@@ -8,6 +8,10 @@
 
 // TODO: way to define primitives, maybe with [PRIMITIVE] tag
 
+// TODO: make preSampler & yRange function parsed before exec
+// (they should be converted to use data from arguments)
+
+
 import tools from './tools.js'
 
 // Functions with brackets: fname() { }
