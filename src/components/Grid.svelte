@@ -182,7 +182,7 @@ function update($layout = layout) {
     }
     // Prevent drawing before meta data extracted
     // from the scripts
-    if (!meta.ready) return
+    // if (!meta.ready) return
     // Now draw
     for (var rr of renderers) {
         events.emitSpec(`rr-${id}-${rr.id}`,

@@ -173,11 +173,11 @@ function update($layout = layout) {
     }
 
     // Draw only when data extracted from the srcipts
-    if (meta.ready) {
+    //if (meta.ready) {
         sb.body(props, layout, scale, side, ctx)
-    } else {
-        sb.border(props, layout, side, ctx)
-    }
+    //} else {
+    //    sb.border(props, layout, side, ctx)
+    //}
 
     ovDrawCalls()
 

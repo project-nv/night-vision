@@ -67,7 +67,7 @@ export default function Scale(id, src, specs) {
 
         // Prevent sb calculation before meta data
         // extracted  from the scripts
-        if (!meta.ready) self.sb = props.config.SBMIN
+        // if (!meta.ready) self.sb = props.config.SBMIN
     }
 
     // Calc vertical value range
