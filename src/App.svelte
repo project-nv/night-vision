@@ -53,7 +53,7 @@ let chart = null
 
 onMount(() => {
     chart = new NightVision('chart-container', {
-        data: data,
+        data: data3,
         //autoResize: true,
         //indexBased: true
     })

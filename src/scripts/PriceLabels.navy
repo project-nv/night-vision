@@ -1,4 +1,4 @@
-// Navy ~ 0.1-lite
+// Navy ~ 0.2-lite
 
 // <ds>Price labels that stick to candles</ds>
 // Format: [<timestamp>, <LabelObject>]
@@ -54,11 +54,6 @@ draw(ctx) {
         ctx.fillStyle = item.c || $props.color
         ctx.fillText(item.text, item.x, item.y + dy)
     }
-
-
-
-    // Draw texts
-
 }
 
 calcItems(ctx, layout, view, data) {
@@ -103,8 +98,6 @@ drawBody(ctx, item) {
     ctx.quadraticCurveTo(x - hw, y - 5 * d, x - hw + r, y - 5 * d)
     ctx.lineTo(x - 5, y - 5 * d)
     ctx.lineTo(x, y)
-
-
 }
 
 // Legend, defined as pairs [value, color]

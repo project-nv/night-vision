@@ -1,4 +1,4 @@
-// Navy ~ 0.1-lite
+// Navy ~ 0.2-lite
 
 // <ds>Two bands: above and below the price (like LuxAlgo Reverse Zones)</ds>
 // Format: [<timestamp>, <high1>, <mid1>, <low1>, <high2>, <mid2>, <low2>]

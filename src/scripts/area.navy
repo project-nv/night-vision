@@ -1,5 +1,5 @@
 
-// NavyJS ~ 0.1-lite
+// NavyJS ~ 0.2-lite
 
 // <ds>Area chart</ds>, format: [<timestamp>, <value>]
 
@@ -60,8 +60,7 @@ preSampler(x) => [x[$props.dataIndex]]
 ohlc(x) => Array(4).fill(x[$props.dataIndex])
 
 // Legend, defined as pairs [value, color]
-yRange() {
-    let data = $core.hub.ovDataSubset($core.paneId, $core.id)
+yRange(data) {
     let di = $props.dataIndex
     let len = data.length
     var h, l, high = -Infinity, low = Infinity

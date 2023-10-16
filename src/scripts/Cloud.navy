@@ -1,4 +1,4 @@
-// Navy ~ 0.1-lite
+// Navy ~ 0.2-lite
 
 // <ds>Cloud</ds>, format [<timestamp>, <line1>, <line2>]
 [OVERLAY name=Cloud, ctx=Canvas, verion=0.1.0]

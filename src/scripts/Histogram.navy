@@ -1,4 +1,4 @@
-// Navy ~ 0.1-lite
+// Navy ~ 0.2-lite
 
 // <ds>Colored histogram, can be used for MACD</ds>
 // Format: [<timestamp>, <hist>, <?value>, <?signal>]

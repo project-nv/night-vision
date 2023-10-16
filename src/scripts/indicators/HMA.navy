@@ -1,5 +1,5 @@
 
-// Navy ~ 0.1-lite
+// Navy ~ 0.2-lite
 // <ds>Hull Moving Average</ds>
 
 [INDICATOR name=HMA, version=1.0.0]

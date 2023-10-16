@@ -1,5 +1,5 @@
 
-// Navy ~ 0.1-lite
+// Navy ~ 0.2-lite
 // <ds>Volume Weighted Moving Average</ds>
 
 [INDICATOR name=VWMA, version=1.0.0]

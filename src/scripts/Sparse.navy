@@ -1,4 +1,4 @@
-// Navy ~ 0.1-lite
+// Navy ~ 0.2-lite
 
 // <ds>Sparse data: points, squares, crosses, triangles</ds>
 // Format: [<timestamp>, <value>, <?direction>]
@@ -106,8 +106,7 @@ drawTriandles(ctx, view, layout) {
     ctx.fill()
 }
 
-yRange() {
-    let data = $core.hub.ovDataSubset($core.paneId, $core.id)
+static yRange(data) {
     let len = data.length
     var h, l, high = -Infinity, low = Infinity
     for(var i = 0; i < len; i++) {
@@ -118,7 +117,7 @@ yRange() {
     return [high, low]
 }
 
-preSampler(x) => [x[1]]
+static preSampler(x) => [x[1]]
 
 // Legend, defined as pairs [value, color]
 legend(x) => [[Math.random(), $props.color]]

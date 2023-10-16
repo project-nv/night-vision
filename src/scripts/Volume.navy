@@ -1,4 +1,4 @@
-// Navy ~ 0.1-lite
+// Navy ~ 0.2-lite
 
 // <ds>Regular volume</ds> 
 // Format: [<timestamp>, <volume>, <direction>]
@@ -41,7 +41,7 @@ drawCvPart(ctx, f, arr, color) {
 }
 
 // Custom y-range
-yRange(hi, lo) {
+yRange(data, hi, lo) {
     // Remove this overlay for yRange calculation
     // if it's not the main overlay of the pane
     if ($core.id !== 0) {

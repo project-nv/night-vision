@@ -1,5 +1,5 @@
 
-// Navy ~ 0.1-lite
+// Navy ~ 0.2-lite
 // <ds>Exponential Moving Average</ds>
 
 [INDICATOR name=EMA, version=1.0.0]

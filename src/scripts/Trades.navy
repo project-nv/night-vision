@@ -1,5 +1,5 @@
 
-// Navy ~ 0.1-lite
+// Navy ~ 0.2-lite
 
 // <ds>Simple trades</ds>
 // Format: [<timestamp>, <dir>, <price>, <?label>]
@@ -78,10 +78,10 @@ drawLabels(ctx, view, data, layout) {
 }
 
 // Sample data point with index 2
-preSampler(x) => x[2]
+static preSampler(x) => x[2]
 
 // Not affecting the y-range
-yRange() => null
+static yRange() => null
 
 // Legend formatter, Array of [value, color] pairs
 // x represents one data item e.g. [<time>, <value>]

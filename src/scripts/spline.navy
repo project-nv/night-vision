@@ -1,5 +1,5 @@
 
-// NavyJS ~ 0.1-lite
+// NavyJS ~ 0.2-lite
 
 // <ds>Single spline</ds>
 // Format: [<timestamp>, <number>]
@@ -45,8 +45,7 @@ preSampler(x) => [x[$props.dataIndex]]
 // Here we simulate a candle with 0 height
 ohlc(x) => Array(4).fill(x[$props.dataIndex])
 
-yRange() {
-    let data = $core.hub.ovDataSubset($core.paneId, $core.id)
+yRange(data) {
     let di = $props.dataIndex
     let len = data.length
     var h, l, high = -Infinity, low = Infinity

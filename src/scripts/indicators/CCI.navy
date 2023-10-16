@@ -1,5 +1,5 @@
 
-// Navy ~ 0.1-lite
+// Navy ~ 0.2-lite
 // <ds>Commodity Channel Index</ds>
 
 [INDICATOR name=CCI, version=1.0.0]
