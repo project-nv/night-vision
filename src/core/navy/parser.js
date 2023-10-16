@@ -4,7 +4,7 @@
 import ParserOV from './parserOv.js'
 import ParserIND from './parserInd.js'
 
-const VERSION = 0.1
+const VERSION = 0.2
 const TAG = 'lite'
 const VERS_REGX = /\/\*[\s\S]*?\*\/|([^\\:]|^)\/\/.*$/gm
 const OV_REGX = /\[OVERLAY[\s]+([\s\S]*?)]([\s\S]*?)(\[OVERLAY|\[INDICATOR|\[EOF)/gm
@@ -14,6 +14,7 @@ export default class Parser {
 
     constructor(src, name = 'Unknown Script') {
 
+        name = this.extractName(src) || name
         this.version = VERSION
         this.src = src + '\n[EOF]'
         this.scriptName = name
@@ -28,6 +29,11 @@ export default class Parser {
 
         if (this.scriptVers > this.version) {
             console.warn(`${name}: Script version > parser version`)
+        }
+
+        if (this.scriptVers < 0.2 && 
+            src.includes('OVERLAY') && src.includes('yRange')) {
+            console.warn(`${name}: Update yRange() function (see docs)`)
         }
 
         if (this.scriptTag !== TAG) {
@@ -59,6 +65,17 @@ export default class Parser {
 
         return [0]
     }
+
+    extractName(script) {
+        const regex = /\[.*?name=([^\s,]+)/;
+        const match = script.match(regex);
+        if (match && match[1]) {
+            return match[1].trim();
+        } else {
+            return null; // If 'name' field is not found
+        }
+    }
+
 
     // Parse [OVERLAY] tags
     overlayTags() {

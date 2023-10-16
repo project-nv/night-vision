@@ -56,7 +56,8 @@ class Scripts {
                     author: ov.tagProps.author,
                     version: ov.tagProps.version,
                     ctx: ov.tagProps.ctx || 'Canvas',
-                    make: ov.prefab
+                    make: ov.prefab,
+                    static: ov.static
                 }
             }
             for (var ind of parser.indicators) {

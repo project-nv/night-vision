@@ -1,5 +1,5 @@
 
-// NavyScript~0.1
+// NavyScript~0.1-lite
 
 [OVERLAY name=Spline, export=true, ctx=Canvas, extends=Line]
 

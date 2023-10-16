@@ -18,6 +18,7 @@ import tools from './tools.js'
 const FREGX1 = /(function[\s]+|)([$A-Z_][0-9A-Z_$\.]*)[\s]*?\(([^()]*?)\)[\s]*?{/gmi
 const FREGX2 = /(function[\s]+|)([$A-Z_][0-9A-Z_$\.]*)[\s]*?\(([^()]*?)\)[\s]*?=>[\s]*?{/gmi
 const FREGX3 = /(function[\s]+|)([$A-Z_][0-9A-Z_$\.]*)[\s]*?\(([^()]*?)\)[\s]*?=>/gmi
+const SREGX = /static\s+var\s+([a-zA-Z0-9_]+)\s*=/g
 
 const KWORDS = ['if', 'for', 'while', 'switch', 'catch', 'with']
 
@@ -51,9 +52,12 @@ export default class ParserOV {
         code = this.prepFuncions1(code)
         code = this.prepFuncions2(code)
         code = this.prepFuncions3(code)
-
+        
+        let blocks = tools.extractStaticBlocks(code)
+        this.static = this.wrapStatic(blocks) 
+        
+        code = this.renameStatic(code)
         this.prefab = this.wrapTheCode(code, this.flags)
-
     }
 
     // Find all function declarations & replace them with
@@ -154,13 +158,37 @@ export default class ParserOV {
     // Add some flag for the future use (e.g. in layout)
     parseFlags(name, fargs, block) {
         if (name === 'yRange') {
-            let x = !!fargs.trim().length
+            // Precalc if at least 'h' needed
+            let x = fargs.trim().split(',').length > 1 // (data, h, ...)
             this.flags += `yRangePreCalc: ${x},\n`
         } else if (name === 'legend') {
             if (block === 'null' || block === 'undefined') {
                 this.flags += `noLegend: true,\n`
             }
         }
+    }
+
+    wrapStatic(code) {
+        let renamed = code.replace(SREGX, '$static.$1 =');
+        const wrappedScript = `
+            var $static = {}
+            ${renamed}
+            return $static
+        `;
+        try {
+            // Using the Function constructor.
+            const dynamicFunction = new Function(wrappedScript);
+            const result = dynamicFunction();
+            return result
+        } catch (error) {
+            console.error("Error parsing static functions", error);
+        }
+        return {}
+    }
+
+    // Rename static functions 
+    renameStatic(code) {
+        return code.replace(SREGX, '$static.$1 =')
     }
 
     // Create a function that returns a new overlay object
@@ -171,6 +199,7 @@ export default class ParserOV {
             let { $core, $props, $events } = env
             let prop = (...args) => env.prop(...args)
             let watchProp = (...args) => env.watchProp(...args)
+            let $static = {} 
 
             // Add primitives
             let $lib = env.lib

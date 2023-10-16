@@ -163,7 +163,48 @@ function findClosingBracket(src, startPos, file, btype = '{}') {
 
 }
 
+// Extracting 'static' function from a script
+// Blame GPT4 for any errors
+function extractStaticBlocks(script) {
+    let matches = [];
+    let currentIndex = 0;
+
+    while (currentIndex < script.length) {
+        let staticIndex = script.indexOf('static', currentIndex);
+        if (staticIndex === -1) break;
+
+        let arrowIndex = script.indexOf('=>', staticIndex);
+        if (arrowIndex === -1) break;
+
+        // Adjust currentIndex to the character after '=>' and trim whitespaces.
+        currentIndex = arrowIndex + 2;
+        while ([' ', '\t', '\n', '\r'].includes(script[currentIndex])) {
+            currentIndex++;
+        }
+
+        let nextChar = script[currentIndex];
+
+        if (['{', '[', '('].includes(nextChar)) {
+            let closingIndex;
+            try {
+                closingIndex = findClosingBracket(script, currentIndex, 'script', nextChar + ({ '{': '}', '[': ']', '(': ')' })[nextChar]);
+            } catch (error) {
+                console.error(error);
+                continue;
+            }
+            matches.push(script.slice(staticIndex, closingIndex + 1).trim());
+            currentIndex = closingIndex + 1; // update the currentIndex to the character after the closing bracket
+        } else {
+            let newLineIndex = script.indexOf('\n', currentIndex);
+            matches.push(script.slice(staticIndex, newLineIndex !== -1 ? newLineIndex : undefined).trim());
+        }
+    }
+
+    return matches.join('\n');
+}
+
+
 export default {
     maskStrings, unmaskStrings, findStrings, maskRegex,
-    decomment, findClosingBracket
+    decomment, findClosingBracket, extractStaticBlocks
 }
