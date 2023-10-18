@@ -60,14 +60,10 @@ draw(ctx) {
 // and negative otherwise
 percent() {
     if (pin1 && pin2) {
-        let delta = 100 * (pin2.v - pin1.v)
-        if (delta > 0) {
-            return delta / pin1.v
-        } else {
-            return delta / pin2.v
-        }
+        let delta = pin2.v - pin1.v;
+        return (delta / pin1.v) * 100;
     }
-    return 0
+    return 0;
 }
 
 // Calculate delta time between pins t-values
