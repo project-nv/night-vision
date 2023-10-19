@@ -1,7 +1,8 @@
 
 // NavyJS ~ 0.2-lite
 
-// <ds>Area chart</ds>, format: [<timestamp>, <value>]
+// <ds>Area chart, like in MacOS Stocks app </ds>
+// format: [<timestamp>, <value>]
 
 [OVERLAY name=AppleArea, ctx=Canvas, version=1.0.0]
 
@@ -10,9 +11,12 @@ prop('colorUp', { type: 'color', def: '#57db64' })
 prop('colorDown', { type: 'color', def: '#ff3b2f' })
 prop('colorSelect', { type: 'color', def: '#49bef4' })
 prop('colorSelectBack', { type: 'color', def: '#00a7f455' })
+prop('colorSelectValue', { type: 'color', def: '#3b8fed' })
+prop('colorBaseline', { type: 'color', def: '#555555' })
 prop('lineWidth', { type: 'number', def: 1.5 })
-prop('dataIndex', { type: 'integer', def: 1 })
 
+const HPX = - 0.5
+const FONT = 'bold 14' + $core.props.config.FONT.slice(2)
 let direction = 1
 let mode = 'display'
 
@@ -20,19 +24,21 @@ init() {
     setTimeout(() => {
         $events.emit('show-crosshair', false)
         $events.emit('show-sb-panel', false)
+        $events.emit('show-bb-panel', false)
     })
 }
 
 draw(ctx) {
-   
+
     mode = $core.cursor.visible ? 'select' : 'display'
 
     const layout = $core.layout
     const data = $core.data // Full dataset
     const view = $core.view // Visible view
-    const idx = $props.dataIndex
-    const grd = ctx.createLinearGradient(0, 0, 0, layout.height)
 
+    drawBaseline(ctx, layout)
+
+    const grd = ctx.createLinearGradient(0, 0, 0, layout.height)
     let color = mode === 'select' ? $props.colorSelect : (
         direction > 0 ? $props.colorUp : $props.colorDown
     )
@@ -48,7 +54,7 @@ draw(ctx) {
     for (var i = view.i1, n = view.i2; i <= n; i++) {
         let p = data[i]
         let x = layout.ti2x(p[0], i)
-        let y = layout.value2y(p[idx])
+        let y = layout.value2y(p[1])
         ctx.lineTo(x, y)
     }
     ctx.stroke()
@@ -62,16 +68,104 @@ draw(ctx) {
     for (var i = view.i1, n = view.i2; i <= n; i++) {
         let p = data[i]
         let x = layout.ti2x(p[0], i)
-        let y = layout.value2y(p[idx])
+        let y = layout.value2y(p[1])
         ctx.lineTo(x, y)
     }
     ctx.lineTo(layout.ti2x(pN, i - 1), layout.height)
     ctx.fill()
 
+    let rightMost = $core.dataSubset.slice(-1)[0][0]
+    if ($core.cursor.ti > rightMost) return
+
+    drawVertical(ctx, layout) 
+
+    // Draw selection circle
+    drawSelectionCircle(ctx, layout);
+
+}
+
+// Line that starts from the leftmost price value
+drawBaseline(ctx, layout) {
+    let v0 = $core.dataSubset[0][1]
+    let vLast = $core.dataSubset.slice(-1)[0][1]
+
+    direction = Math.sign(vLast - v0)
+
+    let y = layout.value2y(v0)
+    ctx.save()
+    ctx.strokeStyle = $props.colorBaseline
+    ctx.beginPath()
+    ctx.setLineDash([3])
+    ctx.moveTo(0, y + HPX)
+    ctx.lineTo(layout.width + HPX, y + HPX)
+    ctx.stroke()
+    ctx.restore()
+
+}
+
+// Draw vertical line with value 
+drawVertical(ctx, layout) {
+    if (mode === 'select' && $core.cursor.visible) {
+        // Draw vertical line
+        ctx.strokeStyle = $props.colorSelect
+        ctx.lineWidth = 1
+        ctx.beginPath()
+        ctx.moveTo($core.cursor.x, 5)
+        ctx.lineTo($core.cursor.x, layout.height)
+        ctx.stroke()
+
+        // Display value panel
+        const selectedValue = $core.cursor.values[0][0][1]
+        const valueText = selectedValue.toFixed(2)
+
+        ctx.font = FONT
+        ctx.fillStyle = $props.colorSelect
+        const textWidth = ctx.measureText(valueText).width
+
+        // Calculate position for the value panel
+        const panelX = $core.cursor.x - textWidth / 2
+        const panelY = 5 // Distance from the top of the canvas
+
+        // Draw value panel background
+        ctx.fillStyle = $core.colors.back
+        const panelHeight = 20 // Height of the panel
+        ctx.fillRect(panelX - 5, panelY, textWidth + 10, panelHeight)
+
+        // Draw value text
+        ctx.fillStyle = $props.colorSelectValue
+        const textY = panelY + panelHeight - 5 // Vertical position of the text, adjusted for padding
+        ctx.fillText(valueText, panelX, textY)
+    }
+}
+
+// Draw a circle around the selected price point
+drawSelectionCircle(ctx, layout) {
+    if (mode === 'select' && $core.cursor.visible) {
+
+        let selectedValue = $core.cursor.values[0][0][1];
+
+        const circleRadius = 8; // Radius of the circle
+        const circleStrokeWidth = 2; // Stroke width of the circle
+        const circleX = $core.cursor.x;
+        const circleY = layout.value2y(selectedValue);
+
+        // Draw circle stroke (back color)
+        ctx.strokeStyle = $core.colors.back;
+        ctx.lineWidth = circleStrokeWidth;
+        ctx.beginPath();
+        ctx.arc(circleX, circleY, circleRadius + circleStrokeWidth / 2, 0, 2 * Math.PI);
+        ctx.stroke();
+
+        // Draw circle (select color)
+        ctx.fillStyle = $props.colorSelect;
+        ctx.beginPath();
+        ctx.arc(circleX, circleY, circleRadius, 0, 2 * Math.PI);
+        ctx.fill();
+    }
 }
 
 // Precision sampling
-preSampler(x) => [x[$props.dataIndex]]
+preSampler(x) => [x[1]]
 
 // Map data item to OHLC (for candle magnets etc.)
 // Here we simulate a candle with 0 height
