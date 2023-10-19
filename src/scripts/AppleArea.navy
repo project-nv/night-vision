@@ -1,0 +1,81 @@
+
+// NavyJS ~ 0.2-lite
+
+// <ds>Area chart</ds>, format: [<timestamp>, <value>]
+
+[OVERLAY name=AppleArea, ctx=Canvas, version=1.0.0]
+
+// Define new props
+prop('colorUp', { type: 'color', def: '#57db64' })
+prop('colorDown', { type: 'color', def: '#ff3b2f' })
+prop('colorSelect', { type: 'color', def: '#49bef4' })
+prop('colorSelectBack', { type: 'color', def: '#00a7f455' })
+prop('lineWidth', { type: 'number', def: 1.5 })
+prop('dataIndex', { type: 'integer', def: 1 })
+
+let direction = 1
+let mode = 'display'
+
+init() {
+    setTimeout(() => {
+        $events.emit('show-crosshair', false)
+        $events.emit('show-sb-panel', false)
+    })
+}
+
+draw(ctx) {
+   
+    mode = $core.cursor.visible ? 'select' : 'display'
+
+    const layout = $core.layout
+    const data = $core.data // Full dataset
+    const view = $core.view // Visible view
+    const idx = $props.dataIndex
+    const grd = ctx.createLinearGradient(0, 0, 0, layout.height)
+
+    let color = mode === 'select' ? $props.colorSelect : (
+        direction > 0 ? $props.colorUp : $props.colorDown
+    )
+    let cb = mode === 'select' ? $props.colorSelectBack : (color + '55')
+    grd.addColorStop(0, cb)
+    grd.addColorStop(1, color + '00')
+
+    // Line
+    ctx.lineWidth = $props.lineWidth
+    ctx.strokeStyle = color
+    ctx.lineJoin = "round"
+    ctx.beginPath()
+    for (var i = view.i1, n = view.i2; i <= n; i++) {
+        let p = data[i]
+        let x = layout.ti2x(p[0], i)
+        let y = layout.value2y(p[idx])
+        ctx.lineTo(x, y)
+    }
+    ctx.stroke()
+
+    // Area
+    ctx.fillStyle = grd
+    ctx.beginPath()
+    let p0 = (data[0] || [])[0]
+    let pN = (data[data.length - 1] || [])[0]
+    ctx.lineTo(layout.ti2x(p0, 0), layout.height)
+    for (var i = view.i1, n = view.i2; i <= n; i++) {
+        let p = data[i]
+        let x = layout.ti2x(p[0], i)
+        let y = layout.value2y(p[idx])
+        ctx.lineTo(x, y)
+    }
+    ctx.lineTo(layout.ti2x(pN, i - 1), layout.height)
+    ctx.fill()
+
+}
+
+// Precision sampling
+preSampler(x) => [x[$props.dataIndex]]
+
+// Map data item to OHLC (for candle magnets etc.)
+// Here we simulate a candle with 0 height
+ohlc(x) => Array(4).fill(x[$props.dataIndex])
+
+// Legend, defined as pairs [value, color]
+legend(x) => null

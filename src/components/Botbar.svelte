@@ -23,6 +23,7 @@ let events = Events.instance(props.id)
 
 // EVENT INTERFACE
 events.on(`${bbUpdId}:update-bb`, update)
+events.on(`${bbUpdId}:show-bb-panel`, f => showPanel = f)
 
 $:bbStyle = `
     background: ${props.colors.back};
@@ -32,6 +33,7 @@ $:bbStyle = `
 
 let canvas // Canvas ref
 let ctx // Canvas context
+let showPanel = true
 
 $:width = (layout.botbar || {}).width
 $:resizeWatch(width)
@@ -58,7 +60,7 @@ function update($layout = layout) {
 
     // applyShaders()
 
-    if (props.cursor.x && props.cursor.ti !== undefined) {
+    if (props.cursor.x && props.cursor.ti !== undefined && showPanel) {
         bb.panel(props, layout, ctx)
     }
 }

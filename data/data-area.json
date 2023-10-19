@@ -5,7 +5,7 @@
             "overlays": [
                 {
                     "name": "<strong>APE</strong> / Tether US",
-                    "type": "Area",
+                    "type": "AppleArea",
                     "main": true,
                     "data": [
                         [

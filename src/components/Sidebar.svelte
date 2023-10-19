@@ -43,9 +43,11 @@ let sbUpdId = `sb-${id}-${side}`
 let sbId = `${props.id}-sb-${id}-${side}`
 let canvasId = `${props.id}-sb-canvas-${id}-${side}`
 let showSwitch = false
+let showPanel = true
 
 // EVENT INTERFACE
 events.on(`${sbUpdId}:update-sb`, update)
+events.on(`${sbUpdId}:show-sb-panel`, f => showPanel = f)
 
 $:sbStyle = `
     left: ${S * (layout.width + layout.sbMax[0])}px;
@@ -183,7 +185,7 @@ function update($layout = layout) {
 
     if (id) sb.upperBorder(props, layout, ctx)
 
-    if (props.cursor.y && props.cursor.scales) {
+    if (props.cursor.y && props.cursor.scales && showPanel) {
         if (props.cursor.gridId === layout.id) {
             sb.panel(props, layout, scale, side, ctx)
         }

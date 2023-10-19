@@ -3,17 +3,22 @@
 
 import Layer from '../layer.js'
 import Const from '../../stuff/constants.js'
+import Events from '../events.js'
 
 const HPX = Const.HPX
 
 export default class Grid extends Layer {
 
-    constructor(id) {
-        super(id, '__$Grid__')
+    constructor(id, nvId) {
+        super(id, '__$Grid__', nvId)
+
+        this.events = Events.instance(this.nvId)
+        this.events.on(`grid-layer:show-grid`, this.onShowHide.bind(this))
 
         this.id = id
         this.zIndex = -1000000 // Deep down in the abyss
         this.ctxType = 'Canvas'
+        this.show = true
 
         this.overlay = {
             draw: this.draw.bind(this),
@@ -29,7 +34,7 @@ export default class Grid extends Layer {
     draw(ctx) {
 
         let layout = this.layout
-        if (!layout) return
+        if (!layout || !this.show) return
 
         ctx.strokeStyle = this.props.colors.grid
         ctx.beginPath()
@@ -59,5 +64,11 @@ export default class Grid extends Layer {
         this.props = props
     }
 
-    destroy() {}
+    onShowHide(flag) {
+        this.show = flag
+    }
+
+    destroy() {
+        this.events.off('grid-layer')
+    }
 }

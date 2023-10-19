@@ -135,8 +135,8 @@ function makeLayers() {
     // TODO: make crosshair customizable
     // TODO: check order if overlay list is changed
     // TODO: switch Grid/X from the pane settings
-    layers.push(new Crosshair(i++))
-    layers.push(new Grid(i++))
+    layers.push(new Crosshair(i++, props.id))
+    layers.push(new Grid(i++, props.id))
     layers.push(new Trackers(i++, props, id))
     layers.sort((l1, l2) => l1.zIndex - l2.zIndex)
 
