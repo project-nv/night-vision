@@ -29,6 +29,12 @@ init() {
     })
 }
 
+destroy() {
+    $events.emit('show-crosshair', true)
+    $events.emit('show-sb-panel', true)
+    $events.emit('show-bb-panel', true)
+}
+
 draw(ctx) {
 
     mode = $core.cursor.visible ? 'select' : 'display'
