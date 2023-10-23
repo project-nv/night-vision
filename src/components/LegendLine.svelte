@@ -28,6 +28,7 @@ let ref // Reference to the legend-line div
 let nRef // Reference to the legend-name span
 let ctrlRef // Reference to the legend controls
 let selected = false
+let show = true
 
 $:updId = `ll-${gridId}-${ov.id}`
 
@@ -118,6 +119,9 @@ $:prec = scale.prec
 $:display = ov.settings.display !== false
 $:state = display ? 'open' : 'closed'
 
+// Disable legend if legend() returns null dynamically
+$:if(legend && data && !legend(data, prec)) show = false
+
 function update() {
     display = ov.settings.display !== false
     if (ctrlRef) ctrlRef.update()
@@ -170,6 +174,10 @@ function updateBoundaries() {
     boundary = ref.getBoundingClientRect()
 }
 
+function disableLegend() {
+    console.log('here')
+}
+
 </script>
 <style>
 .nvjs-legend-line {
@@ -219,7 +227,7 @@ function updateBoundaries() {
     filter: none;
 }*/
 </style>
-{#if !legendFns.noLegend && ov.settings.showLegend !== false}
+{#if !legendFns.noLegend && ov.settings.showLegend !== false && show}
 <!-- svelte-ignore a11y-no-static-element-interactions -->
 <div class="nvjs-legend-line" {style}
     on:mousemove={onMouseMove}
@@ -256,7 +264,7 @@ function updateBoundaries() {
         {:else if legendHtml && data.length}
             {@html legendHtml(data, prec, formatter)}
         {:else if data.length}
-            {#each legend(data, prec) as v, i}
+            {#each legend(data, prec) || [] as v, i}
             <span class="nvjs-ll-value"
                   style={`color: ${v[1]}`}>
                 {formatter(v[0])}

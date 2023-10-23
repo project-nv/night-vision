@@ -14,6 +14,7 @@ prop('colorSelectBack', { type: 'color', def: '#00a7f455' })
 prop('colorSelectValue', { type: 'color', def: '#3b8fed' })
 prop('colorBaseline', { type: 'color', def: '#555555' })
 prop('lineWidth', { type: 'number', def: 1.5 })
+prop('showName', { type: 'boolean', def: false })
 
 const HPX = - 0.5
 const FONT = 'bold 14' + $core.props.config.FONT.slice(2)
@@ -172,4 +173,4 @@ preSampler(x) => [x[1]]
 ohlc(x) => Array(4).fill(x[$props.dataIndex])
 
 // Legend, defined as pairs [value, color]
-legend(x) => null
+legend(x) => $props.showName ? [] : null

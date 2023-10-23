@@ -4,7 +4,7 @@
         {
             "overlays": [
                 {
-                    "name": "",
+                    "name": "Index",
                     "type": "AppleArea",
                     "main": true,
                     "data": [
