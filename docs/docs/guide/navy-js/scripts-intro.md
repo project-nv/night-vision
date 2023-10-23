@@ -7,6 +7,10 @@
 NightVision is currently in an active development state, the API is not finalized. However, it is already suitable for displaying candlestick / time-series data and using simple TA scripts.
 :::
 
+::: info 
+To use `.navy` files in your projects, you need to add `vite-raw-plugin.js` to import scripts as text. If you don't use Vite, replace it with something similar.  
+:::
+
 If you want to stand out from the crowd of other chart technicians (aka adepts of TA), this section is definitely for you. With **navy** scripts you can implement almost any charting idea.
 
 **99% of libraries and services limit your ability to produce new and unique stuff.** For example, TradngView has **PINE** script, which provides an easy way to display various mathematical functions. However, it lacks the ability to create custom overlays (you have a predefined set of primitives).
@@ -15,7 +19,7 @@ If you want to stand out from the crowd of other chart technicians (aka adepts o
 
 
 ```js
-// Navy ~ 0.1-lite
+// Navy ~ 0.2-lite
 
 [OVERLAY name=Spline, ctx=Canvas, version=1.0.0]
 

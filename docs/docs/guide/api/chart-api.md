@@ -201,5 +201,27 @@ A function that allows you to perform different chart updates:
 A full update that also resets the time-range. Equivalent of:
 
 ```js
-this.update('full', {resetRange: true})
+chart.update('full', {resetRange: true})
 ```
+
+## chart.goto
+
+- **Type**: `function`
+
+Go to time/index (depending on the mode). 
+
+```js
+chart.goto(new Date().getTime()) // Warp into now
+```
+
+## chart.scroll
+
+- **Type**: `function`
+
+Scrolls the chart on one interval forward. Useful when you add a new candle. 
+
+## chart.destroy 
+
+- **Type**: `function`
+
+Destroys the chart instance and cleans up all event listeners. 

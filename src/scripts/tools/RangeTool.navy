@@ -1,4 +1,4 @@
-// Navy ~ 0.1-lite
+// Navy ~ 0.2-lite
 // <ds>Time & value measurment tool [Shift+Click]</ds>
 
 [OVERLAY name=RangeTool, ctx=Canvas, verion=1.0.1, author=GPT4]

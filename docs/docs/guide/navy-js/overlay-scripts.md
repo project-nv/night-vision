@@ -10,7 +10,7 @@ As was described in the [Scripts](/guide/main-comp/scripts.html) chapter, each `
 Typical overlay looks like this:
 
 ```js
-// Navy ~ 0.1-lite // (1)
+// Navy ~ 0.2-lite // (1)
 
 [OVERLAY name=NewOverlay, ctx=Canvas, verion=0.1.0] // (2)
 
@@ -246,8 +246,45 @@ keypress(event) {
 }
 ```
 
+If your overlay requires the locking of scrolling, you can toggle it by sending this event to MetaHub:
+
+```
+// Lock On
+$events.emit('scroll-lock', true)
+
+// Lock Off
+$events.emit('scroll-lock', false)
+```
+
+## Static functions 
+
+Introduced in Navy v0.2. Static functions are parsed before overlay execution and are placed inside an overlay prefab (e.g., `chart.scriptHub.prefabs.Area.static`). The primary reason for this feature is to address the glitch observed during chart start-up or reset. This glitch occurs because the layout builder function doesn't receive the `yRange` function until the `Candles` overlay is placed and executed. This results in the inclusion of the volume value. However, when defined with the `static` keyword, the `yRange` function becomes immediately available:
+
+```js
+static yRange(data) {
+    // Calculate y-range using `data`
+    // ...
+    return [hi, lo]
+}
+```     
+
+::: info
+Please note that in Navy v0.2 the order of arguments for `yRange` has changed to (`data`, `hi`, `lo`)
+:::
+
+::: info
+Static functions do not have access to the script execution context (e.g., $props, $core, etc)
+:::
+
+The `static` keyword also applies to `preSampler`. You can define your custom static functions if needed.   
+
 ## More Info?
 
 Currenlty, it's recommended to eyeball all the built-in sources: https://github.com/project-nv/night-vision/tree/main/src/scripts
 
 Also, as you probably already know, good stuff is here: [NavyJS API](/guide/api/navy-api.html)
+
+
+
+
+

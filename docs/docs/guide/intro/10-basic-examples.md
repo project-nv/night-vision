@@ -275,7 +275,7 @@ To produce this nice chart, you need to add a new script to the chart's collecti
 
 ```js
 
-// Navy ~ 0.1-lite
+// Navy ~ 0.2-lite
 // ^^^ First comment should provide a NavyJS version
 
 // Meta tag
