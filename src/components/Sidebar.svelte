@@ -18,6 +18,7 @@ import { fade } from 'svelte/transition'
 import ScaleSelector from './ScaleSelector.svelte'
 import Events from '../core/events.js'
 import Utils from '../stuff/utils.js'
+import Const from '../stuff/constants.js'
 import math from '../stuff/math.js'
 import dpr from '../stuff/dprCanvas.js'
 import sb from '../core/primitives/sidebar.js'
@@ -64,6 +65,7 @@ let mc // Mouse controller
 let zoom = 1
 let yRange
 let drug
+let updId 
 
 $:width = layout.width
 $:height = layout.height
@@ -73,6 +75,7 @@ onMount(async () => { await setup() })
 onDestroy(() => {
     events.off(`${sbUpdId}`)
     if (mc) mc.destroy()
+    clearInterval(updId)
 })
 
 async function setup() {
@@ -81,6 +84,12 @@ async function setup() {
 
     update()
     if (scale) await listeners()
+
+    // Start updates to show fresh candle time 
+    if (props.config.CANDLE_TIME && props.timeFrame >= Const.MINUTE) {
+        let dt = Const.SECOND / 5 
+        updId = setInterval(update, dt)
+    }
 }
 
 // TODO: add mouse wheel/touchpad zoom

@@ -2,6 +2,7 @@
 // Drawing sidebar with CanvasJS
 
 import Const from '../../stuff/constants.js'
+import Utils from '../../stuff/utils.js'
 
 const HPX = Const.HPX
 
@@ -96,6 +97,7 @@ function panel(props, layout, scale, side, ctx) {
 
 function tracker(props, layout, scale, side, ctx, tracker) {
     const panHeight = Math.floor(props.config.PANHEIGHT * 0.8)
+    const ct = props.config.CANDLE_TIME && props.timeFrame >= Const.MINUTE
     let $ = tracker.value
     let lbl = $.toFixed(scale.prec)
     ctx.fillStyle = tracker.color
@@ -104,10 +106,16 @@ function tracker(props, layout, scale, side, ctx, tracker) {
     let x = S ? 1 : 4
     let y = tracker.y - panHeight * 0.5 + HPX
     let a = S ? 7 : panWidth - 3
-    roundRect(ctx, x , y, panWidth, panHeight, 3, S)
+    let h = ct ? Math.floor(panHeight * 1.75) + 2 + HPX : panHeight
+    roundRect(ctx, x , y, panWidth, h, 3, S)
     ctx.fillStyle = props.colors.back
     ctx.textAlign = S ? 'left' : 'right'
     ctx.fillText(lbl, a, y + panHeight - 4) // TODO: remove hardcode
+    if (ct) {
+        let rt = Utils.getCandleTime(props.timeFrame)
+        ctx.textAlign = S ? 'left' : 'right'
+        ctx.fillText(rt, a, y + panHeight + 9) // TODO: remove hardcode
+    }
 
 }
 

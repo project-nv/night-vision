@@ -6,6 +6,7 @@ import DataHub from '../dataHub.js'
 import MetaHub from '../metaHub.js'
 import sidebar from './sidebar.js'
 import { priceLine } from './priceLine.js'
+import Utils from '../../stuff/utils.js'
 
 export default class Trackers extends Layer {
 

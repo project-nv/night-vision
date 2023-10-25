@@ -82,7 +82,8 @@ const ChartConfig = {
     L_BTN_MARGIN: '-6px 0 -6px 0', // css margin
     SCROLL_WHEEL: 'prevent', // Scroll wheel morde, 'prevent', 'pass', 'click',
     QUANTIZE_AFTER: 0, // Quantize cursor after, ms
-    AUTO_PRE_SAMPLE: 10 // Sample size for auto-precision
+    AUTO_PRE_SAMPLE: 10, // Sample size for auto-precision
+    CANDLE_TIME: true // Show remaining candle time 
 }
 
 ChartConfig.FONT =
