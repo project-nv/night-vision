@@ -55,6 +55,10 @@ Marks the **main overlay** of the chart. This overlay's data will be used to cal
 - **Type:** `Array`
 - **Default:** `[]`
 
+::: info
+IMPORTANT: The data timestamps should be sorted in ascending order.
+:::
+
 Timeseries data of the overlay. Must have the following format:
 
 ```js
