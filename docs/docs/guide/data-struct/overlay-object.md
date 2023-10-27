@@ -52,12 +52,12 @@ Marks the **main overlay** of the chart. This overlay's data will be used to cal
 
 ## overlay.data <img src="/human.png" class="rh-tag" title="human" />
 
+::: info
+IMPORTANT: The data timestamps should be sorted in ascending order. Otherwise, you'll encounter glitches like disappearing data points.
+:::
+
 - **Type:** `Array`
 - **Default:** `[]`
-
-::: info
-IMPORTANT: The data timestamps should be sorted in ascending order.
-:::
 
 Timeseries data of the overlay. Must have the following format:
 
