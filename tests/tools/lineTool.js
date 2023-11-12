@@ -1,11 +1,11 @@
 
-// RangeTool data set 
+// LineTool data set 
 
-import data from '../../data/data-ohlcv-rsi.json?id=rangeTool'
+import data from '../../data/data-ohlcv-rsi.json?id=lineTool'
 
 export default function test(stack, chart) {
 
-    stack.startTest('RangeTool test')
+    stack.startTest('LineTool test')
 
     stack.add('Set base dataset', () => {
         chart.data = data
@@ -13,22 +13,22 @@ export default function test(stack, chart) {
         chart.se.uploadAndExec()
     })
 
-    stack.add('Add RangeTool to dataset', () => {
+    stack.add('Add LineTool to dataset', () => {
         for (var p = 0; p < 2; p++) {
             chart.data.panes[p].overlays.push({
-                name: 'RangeTool',
-                type: 'RangeTool',
+                name: 'LineTool',
+                type: 'LineTool',
                 data: [],
                 props: {},
                 settings: {
-                    zIndex: 1000
+                    zIndex: 1
                 }
             })
         }
         chart.update()
     })
 
-    stack.add('Press SHIFT+click', () => {})
+    stack.add('Tap & hold to create a line', () => { })
 
     stack.endTest()
 
