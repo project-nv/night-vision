@@ -19,6 +19,7 @@ export default function test(stack, chart) {
                 name: 'LineTool',
                 type: 'LineTool',
                 data: [],
+                dataExt: {}, // Here we place non-timeseries data
                 props: {},
                 settings: {
                     zIndex: 1

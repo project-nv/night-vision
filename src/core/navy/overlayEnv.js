@@ -73,6 +73,7 @@ export default class OverlayEnv {
         core.dataSubset = overlay.dataSubset
         core.data = overlay.data
         core.view = overlay.dataView
+        core.dataExt = overlay.dataExt
         core.id = overlay.id
         core.paneId = core.layout.id
         // TODO: core.fullLayout = ...
