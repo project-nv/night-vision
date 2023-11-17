@@ -4,6 +4,7 @@
 [OVERLAY name=LineTool, ctx=Canvas, verion=1.0.0]
 
 let timeId = null
+let mouseX = 0
 let lines = {} // Line objects stored by uuid
 
 init() {
@@ -22,11 +23,11 @@ draw(ctx) {
 
 newLine() {
 
+    if (unfinishedLines() || mouseMoved()) return
+
     if (!$core.dataExt.lines) {
         $core.dataExt.lines = []
     }
-
-    if (unfinishedLines()) return
 
     let t = $core.cursor.time
     let $ = $core.layout.y2value($core.cursor.y)
@@ -64,6 +65,11 @@ unfinishedLines() {
     return false
 }
 
+mouseMoved() {
+    let d = Math.abs(mouseX - $core.mouse.x)
+    return d > 5
+}
+
 removeLine(uuid) {
     delete lines[uuid]
     $core.dataExt.lines.filter(x => x.uuid !== uuid)
@@ -79,6 +85,7 @@ propagate(name, data) {
 
 mousedown(event) {
     timeId = setTimeout(newLine, 1000)
+    mouseX = $core.mouse.x
     lineSelected(null)
     $events.emit('update-layout')
     propagate('mousedown', event)
