@@ -8,6 +8,8 @@ import DataHub from '../dataHub.js'
 import MetaHub from '../metaHub.js'
 import Scan from '../dataScanner.js'
 import Utils from '../../stuff/utils.js'
+import Mouse from '../input/mouse.js'
+import Keys from '../input/keys.js'
 
 // Build-in primitives
 import Candle from '../primitives/navyLib/candle.js'
@@ -40,11 +42,14 @@ export default class OverlayEnv {
         this.id = id
         this.handlers = {}
 
-        this.$core = { hub, meta, scan }
+        this.$core = { hub, meta, scan, events }
         this.update(ovSrc, layout, props)
 
         this.$props = ovSrc.props
         this.$events = events
+
+        this.$core.mouse = new Mouse(this.$core)
+        this.$core.keys = new Keys(this.$core)
 
         this.lib = {
             Candle, Volbar, layoutCnv, formatCash,

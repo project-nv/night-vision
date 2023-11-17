@@ -196,15 +196,12 @@ function propagate(e) {
         if (layer.overlay[name]) {
             layer.overlay[name](event)
         }
-        // TODO: reimplement
-        /*const mouse = layer.overlay.mouse
-        const keys = layer.overlay.keys
-        if (mouse.listeners) {
+        if (layer.env.$core) {
+            const mouse = layer.env.$core.mouse
+            const keys = layer.env.$core.keys
             mouse.emit(name, event)
-        }
-        if (keys && keys.listeners) {
             keys.emit(name, event)
-        }*/
+        }
     }
 }
 
