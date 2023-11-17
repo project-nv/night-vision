@@ -2,11 +2,6 @@
 import IndexedArray from 'arrayslicer'
 import Const from './constants.js'
 
-const {
-    MINUTE, MINUTE5, MINUTE15, HOUR, HOUR4,
-    DAY, WEEK, MONTH, YEAR
-} = Const
-
 export default {
 
     clamp(num, min, max) {
@@ -531,62 +526,42 @@ export default {
         return $cursor
     },
 
-    // GPT to the moon!
-    getCandleTime(tf) {
-        const now = new Date(),
-            h = now.getUTCHours(),
-            m = now.getUTCMinutes(),
-            s = now.getUTCSeconds(),
-            Mo = now.getUTCMonth(),
-            D = now.getUTCDay(),
-            Y = now.getUTCFullYear();
+    // returns formatted remaining candle time until next close (unix ms ts)
+    getCandleTime(nextClose) {
+      const now = new Date();
+      const utcTs = now.getTime()
+      const ms = nextClose - utcTs
 
-        let rt; 
+      const seconds = Math.floor(ms / 1000);
+      const minutes = Math.floor(seconds / 60);
+      const hours = Math.floor(minutes / 60);
+      const days = Math.floor(hours / 24);
 
-        switch (tf) {
-            case MINUTE:
-                rt = 60 - s;
-                return `00:${rt < 10 ? '0' : ''}${rt}`;
-            case MINUTE5:
-                rt = 5 * 60 - (m % 5) * 60 - s;
-                return `${Math.floor(rt / 60)}:${rt % 60 < 10 ? '0' : ''}${rt % 60}`;
-            case MINUTE15:
-                rt = 15 * 60 - (m % 15) * 60 - s;
-                return `${Math.floor(rt / 60)}:${rt % 60 < 10 ? '0' : ''}${rt % 60}`;
-            case HOUR:
-                rt = 60 * 60 - m * 60 - s;
-                return `${(Math.floor(rt % 3600 / 60) + '').padStart(2, '0')}:` +
-                    `${(rt % 60 + '').padStart(2, '0')}`;
-            case HOUR4:
-                rt = 4 * 60 * 60 - (h % 4) * 3600 - m * 60 - s;
-                const hours = Math.floor(rt / 3600);
-                const minutes = Math.floor(rt % 3600 / 60);
-                if (hours === 0) {
-                    return `${minutes}:${(rt % 60 + '').padStart(2, '0')}`;
-                } else {
-                    return `${hours}:${(minutes + '').padStart(2, '0')}:${(rt % 60 + '').padStart(2, '0')}`;
-                }
-            case DAY:
-                rt = 24 * 60 * 60 - h * 3600 - m * 60 - s;
-                return `${Math.floor(rt / 3600)}:` +
-                    `${(Math.floor(rt % 3600 / 60) + '').padStart(2, '0')}:` +
-                    `${(rt % 60 + '').padStart(2, '0')}`;
-            case WEEK:
-                rt = 7 * 24 * 60 * 60 - (D || 7) * 24 * 60 * 60 - h * 3600 - m * 60 - s;
-                return `${Math.floor(rt / (24 * 3600))}d ${Math.floor(rt % (24 * 3600) / 3600)}h`;
-            case MONTH:
-                const endOfMonth = new Date(Date.UTC(now.getUTCFullYear(), Mo + 1, 1));
-                rt = (endOfMonth - now) / 1000;
-                return `${Math.floor(rt / (24 * 3600))}d ${Math.floor(rt % (24 * 3600) / 3600)}h`;
-            case YEAR:
-                const startOfYear = new Date(Date.UTC(Y, 0, 1));
-                const endOfYear = new Date(Date.UTC(Y + 1, 0, 1));
-                const totalSecondsInYear = (endOfYear - startOfYear) / 1000;
-                rt = totalSecondsInYear - ((now - startOfYear) / 1000);
-                return `${Math.floor(rt / (24 * 3600))}d ${Math.floor(rt % (24 * 3600) / 3600)}h`;
-            default:
-                return "Unk TF";
-        }
+      const formattedDays = days > 0 ? `${days}d` : '';
+      if (formattedDays) {
+        const hours = Math.ceil(minutes / 60);
+        const formattedHours = hours % 24 > 0 ? `${(hours % 24).toString().padStart(2, '0')}` : '';
+        return `${formattedDays} ${formattedHours}h`
+      }
+
+      const formattedHours = hours % 24 > 0 ? `${(hours % 24).toString().padStart(2, '0')}` : '';
+      const formattedMinutes = minutes % 60 > 0 ? `${(minutes % 60).toString().padStart(2, '0')}` : '';
+      const formattedSeconds = seconds % 60 > 0 ? `${(seconds % 60).toString().padStart(2, '0')}` : '';
+
+      if (formattedHours && formattedMinutes && formattedSeconds) {
+        return `${formattedHours}:${formattedMinutes}:${formattedSeconds}`
+      }
+
+      if (formattedMinutes && formattedSeconds) {
+        return `${formattedMinutes}:${formattedSeconds}`
+      }
+
+      if (formattedSeconds) {
+        return `00:${formattedSeconds}`
+      }
+
+      // this is when chart might not be updated, ie nextClose is lt utcTs
+      return ''
     },
 
     // WTF with modern web development

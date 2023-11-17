@@ -6,9 +6,14 @@ const MINUTE5 = MINUTE * 5
 const MINUTE15 = MINUTE * 15
 const MINUTE30 = MINUTE * 30
 const HOUR = MINUTE * 60
+const HOUR2 = HOUR * 2
+const HOUR3 = HOUR * 3
 const HOUR4 = HOUR * 4
+const HOUR6 = HOUR * 6
+const HOUR8 = HOUR * 8
 const HOUR12 = HOUR * 12
 const DAY = HOUR * 24
+const DAY3 = DAY * 3
 const WEEK = DAY * 7
 const MONTH = WEEK * 4
 const YEAR = DAY * 365
@@ -113,6 +118,8 @@ const MAP_UNIT = {
   "2H": HOUR * 2,
   "3H": HOUR * 3,
   "4H": HOUR4,
+  "6H": HOUR6,
+  "8H": HOUR8,
   "12H": HOUR12,
   "1D": DAY,
   "1W": WEEK,
@@ -123,6 +130,8 @@ const MAP_UNIT = {
   "2h": HOUR * 2,
   "3h": HOUR * 3,
   "4h": HOUR4,
+  "6h": HOUR6,
+  "8h": HOUR8,
   "12h": HOUR12,
   "1d": DAY,
   "1w": WEEK,

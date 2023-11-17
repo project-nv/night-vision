@@ -106,17 +106,33 @@ function tracker(props, layout, scale, side, ctx, tracker) {
     let x = S ? 1 : 4
     let y = tracker.y - panHeight * 0.5 + HPX
     let a = S ? 7 : panWidth - 3
-    let h = ct ? Math.floor(panHeight * 1.75) + 2 + HPX : panHeight
+
+    let h = panHeight
+    let rt
+
+    if (ct) {
+      // if candle time is set we compute the remaining time
+      // and grow the height of the rectangle
+      const data = props.cursor.meta.hub.mainOv.data
+      const lastOpen = data[data.length - 1][0]
+      const nextClose = lastOpen + props.timeFrame + 1000
+
+      rt = Utils.getCandleTime(nextClose)
+
+      if (rt) {
+        h = Math.floor(panHeight * 1.75) + 2 + HPX
+      }
+    }
+
     roundRect(ctx, x , y, panWidth, h, 3, S)
     ctx.fillStyle = props.colors.back
     ctx.textAlign = S ? 'left' : 'right'
     ctx.fillText(lbl, a, y + panHeight - 4) // TODO: remove hardcode
-    if (ct) {
-        let rt = Utils.getCandleTime(props.timeFrame)
-        ctx.textAlign = S ? 'left' : 'right'
-        ctx.fillText(rt, a, y + panHeight + 9) // TODO: remove hardcode
-    }
 
+    if (rt) {
+      ctx.textAlign = S ? 'left' : 'right'
+      ctx.fillText(rt, a, y + panHeight + 9) // TODO: remove hardcode
+    }
 }
 
 function roundRect(ctx, x, y, w, h, r, s) {
