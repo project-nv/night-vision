@@ -19,7 +19,16 @@ export default function test(stack, chart) {
                 name: 'LineTool',
                 type: 'LineTool',
                 data: [],
-                dataExt: {}, // Here we place non-timeseries data
+                dataExt: {
+                    lines: [
+                        {
+                            type: 'segment',
+                            p1: [1663347600000, 4.56],
+                            p2: [1663416000000, 4.7],
+                            uuid: '123'
+                        }
+                    ]
+                }, // Here we place non-timeseries data
                 props: {},
                 settings: {
                     zIndex: 1

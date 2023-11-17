@@ -65,6 +65,7 @@ const ChartConfig = {
     TB_BORDER: 1,    // Toolbar border, px
     TB_B_STYLE: 'dotted', // Toolbar border style
     TOOL_COLL: 7,    // Tool collision threshold
+    PIN_RADIUS: 5.5, // Tool pin radius
     EXPAND: 0.15,    // Expand y-range, %/100 of range
     CANDLEW: 0.7,    // Candle width, %/100 of step
     GRIDX: 100,      // Grid x-step target, px

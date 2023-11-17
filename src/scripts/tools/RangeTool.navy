@@ -8,6 +8,7 @@ let pin2 = null
 let shift = false
 let state = 'idle'
 
+// TODO: fix for index-based
 draw(ctx) {
     const layout = $core.layout 
 
