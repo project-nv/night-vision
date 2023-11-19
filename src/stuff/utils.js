@@ -549,6 +549,12 @@ export default {
                 } else if (prop === 'layerY') {
                     return adjustedY;
                 }
+
+                // Ensure methods like preventDefault keep their original context
+                if (typeof target[prop] === 'function') {
+                    return target[prop].bind(target);
+                }
+
                 // Default behavior for other properties
                 return target[prop];
             }
