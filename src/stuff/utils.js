@@ -531,6 +531,31 @@ export default {
         return $cursor
     },
 
+    // Adjust mouse coords to fix the shift caused by 
+    // css transforms
+    adjustMouse(event, canvas) {
+       
+        const rect = canvas.getBoundingClientRect();
+
+        // Calculate the adjusted coordinates
+        const adjustedX = event.clientX - rect.left;
+        const adjustedY = event.clientY - rect.top;
+
+        return new Proxy(event, {
+            get(target, prop) {
+                // Intercept access to layerX and layerY
+                if (prop === 'layerX') {
+                    return adjustedX;
+                } else if (prop === 'layerY') {
+                    return adjustedY;
+                }
+                // Default behavior for other properties
+                return target[prop];
+            }
+        });
+
+    },
+
     // GPT to the moon!
     getCandleTime(tf) {
         const now = new Date(),
