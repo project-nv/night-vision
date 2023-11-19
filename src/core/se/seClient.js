@@ -48,6 +48,7 @@ class SeClient {
     // Update data (when new live data arrives)
     // TODO: autoscroll
     async updateData() {
+        if (!this.hub.mainOv || !this.hub.mainOv.data) return
         let ohlcv = this.hub.mainOv.data
         let data = await this.ww.exec('update-data', {
             // Send the last two candles
