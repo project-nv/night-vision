@@ -22,6 +22,7 @@ import avgVolume from '../primitives/navyLib/avgVolume.js'
 import roundRect from '../primitives/navyLib/roundRect.js'
 import drawArrow from '../primitives/navyLib/arrow.js'
 import TrendLine from '../primitives/navyLib/trendLine.js'
+import RegressionTrend from '../primitives/navyLib/regressionTrend.js'
 import Segment from '../primitives/navyLib/seg.js'
 import Pin from '../primitives/navyLib/pin.js'
 import {
@@ -59,7 +60,7 @@ export default class OverlayEnv {
             candleBody, candleWick, volumeBar,
             fastSma, avgVolume, candleColor, 
             roundRect, rescaleFont, drawArrow, 
-            TrendLine, Segment, Pin,
+            TrendLine, Segment, Pin, RegressionTrend,
             Utils
         }
 

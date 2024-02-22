@@ -4,3 +4,4 @@ package-lock.json
 temp
 /docs/docs/.vitepress/dist
 dist
+.vscode
