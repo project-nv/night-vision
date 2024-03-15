@@ -35,6 +35,7 @@ import watchPropTest from '../tests/navy/watchPropTest.js'
 
 // More tests
 import logScaleTest from '../tests/scales/logScale.js'
+import memoryTest from '../tests/memory/memoryTest.js'
 
 /*
 TODO: data-api interface:
@@ -99,6 +100,10 @@ onMount(() => {
     stack.setGroup('scales-test')
 
     logScaleTest(stack, chart)
+
+    stack.setGroup('memory-test')
+
+    memoryTest(stack, chart)
 
     //  Type in the console: stack.execAll()
     //  or: stack.exec('<group>')    

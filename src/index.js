@@ -9,9 +9,10 @@ import Scripts from './core/scripts.js'
 import Events from './core/events.js'
 import Const from './stuff/constants.js'
 import Utils from './stuff/utils.js'
+import Parser from './core/navy/parser.js'
 
 export {
     NightVision, DataHub, MetaHub,
     DataScan, Scripts, Events,
-    Const, Utils
+    Const, Utils, Parser
 }

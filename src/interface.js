@@ -240,6 +240,7 @@ class NightVision {
     // Should call this to clean-up memory / events
     destroy() {
         this.comp.$destroy()
+        this.ww.stop()
     } 
 }
 
