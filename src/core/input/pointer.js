@@ -28,7 +28,7 @@ export default class Input {
         this.rrId = comp.rrUpdId
         this.gridUpdId = comp.gridUpdId
         this.gridId = comp.id
-        this.cursor = {} // TODO: implement
+        this.cursor = comp.props.cursor
         this.oldMeta = {} // TODO: implement
         this.range = this.props.range
         this.interval = this.props.interval
@@ -72,9 +72,19 @@ export default class Input {
         if (Utils.isMobile) mc.add(new Hammer.Press())
 
         mc.on('panstart', event => {
-            if (this.cursor.scroll_lock) return
+            if (this.cursor.scrollLock) return
             if (this.cursor.mode === 'aim') {
-                return this.emitCursorCoord(event)
+                this.oldMeta.panmoveX = undefined
+                this.oldMeta.panmoveY = undefined
+                this.oldMeta.panstartX = this.cursor.x
+                this.oldMeta.panstartY = this.cursor.y
+                const e = {
+                  center: {
+                    x: this.cursor.x - this.offsetX,
+                    y: this.cursor.y - this.offsetY,
+                  }
+                }
+                return this.emitCursorCoord(e, {visible: true})
             }
             let scaleId = this.layout.scaleIndex
             let tfrm = this.meta.getYtransform(this.gridId, scaleId)
@@ -114,7 +124,22 @@ export default class Input {
                     y: event.center.y + this.offsetY
                 })*/
             } else if (this.cursor.mode === 'aim') {
-                this.emitCursorCoord(event)
+              if (!(this.oldMeta.panmoveX && this.oldMeta.panmoveY)) {
+                this.oldMeta.panmoveX = event.center.x
+                this.oldMeta.panmoveY = event.center.y
+                return
+              }
+
+              const deltaX = event.center.x - this.oldMeta.panmoveX
+              const deltaY = event.center.y - this.oldMeta.panmoveY
+
+              const e = {
+                center: {
+                  x: this.oldMeta.panstartX + deltaX - this.offsetX,
+                  y: this.oldMeta.panstartY + deltaY - this.offsetY,
+                }
+              }
+              this.emitCursorCoord(e, { visible: true })
             }
         })
 
@@ -132,7 +157,8 @@ export default class Input {
             if (this.fade) this.fade.stop()
             this.events.emit('cursor-changed', {})
             this.events.emit('cursor-changed', {
-                mode: 'explore'
+                mode: 'explore',
+                visible: false,
             })
             this.events.emitSpec(this.rrId, 'update-rr')
         })
@@ -157,7 +183,7 @@ export default class Input {
             if (!Utils.isMobile) return
             if (this.fade) this.fade.stop()
             this.calcOffset()
-            this.emitCursorCoord(event, { mode: 'aim' })
+            this.emitCursorCoord(event, { mode: 'aim', visible: true })
             setTimeout(() => this.events.emitSpec(this.rrId, 'update-rr'))
             this.simMousedown(event)
         })
