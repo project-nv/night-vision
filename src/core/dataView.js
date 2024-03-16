@@ -20,4 +20,12 @@ export default class DataView$ {
         )
     }
 
+    // As above, without range expansion.
+    makeUnexpandedSubset() {
+        return this.src.slice(
+            this.i1 + 1,
+            this.i2
+        )
+    }
+
 }

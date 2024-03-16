@@ -1,0 +1,127 @@
+// Navy ~ 0.2-lite
+// <ds>Linear Regression Line Tool</ds>
+
+[OVERLAY name=RegressionLineTool, ctx=Canvas, version=1.0.0, author="chowieuk"]
+
+let timeId = null
+let mouseX = 0
+let lines = {} // Line objects stored by uuid
+
+init() {
+    // Restore lines from dataExt, promoting them to Regression Trend Lines
+    for (var line of $core.dataExt.lines || []) {
+        lines[line.uuid] = new $lib.RegressionTrend($core, line)
+
+        // probable source of weird multiple selection behaviour
+        lines[line.uuid].onSelect = lineSelected
+    }
+    
+}
+
+draw(ctx) {
+    for (var line of Object.values(lines)) {
+        line.draw(ctx)
+    }
+
+}
+
+newLine() {
+
+    if (unfinishedLines() || mouseMoved()) return
+
+    if (!$core.dataExt.lines) {
+        $core.dataExt.lines = []
+    }
+
+    let t = $core.cursor.time
+    let $ = $core.layout.y2value($core.cursor.y)
+    let uuid = $lib.Utils.uuid3()
+    
+    let line = {
+        type: 'segment',
+        p1: [t, $],
+        p2: [t, $],
+        uuid: uuid
+    }
+
+    $core.dataExt.lines.push(line)
+    lines[uuid] = new $lib.RegressionTrend($core, line, true)
+    lines[uuid].onSelect = lineSelected
+    lines[uuid].selected = true
+
+    $events.emit('scroll-lock', true)
+    $events.emit('update-layout')
+    
+}
+
+transformTimeArray(inputArray) {
+  return inputArray.map(subArray => subArray[0]);
+}
+
+transformCloseArray(inputArray) {
+  return inputArray.map(subArray => subArray[4]);
+}
+
+lineSelected($uuid) {
+    for (var uuid in lines) {
+        lines[uuid].selected = uuid === $uuid
+    }
+    $events.emit('update-layout')
+}
+
+unfinishedLines() {
+    for (var line of Object.values(lines)) {
+        if (line.pins.some(x => x.state !== 'settled')) {
+            return true
+        }
+    }
+    return false
+}
+
+mouseMoved() {
+    let d = Math.abs(mouseX - $core.mouse.x)
+    return d > 5
+}
+
+removeLine(uuid) {
+    delete lines[uuid]
+    $core.dataExt.lines.filter(x => x.uuid !== uuid)
+    $events.emit('update-layout')
+}
+
+propagate(name, data) {
+    // if (name == 'mousedown') console.log(name,data)
+    // TODO: sort by z-index
+    for (var line of Object.values(lines)) {
+        line[name](data)
+    }
+} 
+
+mousedown(event) {
+    timeId = setTimeout(newLine, 1000)
+    mouseX = $core.mouse.x
+    lineSelected(null)
+    $events.emit('update-layout')
+    propagate('mousedown', event)
+}
+
+mouseup(event) {
+    clearTimeout(timeId)
+    timeId = null
+    propagate('mouseup', event)
+}
+
+mousemove(event) {
+    // console.log($core.layout.x2time($core.cursor.x))
+    propagate('mousemove', event)
+}
+
+keydown(event) {
+    if (event.code === 'Backspace') {
+        let s = Object.values(lines).find(x => x.selected)
+        if (s) removeLine(s.data.uuid)
+    }
+}
+
+
+legend() => null
