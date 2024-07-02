@@ -1,76 +1,77 @@
 <script>
 
-// Main component combining all grids, scales, etc.
-// Also, main event router, root of 'update' events
+  // Main component combining all grids, scales, etc.
+  // Also, main event router, root of 'update' events
 
-import { onMount, onDestroy } from 'svelte'
-import Cursor from '../core/cursor.js'
-import DataHub from '../core/dataHub.js'
-import MetaHub from '../core/metaHub.js'
-import Scan from '../core/dataScanner.js'
-import Events from '../core/events.js'
-import Const from '../stuff/constants.js'
-import Utils from '../stuff/utils.js'
-import Layout from '../core/layout.js'
-import Context from '../stuff/context.js'
-import Pane from './Pane.svelte'
-import Botbar from './Botbar.svelte'
-import NoDataStub from './NoDataStub.svelte'
+  import { onMount, onDestroy } from 'svelte'
+  import Cursor from '../core/cursor.js'
+  import DataHub from '../core/dataHub.js'
+  import MetaHub from '../core/metaHub.js'
+  import Scan from '../core/dataScanner.js'
+  import Events from '../core/events.js'
+  import Const from '../stuff/constants.js'
+  import Utils from '../stuff/utils.js'
+  import Layout from '../core/layout.js'
+  import Context from '../stuff/context.js'
+  import Pane from './Pane.svelte'
+  import Botbar from './Botbar.svelte'
+  import NoDataStub from './NoDataStub.svelte'
 
-export let props = {}
+  export let props = {}
 
-// Getters
-export function getLayout() { return layout }
-export function getRange() { return range }
-export function getCursor() { return cursor }
+  // Getters
+  export function getLayout() { return layout }
+  export function getRange() { return range }
+  export function getCursor() { return cursor }
 
-// Setters
-export function setRange(val) {
-    let emit = !(val.preventDefault ?? true)
-    delete val.preventDefault
-    Object.assign(range, val) // keeping the same ref
-    onRangeChanged(range, emit)
-}
+  // Setters
+  export function setRange(val) {
+      let emit = !(val.preventDefault ?? true)
+      delete val.preventDefault
+      Object.assign(range, val) // keeping the same ref
+      onRangeChanged(range, emit)
+  }
 
-export function setCursor(val) {
-    let emit = !(val.preventDefault ?? true)
-    delete val.preventDefault
-    Object.assign(cursor, val)
-    onCursorChanged(cursor, emit)
-}
+  export function setCursor(val) {
+      let emit = !(val.preventDefault ?? true)
+      delete val.preventDefault
+      Object.assign(cursor, val)
+      onCursorChanged(cursor, emit)
+  }
 
-// Singleton instances
-let hub = DataHub.instance(props.id)
-let meta = MetaHub.instance(props.id)
-let events = Events.instance(props.id)
-let scan = Scan.instance(props.id)
+  // Singleton instances
+  let hub = DataHub.instance(props.id)
+  let meta = MetaHub.instance(props.id)
+  let events = Events.instance(props.id)
+  let scan = Scan.instance(props.id)
 
-scan.init(props)
+  scan.init(props)
 
-let interval = scan.detectInterval()
-let timeFrame = scan.getTimeframe()
-let range = scan.defaultRange()
-let cursor = new Cursor(meta)
-let storage = {} // Storage for helper variables
-let ctx = new Context(props) // For measuring text
-let chartRR = 0
-let layout = null
+  let interval = scan.detectInterval()
+  let timeFrame = scan.getTimeframe()
+  let range = scan.defaultRange()
+  let cursor = new Cursor(meta)
+  let storage = {} // Storage for helper variables
+  let ctx = new Context(props) // For measuring text
+  let chartRR = 0
+  let layout = null
+  let grids = []
 
-scan.calcIndexOffsets()
+  scan.calcIndexOffsets()
 
-$:chartProps = Object.assign(
-    {interval, timeFrame, range, ctx, cursor},
-    props
-)
+  $:chartProps = Object.assign(
+      {interval, timeFrame, range, ctx, cursor},
+      props
+  )
 
 // EVENT INTEFACE
-events.on('chart:cursor-changed', onCursorChanged)
-events.on('chart:cursor-locked', onCursorLocked)
-events.on('chart:range-changed', onRangeChanged)
-events.on('chart:update-layout', update)
-events.on('chart:full-update', fullUpdate)
+  events.on('chart:cursor-changed', onCursorChanged)
+  events.on('chart:cursor-locked', onCursorLocked)
+  events.on('chart:range-changed', onRangeChanged)
+  events.on('chart:update-layout', update)
+  events.on('chart:full-update', fullUpdate)
 
-onMount(() => {
+  onMount(() => {
 
     hub.calcSubset(range)
     hub.detectMain()
@@ -191,9 +192,10 @@ function rangeUpdate($range) {
             layout={layout.grids[i]}
             props={chartProps}
             main={pane === hub.chart}
+            bind:grid={grids[i]}
         />
         {/each}
-        <Botbar props={chartProps} {layout}/>
+      <Botbar props={chartProps} {layout} {grids} />
     {:else}
         <NoDataStub {props}/>
     {/if}

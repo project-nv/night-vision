@@ -1,29 +1,29 @@
 <script>
 
-// Pane component: combines grid, sidebars & legend
+  // Pane component: combines grid, sidebars & legend
 
-import { onMount, onDestroy } from 'svelte'
-import Grid from './Grid.svelte'
-import Sidebar from './Sidebar.svelte'
-import SidebarStub from './SidebarStub.svelte'
-import Legend from './Legend.svelte'
-import Events from '../core/events.js'
-import Utils from '../stuff/utils.js'
+  import { onMount, onDestroy } from 'svelte'
+  import Grid from './Grid.svelte'
+  import Sidebar from './Sidebar.svelte'
+  import SidebarStub from './SidebarStub.svelte'
+  import Legend from './Legend.svelte'
+  import Events from '../core/events.js'
+  import Utils from '../stuff/utils.js'
 
-export let id // Pane id
-export let props // General props
-export let main // Is this the main Pane
-export let layout // Pane/grid layout
+  export let id // Pane id
+  export let props // General props
+  export let main // Is this the main Pane
+  export let layout // Pane/grid layout
 
-let events = Events.instance(props.id)
-let lsb  // left sidebar ref
-let rsb  // right sidebar ref
-let grid // grid ref
+  let events = Events.instance(props.id)
+  let lsb  // left sidebar ref
+  let rsb  // right sidebar ref
+  export let grid // grid ref
 
-$:leftSb = Utils.getScalesBySide(0, layout)
-$:rightSb = Utils.getScalesBySide(1, layout)
+  $:leftSb = Utils.getScalesBySide(0, layout)
+  $:rightSb = Utils.getScalesBySide(1, layout)
 
-$:style = `
+  $:style = `
     width: ${props.width}px;
     height: ${(layout || {}).height}px;
     /* didn't work, coz canvas draws through the border
@@ -32,20 +32,20 @@ $:style = `
     box-sizing: border-box;*/
 `
 
-// EVENT INTEFACE
-events.on(`pane-${id}:update-pane`, update)
+  // EVENT INTEFACE
+  events.on(`pane-${id}:update-pane`, update)
 
-onMount(() => {
+  onMount(() => {
     // console.log(`Pane ${id} mounted`)
-})
+  })
 
-onDestroy(() => {
+  onDestroy(() => {
     events.off(`pane-${id}`)
-})
+  })
 
-// Send updates to all child components
-// Update layout ref to get faster updates
-function update($layout) {
+  // Send updates to all child components
+  // Update layout ref to get faster updates
+  function update($layout) {
     if (!$layout.grids) return
     layout = $layout.grids[id]
     events.emitSpec(`grid-${id}`, 'update-grid', layout)
@@ -55,28 +55,28 @@ function update($layout) {
     if (rsb) rsb.setLayers(layers)
     events.emitSpec(`sb-${id}-left`, 'update-sb', layout)
     events.emitSpec(`sb-${id}-right`, 'update-sb', layout)
-}
+  }
 
 </script>
 <style>
 </style>
 {#if layout}
-<div class="nvjs-pane" {style}>
+  <div class="nvjs-pane" {style}>
     <Grid {id} {props} {layout} {main} bind:this={grid}/>
     <Legend {id} {props} {layout} {main}/>
     {#if leftSb.length}
-        <Sidebar {id} {props} {layout} bind:this={lsb}
-            side='left' scales={leftSb}/>
+      <Sidebar {id} {props} {layout} bind:this={lsb}
+        side='left' scales={leftSb}/>
     {:else}
-        <SidebarStub {id} {props} {layout}
+      <SidebarStub {id} {props} {layout}
             side='left'/>
     {/if}
     {#if rightSb.length}
-        <Sidebar {id} {props} {layout}  bind:this={rsb}
-            side='right' scales={rightSb}/>
+      <Sidebar {id} {props} {layout}  bind:this={rsb}
+        side='right' scales={rightSb}/>
     {:else}
-        <SidebarStub {id} {props} {layout}
+      <SidebarStub {id} {props} {layout}
             side='right'/>
     {/if}
-</div>
+  </div>
 {/if}
