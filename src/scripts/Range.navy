@@ -3,7 +3,7 @@
 // <ds>Ranging indicator, e.g. RSI</ds>
 // Format: [<timestamp>, <value>]
 
-[OVERLAY name=Range, ctx=Canvas, verion=1.0.1]
+[OVERLAY name=Range, ctx=Canvas, version=1.0.1]
 
 // Overlay props
 prop('color', { type: 'Color', def: '#ec206e' })

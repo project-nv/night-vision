@@ -1,7 +1,7 @@
 // Navy ~ 0.2-lite
 // <ds>Time & value measurment tool [Shift+Click]</ds>
 
-[OVERLAY name=RangeTool, ctx=Canvas, verion=1.0.1, author=GPT4]
+[OVERLAY name=RangeTool, ctx=Canvas, version=1.0.1, author=GPT4]
 
 let pin1 = null 
 let pin2 = null 

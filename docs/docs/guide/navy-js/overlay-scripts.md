@@ -12,7 +12,7 @@ Typical overlay looks like this:
 ```js
 // Navy ~ 0.2-lite // (1)
 
-[OVERLAY name=NewOverlay, ctx=Canvas, verion=0.1.0] // (2)
+[OVERLAY name=NewOverlay, ctx=Canvas, version=0.1.0] // (2)
 
 // Overlay props
 prop('color', { type: 'color', def: '#2d7b2f33' }) // (3)

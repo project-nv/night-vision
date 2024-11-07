@@ -1,6 +1,6 @@
 // Navy ~ 0.2-lite
 
-[OVERLAY name=WatchOverlay, ctx=Canvas, verion=0.1.0]
+[OVERLAY name=WatchOverlay, ctx=Canvas, version=0.1.0]
 
 // Overlay props
 prop('color', { type: 'color', def: '#2d7b2f33' })

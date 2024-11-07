@@ -1,7 +1,7 @@
 // Navy ~ 0.2-lite
 
 // <ds>Cloud</ds>, format [<timestamp>, <line1>, <line2>]
-[OVERLAY name=Cloud, ctx=Canvas, verion=0.1.0]
+[OVERLAY name=Cloud, ctx=Canvas, version=0.1.0]
 
 // Overlay props
 prop('color1', { type: 'color', def: '#55d7b0aa' })
