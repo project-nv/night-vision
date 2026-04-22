@@ -91,7 +91,7 @@ class NightVision {
         return this.comp.showLogo
     }
     set showLogo(val) {
-        this.comp.$set({id: val})
+        this.comp.$set({showLogo: val})
     }
 
 

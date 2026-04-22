@@ -122,10 +122,6 @@ class MetaHub {
         //this.restore()
         this.calcOhlcMap()
         this.ready = true
-        setTimeout(() => {
-            this.events.emitSpec('chart', 'update-layout')
-            this.events.emit('update-legend')
-        })
     }
 
     // Store some meta info such as ytransform by
