@@ -8,9 +8,12 @@ class SeClient {
 
     constructor(id, chart) {
 
+        this.id = id
         this.chart = chart
-        this.ww = chart.ww
-        this.ww.onevent = this.onEvent.bind(this)
+        this.ww = chart?.ww
+        if (this.ww) {
+            this.ww.onevent = this.onEvent.bind(this)
+        }
 
     }
 
@@ -150,6 +153,12 @@ let instances = {}
 function instance(id, chart) {
     if (!instances[id]) {
         instances[id] = new SeClient(id, chart)
+    } else if (chart) {
+        instances[id].chart = chart
+        if (chart.ww && instances[id].ww !== chart.ww) {
+            instances[id].ww = chart.ww
+            instances[id].ww.onevent = instances[id].onEvent.bind(instances[id])
+        }
     }
     return instances[id]
 }
